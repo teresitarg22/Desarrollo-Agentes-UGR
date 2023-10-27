@@ -1,5 +1,5 @@
 # Desarrollo Basado en Agentes   2023/2024
-## Descripción
+## :bulb: Descripción 
 
 Somos el grupo 206 de la asignatura Desarrollo Basado en Agentes, formado por:
 
@@ -11,7 +11,7 @@ Somos el grupo 206 de la asignatura Desarrollo Basado en Agentes, formado por:
 - :bust_in_silhouette: Rincón Otero, Marta
 - :bust_in_silhouette: Velázquez Ortuño, Diego
 
-## Estructura del Repositorio
+## :file_folder: Estructura del Repositorio
 
 Este repositorio está organizado de la siguiente manera:
 
