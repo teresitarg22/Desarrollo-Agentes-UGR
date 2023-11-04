@@ -1,12 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package agentemundo2d;
 
 import java.util.Scanner;
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.InputStream;
 
 /**
  *
@@ -19,21 +15,31 @@ public class Mapa {
     private int[][] mapa;
 
     public Mapa(String archivo) {
+        // Combino la ruta con el nombre del archivo pasado como argumento
+        // Partimos del .jar (AgenteMundo2D.jar) y con /Mapas/ entro en el paquete de mapas
+        String rutaCompleta = "/Mapas/" + archivo; 
         try {
-            Scanner scanner = new Scanner(new File(archivo));
+            // Abre el archivo con la ruta completa
+            InputStream inputStream = getClass().getResourceAsStream(rutaCompleta);
+        
+            if (inputStream != null) {
+                Scanner scanner = new Scanner(inputStream);
+                filas = scanner.nextInt();
+                columnas = scanner.nextInt();
+                mapa = new int[filas][columnas];
 
-            filas = scanner.nextInt();
-            columnas = scanner.nextInt();
-            mapa = new int[filas][columnas];
-
-            for (int i = 0; i < filas; i++) {
-                for (int j = 0; j < columnas; j++) {
-                    mapa[i][j] = scanner.nextInt();
+                for (int i = 0; i < filas; i++) {
+                    for (int j = 0; j < columnas; j++) {
+                        mapa[i][j] = scanner.nextInt();
+                    }
                 }
-            }
 
-            scanner.close();
-        } catch (FileNotFoundException e) {
+                scanner.close();
+                
+            } else {
+                System.err.println("No se pudo encontrar el archivo dentro del paquete Mapas.");
+            }
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

@@ -4,17 +4,14 @@
  */
 package agentemundo2d;
 
+import jade.core.Agent;
+
 /**
  *
  * @author teresa
  */
-public class AgenteMundo2D {
+public class AgenteMundo2D extends Agent{
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        // TODO code application logic here
-    }
+    
     
 }
