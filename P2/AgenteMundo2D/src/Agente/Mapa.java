@@ -1,5 +1,5 @@
 
-package agentemundo2d;
+package Agente;
 
 import java.util.Scanner;
 import java.io.InputStream;

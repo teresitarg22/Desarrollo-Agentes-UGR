@@ -1,5 +1,5 @@
 
-package agentemundo2d;
+package Agente;
 
 import jade.core.Agent;
 

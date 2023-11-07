@@ -5,7 +5,7 @@
  * Para indicar el mapa poner directamente el nombre del txt a probar
  */
 
-package agentemundo2d;
+package Agente;
 
 import jade.core.Runtime;
 import jade.core.Profile;
