@@ -6,7 +6,7 @@ import java.io.InputStream;
 
 /**
  *
- * @author marta
+ * @author Marta Rincón Otero
  */
 public class Mapa {
     

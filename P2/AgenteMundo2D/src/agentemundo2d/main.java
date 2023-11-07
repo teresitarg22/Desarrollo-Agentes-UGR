@@ -5,8 +5,6 @@
  * Para indicar el mapa poner directamente el nombre del txt a probar
  */
 
-
-
 package agentemundo2d;
 
 import jade.core.Runtime;
@@ -18,7 +16,7 @@ import jade.wrapper.AgentController;
 
 /**
  *
- * @author marta
+ * @author Marta Rincón Otero
  */
 public class main {
 
@@ -51,7 +49,6 @@ public class main {
 
         Mapa mapa = new Mapa(archivo);
         mapa.imprimirMapa();
- 
     }
     
 }
