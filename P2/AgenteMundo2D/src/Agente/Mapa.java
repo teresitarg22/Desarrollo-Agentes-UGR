@@ -14,6 +14,8 @@ public class Mapa {
     private int columnas;
     private int[][] mapa;
 
+    // ---------------------------------------------
+    // Constructor.
     public Mapa(String archivo) {
         // Combino la ruta con el nombre del archivo pasado como argumento
         // Partimos del .jar (AgenteMundo2D.jar) y con /Mapas/ entro en el paquete de mapas
@@ -44,6 +46,8 @@ public class Mapa {
         }
     }
     
+    // ---------------------------------------------
+    // Imprime el mapa.
     public void imprimirMapa() {
         for (int i = 0; i < filas; i++) {
             for (int j = 0; j < columnas; j++) {
@@ -53,6 +57,8 @@ public class Mapa {
         }
     }
     
+    // ---------------------------------------------
+    // Obtener el valor de una celda dada.
     public int obtenerCelda ( int fila, int columna) {
         if (fila >= 0 && fila < filas && columna >= 0 && columna < columnas) {
             // Si los valores dados no superan ni son menores que el tamaño de la matriz
@@ -63,6 +69,8 @@ public class Mapa {
         }
     }
     
+    // ---------------------------------------------
+    // Obtiene si una celda es accesible o no.
     public boolean esAccesible ( int fila, int columna) {
        if (fila >= 0 && fila < filas && columna >= 0 && columna < columnas) {
            if (mapa[fila][columna] == 0)
@@ -73,6 +81,18 @@ public class Mapa {
             System.out.println("ERROR: Coordenadas fuera de los límites del mapa.");
             return false;
         } 
+    }
+    
+    // ---------------------------------------------
+    // Obtener el valor de las filas del mapa.
+    public int getFilas() {
+        return filas;
+    }
+    
+    // ---------------------------------------------
+    // Obtener el valor de las columnas del mapa.
+    public int getColumnas() {
+        return columnas;
     }
 
 }
