@@ -1,30 +1,10 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-/*package agentemundo2d;
-import java.util.Pair;
-/**
- *
- * @author julia
- */
-/*public class entorno {
-    private Mapa mapa; 
-    private Pair<Integer, Integer> posicionAgente = new Pair<Integer, Integer>(0, 0);
-    
-    public entorno(Mapa mapa){
-        this.mapa = mapa; 
-    }
-       
-}*/
 
-package agentemundo2d;
+package Agente;
 
 import java.util.AbstractMap.SimpleEntry;
 
 /**
- * 
- * @ author julia
+ * @ author Julia Cano Flores
  */
 public class entorno {
     private Mapa mapa;
@@ -49,7 +29,7 @@ public class entorno {
                         sensores[contador]=mapa.obtenerCelda(i, j); 
                     }
                     else{
-                        sensores[contador] = -1;                                        //Si estás al bode del mapa, marca como no disponible
+                        sensores[contador] = -1;                                        // Si estás al borde del mapa, marca como no disponible
                     }
 
                     contador++;
@@ -58,19 +38,18 @@ public class entorno {
         } 
     }
     
-    
-    public void actualizarPosicionAgente(int arribaAbajo, int derechaIzquierda){    //Permite mover arriba, abajo, derecha, izquierda y diagonales. 
+    public void actualizarPosicionAgente(int arribaAbajo, int derechaIzquierda){    // Permite mover arriba, abajo, derecha, izquierda y diagonales. 
         
-        if (arribaAbajo <= 1 && arribaAbajo >= -1 && derechaIzquierda <= 1 && derechaIzquierda >= -1){  //Solo puedes avanzar una casilla
+        if (arribaAbajo <= 1 && arribaAbajo >= -1 && derechaIzquierda <= 1 && derechaIzquierda >= -1){  // Solo puedes avanzar una casilla
             int nueva_i = posicionAgente.getKey() + arribaAbajo; 
             int nueva_j = posicionAgente.getValue() + derechaIzquierda; 
 
-            if (mapa.esAccesible(nueva_i, nueva_j) && mapa.obtenerCelda(nueva_i, nueva_j)!=-1){ //La siguiente posición debe ser válida
+            if (mapa.esAccesible(nueva_i, nueva_j) && mapa.obtenerCelda(nueva_i, nueva_j)!=-1){ // La siguiente posición debe ser válida
                 posicionAgente = new SimpleEntry<>(nueva_i, nueva_j); 
                 generarSensores(); 
             }
             else 
-                System.out.print("No puedo continuar en esta dirección");
+                System.out.print("No puedo continuar en esta dirección.");
         }
     }  
     

@@ -46,7 +46,7 @@ public class TomaDecision extends SimpleBehaviour{
             · Matrix auxiliar -- RTA* o LRTA*
         
             1. Obtenemos la pos actual del agente.
-            2. Definimos nuestras posibles acciones: arriba, abajo, izq, der 
+            2. Definimos nuestras posibles acciones: arriba, abajo, izq, der, diagonales 
             3. Definimos cuál es la distancia al obj desde la pos inicial == distancia_min
             4. Vemos el valor de las celdas adyacentes, empezando por la de enfrente.
             5. ¿Sabemos cuál es el objetivo? calculamos la distancia al objetivo desde cada una de las celdas adyacentes.
