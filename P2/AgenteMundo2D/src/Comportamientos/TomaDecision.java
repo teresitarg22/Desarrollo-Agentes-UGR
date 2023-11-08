@@ -10,7 +10,7 @@ import jade.core.behaviours.SimpleBehaviour;
  */
 public class TomaDecision extends SimpleBehaviour{
     private boolean objetivoAlcanzado = false;      // Inicializamos el objetivo a false.
-
+    
     // ----------------------------------------------------------------------------------
     // Calcula la próxima acción y le pasa las coordenadas al siguiente comportamiento.
     @Override
@@ -19,7 +19,7 @@ public class TomaDecision extends SimpleBehaviour{
         
         if (siguienteMovimiento != null) {
             // Pasa el siguiente movimiento calculado al siguiente comportamiento: Mover
-            // myAgent.addBehaviour(new Mover(siguienteMovimiento));
+            // myAgent.addBehaviour(new Mover(siguienteMovimiento, distancia_min));
         } else {
             // ¿E posible que no se encuentre siguiente moviimento?
             
@@ -37,6 +37,9 @@ public class TomaDecision extends SimpleBehaviour{
     // Calcula la próxima acción basada en el entorno.
     private int[] calcularSiguienteMovimiento() {
         int[] siguienteMovimiento = null;
+        int distancia_min = Integer.MAX_VALUE;
+        
+        // int posActual = 
         
         // Aquí tenemos que tener en cuenta los sensores.
         // Queremos devolver las coordenadas al siguiente movimiento, se las pasaremos al comportamiento Mover.

@@ -9,6 +9,16 @@ import jade.core.Agent;
  */
 public class AgenteMundo2D extends Agent{
 
-    
-    
+    // -------------------------------------------------
+    // Inicialización del agente.
+    @Override
+    public void setup(){
+        
+    }
+      
+    /*
+    public int [] getPosAgente(){
+        
+    }
+    */
 }
