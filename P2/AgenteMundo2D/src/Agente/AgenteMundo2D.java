@@ -3,6 +3,10 @@ package Agente;
 
 import jade.core.Agent;
 
+import Comportamientos.Vision;
+import Comportamientos.Mover;
+import Comportamientos.TomaDecision;
+
 /**
  *
  * @author Diego Velazquez Ortuño
