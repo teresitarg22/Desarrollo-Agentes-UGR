@@ -15,10 +15,4 @@ public class AgenteMundo2D extends Agent{
     public void setup(){
         
     }
-      
-    /*
-    public int [] getPosAgente(){
-        
-    }
-    */
 }
