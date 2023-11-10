@@ -19,7 +19,7 @@ public class TomaDecision extends SimpleBehaviour{
         
         if (siguienteMovimiento != null) {
             // Pasa el siguiente movimiento calculado al siguiente comportamiento: Mover
-            // myAgent.addBehaviour(new Mover(siguienteMovimiento, distancia_min));
+            // myAgent.setSiguiente;
         } else {
             // ¿E posible que no se encuentre siguiente moviimento?
             
@@ -29,7 +29,8 @@ public class TomaDecision extends SimpleBehaviour{
         objetivoAlcanzado = verificarObjetivoAlcanzado();
         
         if (objetivoAlcanzado) {
-            
+            System.out.println("¡Se ha alcanzado el objetivo!");
+            myAgent.doDelete();
         }
     }
 

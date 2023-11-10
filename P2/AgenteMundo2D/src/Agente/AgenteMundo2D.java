@@ -8,7 +8,6 @@ import Comportamientos.Mover;
 import Comportamientos.TomaDecision;
 
 /**
- *
  * @author Diego Velazquez Ortuño
  */
 public class AgenteMundo2D extends Agent{
@@ -19,4 +18,8 @@ public class AgenteMundo2D extends Agent{
     public void setup(){
         
     }
+    
+    // setSiguienteMovi()
+    
+    // get.-.
 }

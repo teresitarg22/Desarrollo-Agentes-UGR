@@ -8,8 +8,8 @@ import java.util.AbstractMap.SimpleEntry;
  */
 public class Entorno {
     private Mapa mapa;
-    private SimpleEntry<Integer, Integer> posicionObjetivo = new SimpleEntry<>(1, 1); //Por defecto el objetivo está en la 0,0
-    private SimpleEntry<Integer, Integer> posicionAgente = new SimpleEntry<>(0, 0); //Por defecto el agente está en la 0,0
+    private SimpleEntry<Integer, Integer> posicionObjetivo = new SimpleEntry<>(1, 1); // Por defecto el objetivo está en la 0,0
+    private SimpleEntry<Integer, Integer> posicionAgente = new SimpleEntry<>(0, 0); // Por defecto el agente está en la 0,0
     private int[] sensores = new int[8]; 
 
     // ---------------------------------------------
