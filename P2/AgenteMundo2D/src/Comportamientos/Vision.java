@@ -10,6 +10,7 @@ import jade.core.behaviours.SimpleBehaviour;
 public class Vision extends SimpleBehaviour {
     
     public Vision(){
+        // Ver los sensores, le pasas el entorno y te devuelve Ag()
         
     }
     

@@ -3,13 +3,20 @@ package Comportamientos;
 
 // Realizamos los imports que necesitamos.
 import jade.core.behaviours.SimpleBehaviour;
+import Agente.Entorno;
 
+// Le pasamos una instancia de Entorno
 
 /**
  * @author Sergio Muñoz Gómez y Teresa Fernanda Reyes García
  */
 public class TomaDecision extends SimpleBehaviour{
     private boolean objetivoAlcanzado = false;      // Inicializamos el objetivo a false.
+    
+    
+    public TomaDecision(Entorno entorno){
+        
+    }
     
     // ----------------------------------------------------------------------------------
     // Calcula la próxima acción y le pasa las coordenadas al siguiente comportamiento.

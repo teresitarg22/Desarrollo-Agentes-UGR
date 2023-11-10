@@ -16,10 +16,8 @@ public class AgenteMundo2D extends Agent{
     // Inicialización del agente.
     @Override
     public void setup(){
-        
+        // Le pasas una instancia del objeto desde addbehaviour : 
     }
     
-    // setSiguienteMovi()
     
-    // get.-.
 }
