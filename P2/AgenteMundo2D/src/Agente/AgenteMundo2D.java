@@ -13,7 +13,6 @@ import Comportamientos.TomaDecision;
 import Comportamientos.IniciarEstado;
 
 /**
- *
  * @author Diego Velazquez Ortuño
  */
 public class AgenteMundo2D extends Agent{

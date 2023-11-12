@@ -3,13 +3,20 @@ package Comportamientos;
 
 // Realizamos los imports que necesitamos.
 import jade.core.behaviours.SimpleBehaviour;
+import Agente.Entorno;
 
+// Le pasamos una instancia de Entorno
 
 /**
  * @author Sergio Muñoz Gómez y Teresa Fernanda Reyes García
  */
 public class TomaDecision extends SimpleBehaviour{
     private boolean objetivoAlcanzado = false;      // Inicializamos el objetivo a false.
+    
+    
+    public TomaDecision(Entorno entorno){
+        
+    }
     
     // ----------------------------------------------------------------------------------
     // Calcula la próxima acción y le pasa las coordenadas al siguiente comportamiento.
@@ -19,7 +26,7 @@ public class TomaDecision extends SimpleBehaviour{
         
         if (siguienteMovimiento != null) {
             // Pasa el siguiente movimiento calculado al siguiente comportamiento: Mover
-            // myAgent.addBehaviour(new Mover(siguienteMovimiento, distancia_min));
+            // myAgent.setSiguiente;
         } else {
             // ¿E posible que no se encuentre siguiente moviimento?
             
@@ -29,7 +36,8 @@ public class TomaDecision extends SimpleBehaviour{
         objetivoAlcanzado = verificarObjetivoAlcanzado();
         
         if (objetivoAlcanzado) {
-            
+            System.out.println("¡Se ha alcanzado el objetivo!");
+            myAgent.doDelete();
         }
     }
 
