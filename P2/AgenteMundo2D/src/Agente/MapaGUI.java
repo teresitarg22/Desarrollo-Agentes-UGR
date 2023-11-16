@@ -286,25 +286,25 @@ public class MapaGUI extends javax.swing.JFrame {
             // Convertir los valores de texto a enteros
             int coordX = Integer.parseInt(coordXStr); // Agente
             int coordY = Integer.parseInt(coordYStr);
+            SimpleEntry<Integer, Integer> coordenadasAg = new SimpleEntry<>(coordX, coordY);
             
             int coordXObj = Integer.parseInt(coordXObjStr); // Objetivo
             int coordYObj = Integer.parseInt(coordYObjStr);
+            SimpleEntry<Integer, Integer> coordenadasObj = new SimpleEntry<>(coordXObj, coordYObj);
 
             // Llamar al método del agente con los valores
-            //agente.setPosicionAgente(coordX, coordY);
+            entorno.setPosicionAgente(coordenadasAg);
             
             //Establecer la imagen del agente en la casilla
             ImageIcon imagenAg = new ImageIcon("/Img/agente.png");
-            SimpleEntry<Integer, Integer> coordenadasAg = new SimpleEntry<>(coordX, coordY);
             JLabel labelAg = etiquetasMapa.get(coordenadasAg);
             labelAg.setIcon(imagenAg);
             
             //Llamo al método para establecer los valores del objetivo
-            //entorno.setPosicionObjetivo(coordXObj, coordYObj);
+            entorno.setPosicionObjetivo(coordenadasObj);
             
             //Establecer la imagen del objetivo en la casilla
             ImageIcon imagenObj = new ImageIcon("/Img/objetivo.png");
-            SimpleEntry<Integer, Integer> coordenadasObj = new SimpleEntry<>(coordXObj, coordYObj);
             JLabel labelObj = etiquetasMapa.get(coordenadasObj);
             labelObj.setIcon(imagenObj);
             

@@ -49,12 +49,11 @@ public class main {
             e.printStackTrace();
         }
         
-        
-        
+       
         mapa.imprimirMapa();
  
         // Iniciar la interfaz gráfica MapaGUI
-        MapaGUI mapaGUI = new MapaGUI(mapa);
+        MapaGUI mapaGUI = new MapaGUI(mapa, entorno);
         mapaGUI.setVisible(true);
         
 
