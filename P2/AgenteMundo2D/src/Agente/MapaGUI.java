@@ -9,6 +9,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Rectangle;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.AbstractMap.SimpleEntry;
 import java.util.Map;
 import java.util.HashMap;
@@ -33,6 +35,7 @@ public class MapaGUI extends javax.swing.JFrame {
     /**
      * Creates new form MapaGUI
      * @param mapa
+     * @param entorno
      */
     public MapaGUI(Mapa mapa, Entorno entorno) {
         this.mapa = mapa;
@@ -71,6 +74,8 @@ public class MapaGUI extends javax.swing.JFrame {
         jPanelMapa = new javax.swing.JPanel();
         jLabelDecision = new javax.swing.JLabel();
         jScrollPanelDecision = new javax.swing.JScrollPane();
+        jButtonSelecMapAg = new javax.swing.JButton();
+        jButtonSelecMapObj = new javax.swing.JButton();
 
         jCheckBox1.setText("jCheckBox1");
 
@@ -117,7 +122,7 @@ public class MapaGUI extends javax.swing.JFrame {
         jPanelMapa.setLayout(jPanelMapaLayout);
         jPanelMapaLayout.setHorizontalGroup(
             jPanelMapaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 488, Short.MAX_VALUE)
+            .addGap(0, 504, Short.MAX_VALUE)
         );
         jPanelMapaLayout.setVerticalGroup(
             jPanelMapaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -127,86 +132,111 @@ public class MapaGUI extends javax.swing.JFrame {
         jLabelDecision.setFont(new java.awt.Font("sansserif", 0, 15)); // NOI18N
         jLabelDecision.setText("Decisiones tomadas:");
 
+        jButtonSelecMapAg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/seleccion.png"))); // NOI18N
+        jButtonSelecMapAg.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonSelecMapAgActionPerformed(evt);
+            }
+        });
+
+        jButtonSelecMapObj.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/seleccion.png"))); // NOI18N
+        jButtonSelecMapObj.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonSelecMapObjActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanelMapa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabelCoordInicObj)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabelCoordInicObj)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                            .addComponent(jLabelCoordInicAgent)
-                                            .addGap(34, 34, 34))
-                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                            .addComponent(jLabelCoordXAgent)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                            .addComponent(jTextFieldCoordXAgent, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addGap(18, 18, 18)
-                                            .addComponent(jLabelCoordYAgent)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(jTextFieldCoordYAgent, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addGap(77, 77, 77))))
                                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                    .addComponent(jLabelCoordXObj)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jTextFieldCoordXObj, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(jLabelCoordYObj)
+                                    .addComponent(jLabelCoordInicAgent)
+                                    .addGap(34, 34, 34))
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                    .addComponent(jLabelCoordXAgent)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(jTextFieldCoordYObj, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(76, 76, 76))
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                    .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(18, 18, 18)))
+                                    .addComponent(jTextFieldCoordXAgent, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(jLabelCoordYAgent)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(jTextFieldCoordYAgent, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(jButtonSelecMapAg)
+                                    .addGap(27, 27, 27))))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                            .addComponent(jLabelCoordXObj)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(jTextFieldCoordXObj, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(18, 18, 18)
+                            .addComponent(jLabelCoordYObj)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jTextFieldCoordYObj, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jButtonSelecMapObj)
+                            .addGap(32, 32, 32))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                            .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(18, 18, 18)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(6, 6, 6)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
                                         .addGap(6, 6, 6)
                                         .addComponent(jScrollPanelDecision, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(jLabelDecision))
-                                .addContainerGap())))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(92, 92, 92)
-                        .addComponent(jButtonSet)
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                                    .addComponent(jLabelDecision)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(82, 82, 82)
+                                .addComponent(jButtonSet)))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(25, 25, 25)
-                .addComponent(jLabelCoordInicAgent)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabelCoordXAgent)
-                    .addComponent(jTextFieldCoordXAgent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabelCoordYAgent)
-                    .addComponent(jTextFieldCoordYAgent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jLabelCoordInicObj)
-                .addGap(17, 17, 17)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabelCoordXObj)
-                    .addComponent(jTextFieldCoordXObj, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabelCoordYObj)
-                    .addComponent(jTextFieldCoordYObj, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jButtonSet)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabelCoordInicAgent)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(19, 19, 19)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabelCoordXAgent)
+                                    .addComponent(jTextFieldCoordXAgent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabelCoordYAgent)
+                                    .addComponent(jTextFieldCoordYAgent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jButtonSelecMapAg)))
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabelCoordInicObj)
+                        .addGap(17, 17, 17)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabelCoordXObj)
+                            .addComponent(jTextFieldCoordXObj, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabelCoordYObj)
+                            .addComponent(jTextFieldCoordYObj, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jButtonSelecMapObj))
+                .addGap(31, 31, 31)
+                .addComponent(jButtonSet, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabelDecision)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPanelDecision, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(21, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanelMapa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -242,7 +272,8 @@ public class MapaGUI extends javax.swing.JFrame {
                 jPanelMapa.add(label);
                 etiquetasMapa.put(new SimpleEntry<>(i, j), label);
             }
-        }     
+        }
+         
     }
   
     private void visualizarAccion(Behaviour behaviour) {
@@ -275,6 +306,9 @@ public class MapaGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextFieldCoordXObjActionPerformed
 
     private void jButtonSetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSetActionPerformed
+        jButtonSelecMapAg.setEnabled(false);
+        jButtonSelecMapObj.setEnabled(false);
+        
         String coordXStr = jTextFieldCoordXAgent.getText();
         String coordYStr = jTextFieldCoordYAgent.getText();
         
@@ -282,48 +316,63 @@ public class MapaGUI extends javax.swing.JFrame {
         String coordYObjStr = jTextFieldCoordYObj.getText();
         
         if ( (!coordXStr.isEmpty() && !coordYStr.isEmpty() ) && (!coordXObjStr.isEmpty() && !coordYObjStr.isEmpty() )) {
-        try {
-            // Convertir los valores de texto a enteros
-            int coordX = Integer.parseInt(coordXStr); // Agente
-            int coordY = Integer.parseInt(coordYStr);
-            SimpleEntry<Integer, Integer> coordenadasAg = new SimpleEntry<>(coordX, coordY);
-            
-            int coordXObj = Integer.parseInt(coordXObjStr); // Objetivo
-            int coordYObj = Integer.parseInt(coordYObjStr);
-            SimpleEntry<Integer, Integer> coordenadasObj = new SimpleEntry<>(coordXObj, coordYObj);
+            try {
+                // Convertir los valores de texto a enteros y convertirlos a SimpleEntry
+                int coordX = Integer.parseInt(coordXStr); // Agente
+                int coordY = Integer.parseInt(coordYStr);
+                SimpleEntry<Integer, Integer> coordenadasAg = new SimpleEntry<>(coordX, coordY);
 
-            // Llamar al método del agente con los valores
-            entorno.setPosicionAgente(coordenadasAg);
-            
-            //Establecer la imagen del agente en la casilla
-            ImageIcon imagenAg = new ImageIcon("/Img/agente.png");
-            JLabel labelAg = etiquetasMapa.get(coordenadasAg);
-            labelAg.setIcon(imagenAg);
-            
-            //Llamo al método para establecer los valores del objetivo
-            entorno.setPosicionObjetivo(coordenadasObj);
-            
-            //Establecer la imagen del objetivo en la casilla
-            ImageIcon imagenObj = new ImageIcon("/Img/objetivo.png");
-            JLabel labelObj = etiquetasMapa.get(coordenadasObj);
-            labelObj.setIcon(imagenObj);
-            
-            JOptionPane.showMessageDialog(this, "Coordenadas del agente y objetivo establecidas con éxito.", "Éxito", JOptionPane.DEFAULT_OPTION);
-            
-        } catch (NumberFormatException e) {
-            // Manejar error si los valores no son enteros
-            JOptionPane.showMessageDialog(this, "Por favor, ingrese valores enteros para X e Y.", "Error", JOptionPane.ERROR_MESSAGE);
+                int coordXObj = Integer.parseInt(coordXObjStr); // Objetivo
+                int coordYObj = Integer.parseInt(coordYObjStr);
+                SimpleEntry<Integer, Integer> coordenadasObj = new SimpleEntry<>(coordXObj, coordYObj);
+
+                // Llamar al método del agente con los valores
+                entorno.setPosicionAgente(coordenadasAg);
+
+                //Establecer la imagen del agente en la casilla
+                ImageIcon imagenAg = new ImageIcon("src/Img/agente.png");
+                JLabel labelAg = etiquetasMapa.get(coordenadasAg);
+                labelAg.setIcon(imagenAg);
+
+                //Llamo al método para establecer los valores del objetivo
+                entorno.setPosicionObjetivo(coordenadasObj);
+
+                //Establecer la imagen del objetivo en la casilla
+                ImageIcon imagenObj = new ImageIcon("src/Img/objetivo.png");
+                JLabel labelObj = etiquetasMapa.get(coordenadasObj);
+                labelObj.setIcon(imagenObj);
+
+                jButtonSet.setEnabled(false);
+                jTextFieldCoordXAgent.setEnabled(false);
+                jTextFieldCoordYAgent.setEnabled(false);
+                jTextFieldCoordXObj.setEnabled(false);
+                jTextFieldCoordYObj.setEnabled(false);
+
+            } catch (NumberFormatException e) {
+                // Manejar error si los valores no son enteros
+                JOptionPane.showMessageDialog(this, "Por favor, ingrese valores enteros para X e Y.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
+            // Manejar error si algún campo está vacío
+            JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos.", "Error", JOptionPane.ERROR_MESSAGE);
         }
-    } else {
-        // Manejar error si algún campo está vacío
-        JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos.", "Error", JOptionPane.ERROR_MESSAGE);
-    }
 
     }//GEN-LAST:event_jButtonSetActionPerformed
+
+    private void jButtonSelecMapAgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSelecMapAgActionPerformed
+       
+
+    }//GEN-LAST:event_jButtonSelecMapAgActionPerformed
+
+    private void jButtonSelecMapObjActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSelecMapObjActionPerformed
+       
+    }//GEN-LAST:event_jButtonSelecMapObjActionPerformed
 
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButtonSelecMapAg;
+    private javax.swing.JButton jButtonSelecMapObj;
     private javax.swing.JButton jButtonSet;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JLabel jLabelCoordInicAgent;

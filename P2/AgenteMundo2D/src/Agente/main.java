@@ -43,14 +43,12 @@ public class main {
         
         // Crear y lanzar el agente. Uso de try catch para mostrar errores en caso de fallo.
         try {
-           AgentController ac = container.createNewAgent("agentemundo2d","agentemundo2d.AgenteMundo2D", new Object[]{entorno} );
+           AgentController ac = container.createNewAgent("agentemundo2d","Agente.AgenteMundo2D", new Object[]{entorno} );
             ac.start();
         } catch (Exception e) {
             e.printStackTrace();
         }
         
-       
-        mapa.imprimirMapa();
  
         // Iniciar la interfaz gráfica MapaGUI
         MapaGUI mapaGUI = new MapaGUI(mapa, entorno);
