@@ -35,7 +35,7 @@ public class Entorno {
     
     // ---------------------------------------------
     // Actualizar pesos.
-    public void actualizarPesos( SimpleEntry<Integer,Integer> pos, int peso ) {
+    public void actualizarPesos( SimpleEntry<Integer,Integer> pos, Integer peso ) {
         if (this.pesos.containsKey(pos)) 
             this.pesos.put(pos, peso);
     }
@@ -64,7 +64,7 @@ public class Entorno {
     
     // ---------------------------------------------
     // Actualiza la posición del agente.
-    public void actualizarPosicionAgente(int arribaAbajo, int derechaIzquierda){    // Permite mover arriba, abajo, derecha, izquierda y diagonales. 
+    public void actualizarPosicionAgente(Integer arribaAbajo, Integer derechaIzquierda){    // Permite mover arriba, abajo, derecha, izquierda y diagonales. 
         
         if (arribaAbajo <= 1 && arribaAbajo >= -1 && derechaIzquierda <= 1 && derechaIzquierda >= -1){  // Solo puedes avanzar una casilla.
             int nueva_i = posicionAgente.getKey() + arribaAbajo; 

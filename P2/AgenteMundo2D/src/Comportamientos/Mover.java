@@ -2,7 +2,8 @@ package Comportamientos;
 
 // Realizamos los imports que necesitamos.
 import jade.core.behaviours.SimpleBehaviour;
-
+import java.util.AbstractMap.SimpleEntry;
+import Agente.AgenteMundo2D;
 import Agente.Entorno;
 
 /**
@@ -10,27 +11,28 @@ import Agente.Entorno;
  */
 public class Mover extends SimpleBehaviour{
     private Entorno entorno;
-    
-    boolean finalizado = false;
+    SimpleEntry<Integer,Integer> siguienteMovimiento = null;
+    Integer heuristica = null;
     
     public Mover(Entorno entorno){
         this.entorno = entorno;
-        //myAgent.getSiguienteMovimiento();
+        this.heuristica = ((AgenteMundo2D) myAgent).getHeuristica();
+        this.siguienteMovimiento = ((AgenteMundo2D) myAgent).getSiguienteMovimiento();
     }
     
     // ----------------------------------------------------------------------------------
     // Se realiza el movimiento del agente según el siguienteMovimiento.
     @Override
     public void action(){
-        this.entorno.actualizarPosicionAgente(,);
+        // Actualizamos la posición del agente con las coordenadas dadas y actualizamos en nuestro mapa de pesos la heurística.
+        this.entorno.actualizarPosicionAgente(this.siguienteMovimiento.getKey(), this.siguienteMovimiento.getValue());
+        this.entorno.actualizarPesos(this.siguienteMovimiento, this.heuristica);
     }
     
     // ----------------------------------------------------------------------------------
     // 
     @Override
     public boolean done(){
-        // ?? revisar esto:
-        this.entorno.actualizarPesos(,);
-        return finalizado;
+        return false;
     }
 }
