@@ -3,6 +3,9 @@ package Agente;
 
 import java.util.Scanner;
 import java.io.InputStream;
+import java.util.AbstractMap.SimpleEntry;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  *
@@ -12,7 +15,7 @@ public class Mapa {
     
     private int filas;
     private int columnas;
-    private int[][] mapa;
+    private Map < SimpleEntry <Integer, Integer >, Integer> mapa;
 
     // ---------------------------------------------
     // Constructor.
@@ -28,11 +31,11 @@ public class Mapa {
                 Scanner scanner = new Scanner(inputStream);
                 filas = scanner.nextInt();
                 columnas = scanner.nextInt();
-                mapa = new int[filas][columnas];
+                mapa = new HashMap<>();
 
                 for (int i = 0; i < filas; i++) {
                     for (int j = 0; j < columnas; j++) {
-                        mapa[i][j] = scanner.nextInt();
+                        mapa.put(new SimpleEntry<>(i, j), scanner.nextInt());
                     }
                 }
 
@@ -49,9 +52,10 @@ public class Mapa {
     // ---------------------------------------------
     // Imprime el mapa.
     public void imprimirMapa() {
+        
         for (int i = 0; i < filas; i++) {
             for (int j = 0; j < columnas; j++) {
-                System.out.print(mapa[i][j] + " ");
+                System.out.print( mapa.get(new SimpleEntry<>(i, j)) + " "); // uso new  para asegurar que creo una instancia única para representar las coordenadas específicas
             }
             System.out.println();
         }
@@ -60,9 +64,9 @@ public class Mapa {
     // ---------------------------------------------
     // Obtener el valor de una celda dada.
     public int obtenerCelda ( int fila, int columna) {
-        if (fila >= 0 && fila < filas && columna >= 0 && columna < columnas) {
-            // Si los valores dados no superan ni son menores que el tamaño de la matriz
-            return mapa[fila][columna];
+        SimpleEntry<Integer, Integer> coordenadas = new SimpleEntry<>(fila, columna); 
+        if (mapa.containsKey(coordenadas)) { //Compruebo que el mapa tiene esas coordenadas (no esta fuera de los limites)
+            return mapa.get(coordenadas);
         } else {
             System.out.println("ERROR: Coordenadas fuera de los límites del mapa.");
             return -1; // Valor de celda no válida
@@ -72,15 +76,13 @@ public class Mapa {
     // ---------------------------------------------
     // Obtiene si una celda es accesible o no.
     public boolean esAccesible ( int fila, int columna) {
-       if (fila >= 0 && fila < filas && columna >= 0 && columna < columnas) {
-           if (mapa[fila][columna] == 0)
-                return true;
-           else
-               return false;
+       SimpleEntry<Integer, Integer> coordenadas = new SimpleEntry<>(fila, columna);
+        if (mapa.containsKey(coordenadas)) {
+            return mapa.get(coordenadas) == 0; // Si es 0 (camino) es true , si es -1 (muro) devolverá false
         } else {
             System.out.println("ERROR: Coordenadas fuera de los límites del mapa.");
             return false;
-        } 
+        }
     }
     
     // ---------------------------------------------
