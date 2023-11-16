@@ -14,9 +14,7 @@ import jade.wrapper.AgentContainer;
 import jade.wrapper.AgentController;
 import javax.swing.SwingUtilities;
 
-
 /**
- *
  * @author Marta Rincón Otero
  */
 public class main {
@@ -30,22 +28,22 @@ public class main {
             return;
         }
         
-       
-       //Si no ha habido errores creo el mapa
+       // Si no ha habido errores creo el mapa.
         String archivo = args[0];
         Mapa mapa = new Mapa(archivo);
-        
+        Entorno entorno = new Entorno(mapa);
        
-        //Un vez incializado el mapa, iniciamos plataforma JADE
-        //Creamos contenedor
+        // ------------------------------------------------------------------
+        // Un vez incializado el mapa, iniciamos plataforma JADE.
+        // Creamos contenedor.
         Runtime rt = Runtime.instance();
         
         Profile p = new ProfileImpl();
         AgentContainer container = rt.createMainContainer(p);
         
-        // Crear y lanzar el agente. Uso de try catch para mostrar errores en caso de fallo
+        // Crear y lanzar el agente. Uso de try catch para mostrar errores en caso de fallo.
         try {
-           AgentController ac = container.createNewAgent("agentemundo2d","agentemundo2d.AgenteMundo2D", new Object[]{ new Entorno( mapa ) } );
+           AgentController ac = container.createNewAgent("agentemundo2d","agentemundo2d.AgenteMundo2D", new Object[]{entorno} );
             ac.start();
         } catch (Exception e) {
             e.printStackTrace();

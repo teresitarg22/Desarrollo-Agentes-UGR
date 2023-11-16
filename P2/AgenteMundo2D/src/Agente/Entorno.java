@@ -86,14 +86,14 @@ public class Entorno {
     }
     
     // ---------------------------------------------
-    // Obtener la posición actual del agente.
-    public void setPosicionAgente( SimpleEntry<Integer,Integer> pos ) {
+    // Establecer la posición actual del agente.
+    public void setPosicionAgente(SimpleEntry<Integer,Integer> pos) {
         this.posicionAgente = pos;
     }
     
     // ---------------------------------------------
-    // Obtener la posición del objetivo.
-    public void setPosicionObjetivo( SimpleEntry<Integer,Integer> pos ) {
+    // Establecer la posición del objetivo.
+    public void setPosicionObjetivo(SimpleEntry<Integer,Integer> pos) {
         this.posicionObjetivo = pos;
     }
     
