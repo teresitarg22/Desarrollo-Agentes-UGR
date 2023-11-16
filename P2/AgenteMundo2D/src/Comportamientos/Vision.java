@@ -3,20 +3,21 @@ package Comportamientos;
 
 import jade.core.behaviours.SimpleBehaviour;
 
+import Agente.Entorno;
 
 /**
  * @author Diego Velázquez Ortuño
  */
 public class Vision extends SimpleBehaviour {
+    private Entorno entorno;
     
-    public Vision(){
-        // Ver los sensores, le pasas el entorno y te devuelve Ag()
-        
+    public Vision(Entorno entorno){
+        this.entorno = entorno;
     }
     
     @Override
     public void action(){
-        
+        this.entorno.actualizarSensores();
     }
     
     @Override

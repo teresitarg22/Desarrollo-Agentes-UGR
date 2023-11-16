@@ -1,10 +1,6 @@
 
 package Agente;
 
-import java.util.Map;
-import java.util.HashMap;
-import java.util.AbstractMap.SimpleEntry;
-
 import jade.core.Agent;
 
 import Comportamientos.Vision;
@@ -15,19 +11,18 @@ import Comportamientos.IniciarEstado;
 /**
  * @author Diego Velazquez Ortuño
  */
-public class AgenteMundo2D extends Agent{
-    
-    Map< SimpleEntry<Integer,Integer> , Integer > pesos = HashMap<>();
+public class AgenteMundo2D extends Agent {
 
     // -------------------------------------------------
     // Inicialización del agente.
     @Override
     public void setup(){
+        Entorno entorno = (Entorno) getArguments()[0];
+        
         addBehaviour( new IniciarEstado() );
-        addBehaviour( new Vision() );
-        addBehaviour( new TomaDecision() );
-        addBehaviour( new Mover() );
-    }
-    
-    
+        addBehaviour( new Vision(entorno) );
+        addBehaviour( new TomaDecision(entorno) );
+        addBehaviour( new Mover(entorno) );
+    }   
 }
+
