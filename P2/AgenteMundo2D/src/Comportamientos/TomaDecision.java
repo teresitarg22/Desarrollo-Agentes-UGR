@@ -45,12 +45,21 @@ public class TomaDecision extends SimpleBehaviour{
     // Calcula la próxima acción basada en el entorno.
     private int[] calcularSiguienteMovimiento() {
         int[] siguienteMovimiento = null;
-        int distancia_min = Integer.MAX_VALUE;
+        int[] posicionActual = obtenerPosicionActual(); 
         
-        // int posActual = 
+        int distanciaMinima = distanciaManhattan(posicionActual, objetivo) ; 
         
-        // Aquí tenemos que tener en cuenta los sensores.
-        // Queremos devolver las coordenadas al siguiente movimiento, se las pasaremos al comportamiento Mover.
+        for (int[] movimiento : posiblesMovimientos) {
+            int filaSiguiente = posicionActual[0] + movimiento[0] ; 
+            int columnaSiguiente = posicionActual[1] + movimiento[1] ; 
+             
+            int distanciaAlObjetivo = distanciaManhattan ( new int[]{filaSiguiente,columnaSiguiente}, objetivo) ; 
+             
+            if (distanciaAlObjetivo < distanciaMinima) {
+                 distanciaMinima = distanciaAlObjetivo ; 
+                 siguienteMovimiento = new int [] {filaSiguiente, columnaSiguiente} ; 
+            }
+        }
         
         /*
             · Distancia Manhattan
@@ -69,6 +78,12 @@ public class TomaDecision extends SimpleBehaviour{
         */
         
         return siguienteMovimiento;
+    }
+    
+    // ----------------------------------------------------------------------------------
+    // Calculamos la distancia Manhattan entre dos puntos.
+    private int distanciaManhattan(int [] puntoA, int[] puntoB){
+        return Math.abs(puntoA[0] - puntoB[0]) + Math.abs(puntoA[1] - puntoB[1]); 
     }
     
     // ----------------------------------------------------------------------------------
