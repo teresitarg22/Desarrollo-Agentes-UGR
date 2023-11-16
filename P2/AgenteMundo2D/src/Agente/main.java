@@ -29,6 +29,12 @@ public class main {
             return;
         }
         
+       
+       //Si no ha habido errores creo el mapa
+        String archivo = args[0];
+        Mapa mapa = new Mapa(archivo);
+        
+       
         //Un vez incializado el mapa, iniciamos plataforma JADE
         //Creamos contenedor
         Runtime rt = Runtime.instance();
@@ -38,16 +44,14 @@ public class main {
         
         // Crear y lanzar el agente. Uso de try catch para mostrar errores en caso de fallo
         try {
-           AgentController ac = container.createNewAgent("agentemundo2d","agentemundo2d.AgenteMundo2D", null);
+           AgentController ac = container.createNewAgent("agentemundo2d","agentemundo2d.AgenteMundo2D", new Object[]{ new Entorno( mapa ) } );
             ac.start();
         } catch (Exception e) {
             e.printStackTrace();
         }
         
-        //Si no ha habido errores creo el mapa
-        String archivo = args[0];
-
-        Mapa mapa = new Mapa(archivo);
+        
+        
         mapa.imprimirMapa();
     }
     
