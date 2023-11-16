@@ -1,6 +1,6 @@
 /** 
  * ejecución EN MI CASO dentro de ~/.../JADE-all-4.6.0/jade/proyectos/Desarrollo-Agentes/P2/AgenteMundo2D$
- * comando: java -cp dist/AgenteMundo2D.jar:dist/lib/jade.jar agentemundo2d.main mapWithVerticalWall.txt
+ * comando: java -cp dist/AgenteMundo2D.jar:dist/lib/jade.jar Agente.main mapWithVerticalWall.txt
  * formato: java -cp (ruta del jar del proyecto: ruta de jade) (paquete donde se encuentra el archivo main).main (nombre del mapa a usar)
  * Para indicar el mapa poner directamente el nombre del txt a probar
  */
@@ -12,6 +12,7 @@ import jade.core.Profile;
 import jade.core.ProfileImpl;
 import jade.wrapper.AgentContainer;
 import jade.wrapper.AgentController;
+import javax.swing.SwingUtilities;
 
 
 /**
@@ -25,7 +26,7 @@ public class main {
      */
     public static void main(String[] args) {
        if (args.length != 1) {
-            System.out.println("Uso: java -cp dist/AgenteMundo2D.jar:dist/lib/jade.jar agentemundo2d.main mapa.txt");
+            System.out.println("Uso: java -cp dist/AgenteMundo2D.jar:dist/lib/jade.jar Agente.main mapa.txt");
             return;
         }
         
@@ -53,6 +54,12 @@ public class main {
         
         
         mapa.imprimirMapa();
+ 
+        // Iniciar la interfaz gráfica MapaGUI
+        MapaGUI mapaGUI = new MapaGUI(mapa);
+        mapaGUI.setVisible(true);
+        
+
     }
     
 }

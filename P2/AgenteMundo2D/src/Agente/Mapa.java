@@ -84,7 +84,7 @@ public class Mapa {
             return false;
         }
     }
-    
+
     // ---------------------------------------------
     // Obtener el valor de las filas del mapa.
     public int getFilas() {
