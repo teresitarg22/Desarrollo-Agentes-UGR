@@ -49,8 +49,9 @@ public class Entorno {
             for (int j=posicionAgente.getValue()-1; j<=posicionAgente.getValue(); j++){
                 
                 if(i != posicionAgente.getKey() || j != posicionAgente.getValue()){         // Ver alrededor del agente, no en la posición.
-                    if (mapa.esAccesible(i, j)){
-                        sensores[contador]=mapa.obtenerCelda(i, j); 
+                    SimpleEntry<Integer, Integer> coordenadas = new SimpleEntry<>(i,j);
+                    if (mapa.esAccesible(coordenadas)){
+                        sensores[contador]=mapa.obtenerCelda(coordenadas); 
                     }
                     else{
                         sensores[contador] = -1;                                        // Si estás al borde del mapa, marca como no disponible.
@@ -70,7 +71,8 @@ public class Entorno {
             int nueva_i = posicionAgente.getKey() + arribaAbajo; 
             int nueva_j = posicionAgente.getValue() + derechaIzquierda; 
 
-            if (mapa.esAccesible(nueva_i, nueva_j) && mapa.obtenerCelda(nueva_i, nueva_j)!=-1){ // La siguiente posición debe ser válida.
+            SimpleEntry<Integer, Integer> coordenadas = new SimpleEntry<>(nueva_i,nueva_j);
+            if (mapa.esAccesible(coordenadas) && mapa.obtenerCelda(coordenadas)!=-1){ // La siguiente posición debe ser válida.
                 posicionAgente = new SimpleEntry<>(nueva_i, nueva_j); 
                 this.actualizarSensores();
             }

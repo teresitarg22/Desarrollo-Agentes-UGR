@@ -63,8 +63,7 @@ public class Mapa {
     
     // ---------------------------------------------
     // Obtener el valor de una celda dada.
-    public int obtenerCelda ( int fila, int columna) {
-        SimpleEntry<Integer, Integer> coordenadas = new SimpleEntry<>(fila, columna); 
+    public int obtenerCelda (SimpleEntry<Integer, Integer> coordenadas ) { 
         if (mapa.containsKey(coordenadas)) { //Compruebo que el mapa tiene esas coordenadas (no esta fuera de los limites)
             return mapa.get(coordenadas);
         } else {
@@ -75,8 +74,7 @@ public class Mapa {
     
     // ---------------------------------------------
     // Obtiene si una celda es accesible o no.
-    public boolean esAccesible ( int fila, int columna) {
-       SimpleEntry<Integer, Integer> coordenadas = new SimpleEntry<>(fila, columna);
+    public boolean esAccesible ( SimpleEntry<Integer, Integer> coordenadas) {
         if (mapa.containsKey(coordenadas)) {
             return mapa.get(coordenadas) == 0; // Si es 0 (camino) es true , si es -1 (muro) devolverá false
         } else {

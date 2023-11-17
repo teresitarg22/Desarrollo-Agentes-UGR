@@ -236,7 +236,9 @@ public class MapaGUI extends javax.swing.JFrame {
                 label.setHorizontalAlignment(JLabel.CENTER);
                 label.setVerticalAlignment(JLabel.CENTER);
                 
-                if ( mapa.esAccesible(i, j)) {
+                SimpleEntry<Integer, Integer> coordenadas = new SimpleEntry<>(i, j);
+                
+                if ( mapa.esAccesible(coordenadas)) {
                     label.setBackground(Color.getHSBColor((float)0.488, (float)0.24, (float)0.97)); // Casilla con valor 0
                 } else {
                     label.setBackground(Color.DARK_GRAY); // Casilla con valor -1
@@ -298,27 +300,40 @@ public class MapaGUI extends javax.swing.JFrame {
                 int coordYObj = Integer.parseInt(coordYObjStr);
                 SimpleEntry<Integer, Integer> coordenadasObj = new SimpleEntry<>(coordXObj, coordYObj);
 
-                // Llamar al método del agente con los valores
-                entorno.setPosicionAgente(coordenadasAg);
+                boolean esAccesibleAg = mapa.esAccesible(coordenadasAg);
+                boolean esAccesibleObj = mapa.esAccesible(coordenadasObj);
+                //Comprobar si es muro o no
+                if ( esAccesibleAg && esAccesibleObj) {
+                    // Llamar al método del agente con los valores
+                    entorno.setPosicionAgente(coordenadasAg);
+                     //Establecer la imagen del agente en la casilla
+                    ImageIcon imagenAg = new ImageIcon("src/Img/agente.png");
+                    JLabel labelAg = etiquetasMapa.get(coordenadasAg);
+                    labelAg.setIcon(imagenAg);
+                    
+                     //Llamo al método para establecer los valores del objetivo
+                    entorno.setPosicionObjetivo(coordenadasObj);
 
-                //Establecer la imagen del agente en la casilla
-                ImageIcon imagenAg = new ImageIcon("src/Img/agente.png");
-                JLabel labelAg = etiquetasMapa.get(coordenadasAg);
-                labelAg.setIcon(imagenAg);
-
-                //Llamo al método para establecer los valores del objetivo
-                entorno.setPosicionObjetivo(coordenadasObj);
-
-                //Establecer la imagen del objetivo en la casilla
-                ImageIcon imagenObj = new ImageIcon("src/Img/objetivo.png");
-                JLabel labelObj = etiquetasMapa.get(coordenadasObj);
-                labelObj.setIcon(imagenObj);
-
-                jButtonSet.setEnabled(false);
-                jTextFieldCoordXAgent.setEnabled(false);
-                jTextFieldCoordYAgent.setEnabled(false);
-                jTextFieldCoordXObj.setEnabled(false);
-                jTextFieldCoordYObj.setEnabled(false);
+                    //Establecer la imagen del objetivo en la casilla
+                    ImageIcon imagenObj = new ImageIcon("src/Img/objetivo.png");
+                    JLabel labelObj = etiquetasMapa.get(coordenadasObj);
+                    labelObj.setIcon(imagenObj);
+                    
+                    jButtonSet.setEnabled(false);
+                    jTextFieldCoordXAgent.setEnabled(false);
+                    jTextFieldCoordYAgent.setEnabled(false);
+                    jTextFieldCoordXObj.setEnabled(false);
+                    jTextFieldCoordYObj.setEnabled(false);
+                } else {
+                    String message = "Por favor, indique una casilla accesible para: ";
+                    if (!esAccesibleAg)
+                        message+= " *agente ";
+                    
+                    if (!esAccesibleObj)
+                        message+= "*objetivo";
+                    
+                    JOptionPane.showMessageDialog(this, message, "Error", JOptionPane.ERROR_MESSAGE);
+                }
 
             } catch (NumberFormatException e) {
                 // Manejar error si los valores no son enteros
