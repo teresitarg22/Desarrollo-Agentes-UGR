@@ -74,8 +74,6 @@ public class MapaGUI extends javax.swing.JFrame {
         jPanelMapa = new javax.swing.JPanel();
         jLabelDecision = new javax.swing.JLabel();
         jScrollPanelDecision = new javax.swing.JScrollPane();
-        jButtonSelecMapAg = new javax.swing.JButton();
-        jButtonSelecMapObj = new javax.swing.JButton();
 
         jCheckBox1.setText("jCheckBox1");
 
@@ -132,20 +130,6 @@ public class MapaGUI extends javax.swing.JFrame {
         jLabelDecision.setFont(new java.awt.Font("sansserif", 0, 15)); // NOI18N
         jLabelDecision.setText("Decisiones tomadas:");
 
-        jButtonSelecMapAg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/seleccion.png"))); // NOI18N
-        jButtonSelecMapAg.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonSelecMapAgActionPerformed(evt);
-            }
-        });
-
-        jButtonSelecMapObj.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/seleccion.png"))); // NOI18N
-        jButtonSelecMapObj.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonSelecMapObjActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -170,9 +154,7 @@ public class MapaGUI extends javax.swing.JFrame {
                                     .addComponent(jLabelCoordYAgent)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                     .addComponent(jTextFieldCoordYAgent, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(jButtonSelecMapAg)
-                                    .addGap(27, 27, 27))))
+                                    .addGap(77, 77, 77))))
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                             .addComponent(jLabelCoordXObj)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -181,9 +163,7 @@ public class MapaGUI extends javax.swing.JFrame {
                             .addComponent(jLabelCoordYObj)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(jTextFieldCoordYObj, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jButtonSelecMapObj)
-                            .addGap(32, 32, 32))
+                            .addGap(76, 76, 76))
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                             .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(18, 18, 18)))
@@ -205,29 +185,21 @@ public class MapaGUI extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(25, 25, 25)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabelCoordInicAgent)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(19, 19, 19)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabelCoordXAgent)
-                                    .addComponent(jTextFieldCoordXAgent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabelCoordYAgent)
-                                    .addComponent(jTextFieldCoordYAgent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButtonSelecMapAg)))
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabelCoordInicObj)
-                        .addGap(17, 17, 17)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabelCoordXObj)
-                            .addComponent(jTextFieldCoordXObj, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabelCoordYObj)
-                            .addComponent(jTextFieldCoordYObj, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jButtonSelecMapObj))
+                .addComponent(jLabelCoordInicAgent)
+                .addGap(19, 19, 19)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabelCoordXAgent)
+                    .addComponent(jTextFieldCoordXAgent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelCoordYAgent)
+                    .addComponent(jTextFieldCoordYAgent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(24, 24, 24)
+                .addComponent(jLabelCoordInicObj)
+                .addGap(17, 17, 17)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabelCoordXObj)
+                    .addComponent(jTextFieldCoordXObj, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelCoordYObj)
+                    .addComponent(jTextFieldCoordYObj, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(31, 31, 31)
                 .addComponent(jButtonSet, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -306,8 +278,8 @@ public class MapaGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextFieldCoordXObjActionPerformed
 
     private void jButtonSetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSetActionPerformed
-        jButtonSelecMapAg.setEnabled(false);
-        jButtonSelecMapObj.setEnabled(false);
+       // jButtonSelecMapAg.setEnabled(false);
+        //jButtonSelecMapObj.setEnabled(false);
         
         String coordXStr = jTextFieldCoordXAgent.getText();
         String coordYStr = jTextFieldCoordYAgent.getText();
@@ -359,20 +331,9 @@ public class MapaGUI extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jButtonSetActionPerformed
 
-    private void jButtonSelecMapAgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSelecMapAgActionPerformed
-       
-
-    }//GEN-LAST:event_jButtonSelecMapAgActionPerformed
-
-    private void jButtonSelecMapObjActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSelecMapObjActionPerformed
-       
-    }//GEN-LAST:event_jButtonSelecMapObjActionPerformed
-
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButtonSelecMapAg;
-    private javax.swing.JButton jButtonSelecMapObj;
     private javax.swing.JButton jButtonSet;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JLabel jLabelCoordInicAgent;

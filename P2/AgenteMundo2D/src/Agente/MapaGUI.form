@@ -54,9 +54,7 @@
                                   <Component id="jLabelCoordYAgent" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="jTextFieldCoordYAgent" min="-2" pref="51" max="-2" attributes="0"/>
-                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                  <Component id="jButtonSelecMapAg" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="77" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -68,9 +66,7 @@
                           <Component id="jLabelCoordYObj" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jTextFieldCoordYObj" min="-2" pref="49" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jButtonSelecMapObj" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="76" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
                           <Component id="jSeparator1" min="-2" pref="254" max="-2" attributes="0"/>
@@ -104,35 +100,22 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="1" attributes="0">
-                  <Group type="102" attributes="0">
-                      <Component id="jLabelCoordInicAgent" min="-2" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
-                              <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="jLabelCoordXAgent" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jTextFieldCoordXAgent" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jLabelCoordYAgent" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jTextFieldCoordYAgent" alignment="3" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="jButtonSelecMapAg" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="jLabelCoordInicObj" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jLabelCoordXObj" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jTextFieldCoordXObj" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabelCoordYObj" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jTextFieldCoordYObj" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                  </Group>
-                  <Component id="jButtonSelecMapObj" min="-2" max="-2" attributes="0"/>
+              <Component id="jLabelCoordInicAgent" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jLabelCoordXAgent" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jTextFieldCoordXAgent" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jLabelCoordYAgent" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jTextFieldCoordYAgent" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
+              <Component id="jLabelCoordInicObj" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jLabelCoordXObj" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jTextFieldCoordXObj" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jLabelCoordYObj" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jTextFieldCoordYObj" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
               <Component id="jButtonSet" min="-2" pref="38" max="-2" attributes="0"/>
@@ -248,25 +231,5 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
     </Container>
-    <Component class="javax.swing.JButton" name="jButtonSelecMapAg">
-      <Properties>
-        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/Img/seleccion.png"/>
-        </Property>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonSelecMapAgActionPerformed"/>
-      </Events>
-    </Component>
-    <Component class="javax.swing.JButton" name="jButtonSelecMapObj">
-      <Properties>
-        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/Img/seleccion.png"/>
-        </Property>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonSelecMapObjActionPerformed"/>
-      </Events>
-    </Component>
   </SubComponents>
 </Form>
