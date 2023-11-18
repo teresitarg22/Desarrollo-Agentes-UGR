@@ -33,6 +33,7 @@ public class Mover extends SimpleBehaviour{
     // 
     @Override
     public boolean done(){
+        System.out.println("Mover");
         return false;
     }
 }

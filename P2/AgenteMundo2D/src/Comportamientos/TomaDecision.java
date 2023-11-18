@@ -111,6 +111,7 @@ public class TomaDecision extends SimpleBehaviour{
     // El comportamiento termina cuando se alcanza el objetivo.
     @Override
     public boolean done() {
+        System.out.println("Decisión");
         return objetivoAlcanzado; 
     }
 }

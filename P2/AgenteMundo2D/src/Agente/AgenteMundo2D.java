@@ -23,7 +23,7 @@ public class AgenteMundo2D extends Agent {
     public void setup(){
         Entorno entorno = (Entorno) getArguments()[0];
         
-        addBehaviour( new IniciarEstado() );
+        //addBehaviour( new IniciarEstado() );
         addBehaviour( new Vision(entorno) );
         addBehaviour( new TomaDecision(entorno) );
         addBehaviour( new Mover(entorno) );
