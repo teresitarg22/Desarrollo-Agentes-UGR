@@ -49,6 +49,15 @@ public class MapaGUI extends javax.swing.JFrame {
         panelEtiquetas.setLayout(new BoxLayout(panelEtiquetas, BoxLayout.Y_AXIS));
         etiquetasMapa = new HashMap<>();
         
+        this.entorno.setEntornoListener(new EntornoListener() {
+            @Override
+            public void onPosicionAgenteActualizada(SimpleEntry<Integer,Integer> pos){
+                SwingUtilities.invokeLater(() -> {
+                    actualizarAgente(pos);
+                });
+            }
+        });
+        
         visualizarMapa();
         
     }
@@ -376,7 +385,7 @@ public class MapaGUI extends javax.swing.JFrame {
     }
     
     public void actualizarAgente( SimpleEntry<Integer,Integer> pos ) {
-        etiquetasMapa.get(posAg).setIcon(null);
+        etiquetasMapa.get(posAg).setIcon(new ImageIcon("src/Img/punto.png"));
         posAg = pos;
         etiquetasMapa.get(posAg).setIcon(new ImageIcon("src/Img/agente.png"));
     }

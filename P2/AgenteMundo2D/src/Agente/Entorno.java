@@ -13,13 +13,18 @@ public class Entorno {
     private Map < SimpleEntry <Integer, Integer >, Integer> pesos;
     private SimpleEntry<Integer, Integer> posicionObjetivo = new SimpleEntry<>(1, 1); // Por defecto el objetivo está en la 0,0
     private SimpleEntry<Integer, Integer> posicionAgente = new SimpleEntry<>(0, 0); // Por defecto el agente está en la 0,0
-    private int[] sensores = new int[8];
+    private int[] sensores;// = new int[8];
+    private PosiblesMovimientos siguienteMovimiento;
+    private EntornoListener entornoListener;
 
     // ---------------------------------------------
     // Constructor.
     public Entorno(Mapa mapa) {
         this.mapa = mapa;
         this.pesos = new HashMap<>();
+        this.siguienteMovimiento = null;
+        this.sensores = new int[PosiblesMovimientos.values().length];
+        
         this.iniPesos();
         this.actualizarSensores();
     }
@@ -41,8 +46,8 @@ public class Entorno {
     
     // ---------------------------------------------
     // Actualiza los sensores.
-    public void actualizarSensores(){
-        int contador = 0; 
+    public void actualizarSensores() {
+        /*int contador = 0; 
         
         for (int i=posicionAgente.getKey()-1; i<=posicionAgente.getKey()+1; i++){
             for (int j=posicionAgente.getValue()-1; j<=posicionAgente.getValue(); j++){
@@ -59,25 +64,32 @@ public class Entorno {
                     contador++;
                 }   
             }
-        } 
+        }*/
+        for (PosiblesMovimientos movimiento : PosiblesMovimientos.values()) {
+            sensores[movimiento.ordinal()] = mapa.obtenerCelda(movimiento.sumar(this.posicionAgente));
+        }
     }
     
     // ---------------------------------------------
     // Actualiza la posición del agente.
-    public void actualizarPosicionAgente(Integer arribaAbajo, Integer derechaIzquierda){    // Permite mover arriba, abajo, derecha, izquierda y diagonales. 
+    public void actualizarPosicionAgente(/*Integer arribaAbajo, Integer derechaIzquierda*/){    // Permite mover arriba, abajo, derecha, izquierda y diagonales. 
         
-        if (arribaAbajo <= 1 && arribaAbajo >= -1 && derechaIzquierda <= 1 && derechaIzquierda >= -1){  // Solo puedes avanzar una casilla.
-            int nueva_i = posicionAgente.getKey() + arribaAbajo; 
-            int nueva_j = posicionAgente.getValue() + derechaIzquierda; 
+        //if (arribaAbajo <= 1 && arribaAbajo >= -1 && derechaIzquierda <= 1 && derechaIzquierda >= -1){  // Solo puedes avanzar una casilla.
+            //int nueva_i = posicionAgente.getKey() + arribaAbajo; 
+            //int nueva_j = posicionAgente.getValue() + derechaIzquierda; 
 
-            SimpleEntry<Integer, Integer> coordenadas = new SimpleEntry<>(nueva_i,nueva_j);
-            if (mapa.esAccesible(coordenadas) && mapa.obtenerCelda(coordenadas)!=-1){ // La siguiente posición debe ser válida.
-                posicionAgente = new SimpleEntry<>(nueva_i, nueva_j); 
-                this.actualizarSensores();
+            //SimpleEntry<Integer, Integer> coordenadas = new SimpleEntry<>(nueva_i,nueva_j);
+            SimpleEntry<Integer,Integer> coordenadas = this.siguienteMovimiento.sumar(this.posicionAgente);
+            //if (mapa.esAccesible(coordenadas) && mapa.obtenerCelda(coordenadas)!=-1){ // La siguiente posición debe ser válida.
+            if (this.entornoListener != null) {
+                this.posicionAgente = coordenadas;
+                this.siguienteMovimiento = null;
+                //this.actualizarSensores();
+                this.entornoListener.onPosicionAgenteActualizada(this.posicionAgente);
             }
             else 
                 System.out.print("No puedo continuar en esta dirección.");
-        }
+        //}
     }  
     
     // ---------------------------------------------
@@ -108,5 +120,15 @@ public class Entorno {
     // Obtener la posición del objetivo.
     public SimpleEntry<Integer, Integer> getPosicionObjetivo() {
         return posicionObjetivo;
+    }
+    
+    // ---------------------------------------------
+    // Establecer la siguiente posición
+    public void setSiguienteMovimiento(PosiblesMovimientos siguienteMovimiento) {
+        this.siguienteMovimiento = siguienteMovimiento;
+    }
+    
+    public void setEntornoListener(EntornoListener listener){
+        this.entornoListener = listener;
     }
 }

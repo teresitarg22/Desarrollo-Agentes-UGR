@@ -11,13 +11,13 @@ import Agente.Entorno;
  */
 public class Mover extends SimpleBehaviour{
     private Entorno entorno;
-    SimpleEntry<Integer,Integer> siguienteMovimiento = null;
-    Integer heuristica = null;
+    /*SimpleEntry<Integer,Integer> siguienteMovimiento = null;
+    Integer heuristica = null;*/
     
     public Mover(Entorno entorno){
         this.entorno = entorno;
-        this.heuristica = ((AgenteMundo2D) myAgent).getHeuristica();
-        this.siguienteMovimiento = ((AgenteMundo2D) myAgent).getSiguienteMovimiento();
+        /*this.heuristica = ((AgenteMundo2D) myAgent).getHeuristica();
+        this.siguienteMovimiento = ((AgenteMundo2D) myAgent).getSiguienteMovimiento();*/
     }
     
     // ----------------------------------------------------------------------------------
@@ -25,8 +25,9 @@ public class Mover extends SimpleBehaviour{
     @Override
     public void action(){
         // Actualizamos la posición del agente con las coordenadas dadas y actualizamos en nuestro mapa de pesos la heurística.
-        this.entorno.actualizarPosicionAgente(this.siguienteMovimiento.getKey(), this.siguienteMovimiento.getValue());
-        this.entorno.actualizarPesos(this.siguienteMovimiento, this.heuristica);
+        /*this.entorno.actualizarPosicionAgente(this.siguienteMovimiento.getKey(), this.siguienteMovimiento.getValue());
+        this.entorno.actualizarPesos(this.siguienteMovimiento, this.heuristica);*/
+        this.entorno.actualizarPosicionAgente();
     }
     
     // ----------------------------------------------------------------------------------

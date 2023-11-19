@@ -67,7 +67,7 @@ public class Mapa {
         if (mapa.containsKey(coordenadas)) { //Compruebo que el mapa tiene esas coordenadas (no esta fuera de los limites)
             return mapa.get(coordenadas);
         } else {
-            System.out.println("ERROR AL OBTENER CELDA: Coordenadas fuera de los límites del mapa.");
+            //System.out.println("ERROR AL OBTENER CELDA: Coordenadas fuera de los límites del mapa.");
             return -1; // Valor de celda no válida
         }
     }

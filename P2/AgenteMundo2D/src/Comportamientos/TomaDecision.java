@@ -6,6 +6,7 @@ import Agente.AgenteMundo2D;
 import jade.core.behaviours.SimpleBehaviour;
 import java.util.AbstractMap.SimpleEntry;
 import Agente.Entorno;
+import Agente.PosiblesMovimientos;
 
 // Le pasamos una instancia de Entorno
 
@@ -13,23 +14,11 @@ import Agente.Entorno;
  * @author Sergio Muñoz Gómez y Teresa Fernanda Reyes García
  */
 public class TomaDecision extends SimpleBehaviour{
-    private SimpleEntry<Integer,Integer> objetivo = this.entorno.getPosicionObjetivo();
-    SimpleEntry<Integer,Integer>  posicionActual = this.entorno.getPosicionAgente();
-    
-    Integer distanciaMinima = distanciaManhattan(posicionActual, objetivo);
-    private final SimpleEntry<Integer, Integer>[] posiblesMovimientos;
-    
     private boolean objetivoAlcanzado = false;      // Inicializamos el objetivo a false.
+    private int distanciaMinima;
     private Entorno entorno;
     
     public TomaDecision(Entorno entorno){
-        this.posiblesMovimientos = new SimpleEntry[]{
-                new SimpleEntry<>(-1, 0), // Arriba.
-                new SimpleEntry<>(1, 0),  // Abajo.
-                new SimpleEntry<>(0, -1), // Izquierda.
-                new SimpleEntry<>(0, 1)   // Derecha.
-        };
-        
         this.entorno = entorno;
     }
     
@@ -37,18 +26,20 @@ public class TomaDecision extends SimpleBehaviour{
     // Calcula la próxima acción y le pasa las coordenadas al siguiente comportamiento.
     @Override
     public void action() {
-        SimpleEntry<Integer,Integer> siguienteMovimiento = calcularSiguienteMovimiento();
+        //SimpleEntry<Integer,Integer> siguienteMovimiento = calcularSiguienteMovimiento();
+        PosiblesMovimientos siguienteMovimiento = calcularSiguienteMovimiento();
         
         if (siguienteMovimiento != null) {
             // Pasa el siguiente movimiento calculado al siguiente comportamiento: Mover
-            ((AgenteMundo2D) myAgent).setSiguienteMovimiento(siguienteMovimiento, this.distanciaMinima + 1);
+            //((AgenteMundo2D) myAgent).setSiguienteMovimiento(siguienteMovimiento, this.distanciaMinima + 1);
+            this.entorno.setSiguienteMovimiento(siguienteMovimiento);
         } else {
             // ¿Es posible que no se encuentre siguiente movimiento?
             System.out.println("No se ha encontrado siguiente movimiento.");
         }
 
         // Verifica si el objetivo se ha alcanzado para comunicarse con el resto de comportamientos.
-        if (verificarObjetivoAlcanzado()) {
+        if (this.entorno.getPosicionAgente() == this.entorno.getPosicionObjetivo()) {
             objetivoAlcanzado = true;
             System.out.println("¡Se ha alcanzado el objetivo!");
             ((AgenteMundo2D) myAgent).doDelete();
@@ -57,25 +48,40 @@ public class TomaDecision extends SimpleBehaviour{
 
     // ----------------------------------------------------------------------------------
     // Calcula la próxima acción basada en el entorno.
-    private SimpleEntry<Integer,Integer> calcularSiguienteMovimiento() {
-        SimpleEntry<Integer,Integer>  siguienteMovimiento = null;
-        posicionActual = this.entorno.getPosicionAgente();
+    //private SimpleEntry<Integer,Integer> calcularSiguienteMovimiento() {
+    private PosiblesMovimientos calcularSiguienteMovimiento() {
+        /*SimpleEntry<Integer,Integer> posicionActual = this.entorno.getPosicionAgente();
+        PosiblesMovimientos siguienteMovimiento = null;
         
         // Actualizamos la distancia mínima calculando la distancia Manhattan entre la pos del agente y el objetivo.
-        distanciaMinima = distanciaManhattan(posicionActual, objetivo); 
+        distanciaMinima = distanciaManhattan(posicionActual, this.entorno.getPosicionObjetivo()); 
         
         // Para cada uno de los posibles movimientos...
-        for (SimpleEntry<Integer,Integer> movimiento : posiblesMovimientos) {
-            Integer filaSiguiente = posicionActual.getKey() + movimiento.getKey(); 
-            Integer columnaSiguiente = posicionActual.getValue() + movimiento.getValue(); 
-            
-            // Calculamos la distancia al objetivo desde cada una de las celdas adyacentes.
-            Integer distanciaAlObjetivo = distanciaManhattan (new SimpleEntry<Integer,Integer>(filaSiguiente,columnaSiguiente), objetivo); 
-            
-            // Comparamos las distancias con la distanciaMinima. Si la distancia al objetivo es menor, actualizamos la distancia mínima.
-            if (distanciaAlObjetivo < distanciaMinima) {
-                 distanciaMinima = distanciaAlObjetivo ; 
-                 siguienteMovimiento = new SimpleEntry<Integer,Integer>(filaSiguiente,columnaSiguiente); 
+        for (PosiblesMovimientos movimiento : PosiblesMovimientos.values()) {
+            if (this.entorno.getSensores()[movimiento.ordinal()] == 0) {
+                // Calculamos la distancia al objetivo desde cada una de las celdas adyacentes.
+                Integer distanciaAlObjetivo = distanciaManhattan (movimiento.sumar(posicionActual), this.entorno.getPosicionObjetivo()); 
+
+                // Comparamos las distancias con la distanciaMinima. Si la distancia al objetivo es menor, actualizamos la distancia mínima.
+                if (distanciaAlObjetivo < distanciaMinima) {
+                     distanciaMinima = distanciaAlObjetivo ; 
+                     siguienteMovimiento = movimiento;//.sumar(posicionActual);
+                }
+            }
+        }*/
+        
+        SimpleEntry<Integer,Integer> pos = this.entorno.getPosicionAgente();
+        PosiblesMovimientos siguienteMovimiento = null;
+        int distMin = Integer.MAX_VALUE;
+        
+        for (PosiblesMovimientos movimiento : PosiblesMovimientos.values()) {
+            if (this.entorno.getSensores()[movimiento.ordinal()] == 0) {
+                int dist = distanciaManhattan(movimiento.sumar(pos),this.entorno.getPosicionObjetivo());
+                
+                if (dist < distMin) {
+                    siguienteMovimiento = movimiento;
+                    distMin = dist;
+                }
             }
         }
         
@@ -99,12 +105,6 @@ public class TomaDecision extends SimpleBehaviour{
     // Calculamos la distancia Manhattan entre dos puntos.
     private int distanciaManhattan(SimpleEntry<Integer,Integer> puntoA, SimpleEntry<Integer,Integer> puntoB){
         return Math.abs(puntoA.getKey() - puntoB.getKey()) + Math.abs(puntoA.getValue() - puntoB.getValue());
-    }
-    
-    // ----------------------------------------------------------------------------------
-    // Verificamos si se ha llegado al objetivo.
-    private boolean verificarObjetivoAlcanzado() {
-        return (posicionActual == this.entorno.getPosicionObjetivo());
     }
     
     // ----------------------------------------------------------------------------------
