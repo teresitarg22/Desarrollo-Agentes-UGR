@@ -27,7 +27,7 @@ public class Mover extends SimpleBehaviour{
         // Actualizamos la posición del agente con las coordenadas dadas y actualizamos en nuestro mapa de pesos la heurística.
         /*this.entorno.actualizarPosicionAgente(this.siguienteMovimiento.getKey(), this.siguienteMovimiento.getValue());
         this.entorno.actualizarPesos(this.siguienteMovimiento, this.heuristica);*/
-        block(500); // - SÓLO USAR EN PRUBAS, tira muchisimo de cpu
+        block(250); // - SÓLO USAR EN PRUBAS, tira muchisimo de cpu
         this.entorno.actualizarPosicionAgente();
     }
     

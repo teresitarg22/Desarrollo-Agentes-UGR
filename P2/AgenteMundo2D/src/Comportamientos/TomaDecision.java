@@ -77,17 +77,23 @@ public class TomaDecision extends SimpleBehaviour{
         
         for (PosiblesMovimientos movimiento : PosiblesMovimientos.values()) {
             if (this.entorno.getSensores()[movimiento.ordinal()] == 0) {
-                this.entorno.getPesos().putIfAbsent(movimiento.sumar(pos), distanciaManhattan(movimiento.sumar(pos),this.entorno.getPosicionObjetivo()));
-                //int dist = distanciaManhattan(movimiento.sumar(pos),this.entorno.getPosicionObjetivo());
-                int dist = this.entorno.getPesos().get(movimiento.sumar(pos));
+                if (movimiento.ordinal()>=4 &&
+                    this.entorno.getSensores()[PosiblesMovimientos.getMovimiento(0, movimiento.y()).ordinal()] !=0 &&
+                    this.entorno.getSensores()[PosiblesMovimientos.getMovimiento(movimiento.x(), 0).ordinal()] !=0 ) {
+                    
+                    continue;
+                }
                 
+                this.entorno.getPesos().putIfAbsent(movimiento.sumar(pos), distanciaManhattan(movimiento.sumar(pos),this.entorno.getPosicionObjetivo()));
+                int dist = this.entorno.getPesos().get(movimiento.sumar(pos));
+
                 if (dist < distMin) {
                     siguienteMovimiento = movimiento;
-                    
+
                     if (distMin != Integer.MAX_VALUE)
                         segundoMejor = distMin;
                     else segundoMejor = dist;
-                    
+
                     distMin = dist;
                 }
             }
