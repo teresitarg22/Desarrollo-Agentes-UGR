@@ -16,6 +16,7 @@ public class Mapa {
     private int filas;
     private int columnas;
     private Map < SimpleEntry <Integer, Integer >, Integer> mapa;
+    private Map < SimpleEntry <Integer, Integer >, Integer> pesos;
 
     // ---------------------------------------------
     // Constructor.
@@ -32,10 +33,12 @@ public class Mapa {
                 filas = scanner.nextInt();
                 columnas = scanner.nextInt();
                 mapa = new HashMap<>();
+                pesos = new HashMap<>();
 
                 for (int i = 0; i < filas; i++) {
                     for (int j = 0; j < columnas; j++) {
                         mapa.put(new SimpleEntry<>(i, j), scanner.nextInt());
+                        //mapa.put(new SimpleEntry<>(i,j), 0);
                     }
                 }
 
@@ -47,6 +50,17 @@ public class Mapa {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+    
+    /*// ---------------------------------------------
+    // Actualizar pesos.
+    public void actualizarPesos( SimpleEntry<Integer,Integer> pos, Integer peso ) {
+        if (this.pesos.containsKey(pos)) 
+            this.pesos.put(pos, peso);
+    }*/
+    
+    public Map<SimpleEntry<Integer,Integer>,Integer> getPesos() {
+        return this.pesos;
     }
     
     // ---------------------------------------------

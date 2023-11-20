@@ -10,38 +10,22 @@ import java.util.AbstractMap.SimpleEntry;
  */
 public class Entorno {
     private Mapa mapa;
-    private Map < SimpleEntry <Integer, Integer >, Integer> pesos;
     private SimpleEntry<Integer, Integer> posicionObjetivo = new SimpleEntry<>(1, 1); // Por defecto el objetivo está en la 0,0
     private SimpleEntry<Integer, Integer> posicionAgente = new SimpleEntry<>(0, 0); // Por defecto el agente está en la 0,0
     private int[] sensores;// = new int[8];
     private PosiblesMovimientos siguienteMovimiento;
     private EntornoListener entornoListener;
+    private int segundoMejor;
 
     // ---------------------------------------------
     // Constructor.
     public Entorno(Mapa mapa) {
         this.mapa = mapa;
-        this.pesos = new HashMap<>();
+        this.segundoMejor = Integer.MAX_VALUE;
         this.siguienteMovimiento = null;
         this.sensores = new int[PosiblesMovimientos.values().length];
-        
-        this.iniPesos();
+
         this.actualizarSensores();
-    }
-    
-    // ---------------------------------------------
-    // Inicializar mapa de pesos.
-    private void iniPesos() {
-        for (int i=0; i<this.mapa.getFilas(); i++)
-            for (int j=0; j<this.mapa.getColumnas(); j++)
-                this.pesos.put(new SimpleEntry<>(i,j), 0);
-    }
-    
-    // ---------------------------------------------
-    // Actualizar pesos.
-    public void actualizarPesos( SimpleEntry<Integer,Integer> pos, Integer peso ) {
-        if (this.pesos.containsKey(pos)) 
-            this.pesos.put(pos, peso);
     }
     
     // ---------------------------------------------
@@ -70,6 +54,14 @@ public class Entorno {
         }
     }
     
+    public void setSegundoMejor(int valor) {
+        this.segundoMejor = valor;
+    }
+    
+    public Map<SimpleEntry<Integer,Integer>,Integer> getPesos() {
+        return this.mapa.getPesos();
+    }
+    
     // ---------------------------------------------
     // Actualiza la posición del agente.
     public void actualizarPosicionAgente(/*Integer arribaAbajo, Integer derechaIzquierda*/){    // Permite mover arriba, abajo, derecha, izquierda y diagonales. 
@@ -82,6 +74,7 @@ public class Entorno {
             SimpleEntry<Integer,Integer> coordenadas = this.siguienteMovimiento.sumar(this.posicionAgente);
             //if (mapa.esAccesible(coordenadas) && mapa.obtenerCelda(coordenadas)!=-1){ // La siguiente posición debe ser válida.
             if (this.entornoListener != null) {
+                getPesos().put(this.posicionAgente, this.segundoMejor+1);
                 this.posicionAgente = coordenadas;
                 this.siguienteMovimiento = null;
                 //this.actualizarSensores();

@@ -39,11 +39,11 @@ public class TomaDecision extends SimpleBehaviour{
         }
 
         // Verifica si el objetivo se ha alcanzado para comunicarse con el resto de comportamientos.
-        if (this.entorno.getPosicionAgente() == this.entorno.getPosicionObjetivo()) {
+        /*if (this.entorno.getPosicionAgente() == this.entorno.getPosicionObjetivo()) {
             objetivoAlcanzado = true;
             System.out.println("¡Se ha alcanzado el objetivo!");
             ((AgenteMundo2D) myAgent).doDelete();
-        }
+        }*/
     }
 
     // ----------------------------------------------------------------------------------
@@ -73,13 +73,21 @@ public class TomaDecision extends SimpleBehaviour{
         SimpleEntry<Integer,Integer> pos = this.entorno.getPosicionAgente();
         PosiblesMovimientos siguienteMovimiento = null;
         int distMin = Integer.MAX_VALUE;
+        int segundoMejor = Integer.MAX_VALUE;
         
         for (PosiblesMovimientos movimiento : PosiblesMovimientos.values()) {
             if (this.entorno.getSensores()[movimiento.ordinal()] == 0) {
-                int dist = distanciaManhattan(movimiento.sumar(pos),this.entorno.getPosicionObjetivo());
+                this.entorno.getPesos().putIfAbsent(movimiento.sumar(pos), distanciaManhattan(movimiento.sumar(pos),this.entorno.getPosicionObjetivo()));
+                //int dist = distanciaManhattan(movimiento.sumar(pos),this.entorno.getPosicionObjetivo());
+                int dist = this.entorno.getPesos().get(movimiento.sumar(pos));
                 
                 if (dist < distMin) {
                     siguienteMovimiento = movimiento;
+                    
+                    if (distMin != Integer.MAX_VALUE)
+                        segundoMejor = distMin;
+                    else segundoMejor = dist;
+                    
                     distMin = dist;
                 }
             }
@@ -98,6 +106,8 @@ public class TomaDecision extends SimpleBehaviour{
              
         */
         
+        this.entorno.setSegundoMejor(segundoMejor);
+        
         return siguienteMovimiento;
     }
     
@@ -111,7 +121,10 @@ public class TomaDecision extends SimpleBehaviour{
     // El comportamiento termina cuando se alcanza el objetivo.
     @Override
     public boolean done() {
-        System.out.println("Decisión");
-        return objetivoAlcanzado; 
+        //System.out.println("Decisión");
+        //return objetivoAlcanzado;
+        //la idea de esto como está planteada es que si devuelve true en el done es que el comportamiento no debe ejecutarse más, por lo que se elimina de la lista de comportamientos
+        //pero los demás no, ya que sólo se elimina este, por lo uq elos demás continuán sus ejecuciones
+        return false;
     }
 }

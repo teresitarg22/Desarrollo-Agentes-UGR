@@ -30,7 +30,7 @@ public class AgenteMundo2D extends Agent {
     } 
     
     // -----------------------------------------------------------
-    public SimpleEntry<Integer,Integer>getSiguienteMovimiento(){
+    /*public SimpleEntry<Integer,Integer>getSiguienteMovimiento(){
         return this.siguienteMovimiento;
     }
     
@@ -41,6 +41,6 @@ public class AgenteMundo2D extends Agent {
     public void setSiguienteMovimiento(SimpleEntry<Integer,Integer> movimiento, Integer heuristica){
         this.siguienteMovimiento = movimiento;
         this.heuristica = heuristica;
-    }
+    }*/
 }
 

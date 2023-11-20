@@ -17,12 +17,17 @@ public class Vision extends SimpleBehaviour {
     
     @Override
     public void action(){
-        this.entorno.actualizarSensores();
+        if (this.entorno.getPosicionAgente().equals(this.entorno.getPosicionObjetivo())) {
+            System.out.println("¡Se ha alcanzado el objetivo!");
+            myAgent.doDelete();
+            //System.exit(0);
+        }
+        else this.entorno.actualizarSensores();
     }
     
     @Override
     public boolean done(){
-        System.out.println("Visión");
+        //System.out.println("Visión");
         return false;
     }
 }
