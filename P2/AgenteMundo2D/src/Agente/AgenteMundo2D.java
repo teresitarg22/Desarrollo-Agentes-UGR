@@ -14,8 +14,8 @@ import java.util.AbstractMap.SimpleEntry;
  * @author Diego Velazquez Ortuño
  */
 public class AgenteMundo2D extends Agent {
-    SimpleEntry<Integer,Integer> siguienteMovimiento = null;
-    Integer heuristica = null;
+    /*SimpleEntry<Integer,Integer> siguienteMovimiento = null;
+    Integer heuristica = null;*/
         
     // -------------------------------------------------
     // Inicialización del agente.

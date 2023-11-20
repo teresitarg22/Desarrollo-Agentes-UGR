@@ -80,8 +80,8 @@ public class Entorno {
                 //this.actualizarSensores();
                 this.entornoListener.onPosicionAgenteActualizada(this.posicionAgente);
             }
-            else 
-                System.out.print("No puedo continuar en esta dirección.");
+            /*else 
+                System.out.print("No puedo continuar en esta dirección.");*/
         //}
     }  
     
