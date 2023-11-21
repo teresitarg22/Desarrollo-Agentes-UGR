@@ -96,10 +96,10 @@ public class TomaDecision extends SimpleBehaviour{
         int distancia = 0;
         
         if(Math.abs(puntoB.getKey() - puntoA.getKey()) < Math.abs(puntoB.getValue() - puntoA.getValue())){
-            distancia = Math.abs(puntoB.getKey() - puntoA.getKey());
+            distancia = Math.abs(puntoB.getKey() - puntoA.getKey()) + 1;
         }
         else{
-            distancia = Math.abs(puntoB.getValue() - puntoA.getValue());
+            distancia = Math.abs(puntoB.getValue() - puntoA.getValue()) + 1;
         }
         
         return distancia;
