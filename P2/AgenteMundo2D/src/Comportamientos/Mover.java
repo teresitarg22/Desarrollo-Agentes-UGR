@@ -1,8 +1,6 @@
 package Comportamientos;
 
 import jade.core.behaviours.SimpleBehaviour;
-import java.util.AbstractMap.SimpleEntry;
-import Agente.AgenteMundo2D;
 import Agente.Entorno;
 
 /**

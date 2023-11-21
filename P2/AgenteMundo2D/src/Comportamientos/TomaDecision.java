@@ -55,21 +55,23 @@ public class TomaDecision extends SimpleBehaviour{
                 
                 this.entorno.getPesos().putIfAbsent(movimiento.sumar(pos), distanciaManhattan(movimiento.sumar(pos),this.entorno.getPosicionObjetivo()));
                 int dist = this.entorno.getPesos().get(movimiento.sumar(pos));
-
+                
+                // Comprobamos si la distancia es menor que la distancia mínima.
                 if (dist < distMin) {
                     siguienteMovimiento = movimiento;
-
+                    
+                    // Comprobamos valores para la segunda mejor distancia mínima.
                     if (distMin != Integer.MAX_VALUE)
                         segundoMejor = distMin;
                     else segundoMejor = dist;
 
-                    distMin = dist;
+                    distMin = dist; // Actualizamos la distancia mínima.
                 }
             }
         }
         
+        // Establecemos el segundo mejor y devolvemos el siguiente movimiento calculado.
         this.entorno.setSegundoMejor(segundoMejor);
-        
         return siguienteMovimiento;
     }
     

@@ -16,7 +16,7 @@ public class Entorno {
     private SimpleEntry<Integer, Integer> posicionObjetivo = new SimpleEntry<>(1, 1); // Por defecto el objetivo está en la 0,0
     private SimpleEntry<Integer, Integer> posicionAgente = new SimpleEntry<>(0, 0); // Por defecto el agente está en la 0,0
     
-    private PosiblesMovimientos siguienteMovimiento;
+    private PosiblesMovimientos siguienteMovimiento; // Cuál va a ser el próximo movimiento.
     private int segundoMejor;
 
     // ---------------------------------------------
@@ -49,6 +49,7 @@ public class Entorno {
             this.posicionAgente = coordenadas;
             this.siguienteMovimiento = null;
             
+            // Llamamos al listener del entorno.
             this.entornoListener.onPosicionAgenteActualizada(this.posicionAgente);
         }
     }  

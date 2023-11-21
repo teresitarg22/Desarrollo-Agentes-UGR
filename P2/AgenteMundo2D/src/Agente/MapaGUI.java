@@ -40,6 +40,7 @@ public class MapaGUI extends javax.swing.JFrame {
         panelEtiquetas.setLayout(new BoxLayout(panelEtiquetas, BoxLayout.Y_AXIS));
         etiquetasMapa = new HashMap<>();
         
+        // Creamos un listener para el entorno.
         this.entorno.setEntornoListener(new EntornoListener() {
             @Override
             public void onPosicionAgenteActualizada(SimpleEntry<Integer,Integer> pos){
@@ -380,10 +381,12 @@ public class MapaGUI extends javax.swing.JFrame {
 
     // ------------------------------------------------------------------------------------
     public void setMainListener(MainListener listener){
+        // Cuando se pulse el botón "Iniciar" comenzará el listener en el main.
         this.mainListener = listener;
     }
     
     // ------------------------------------------------------------------------------------
+    // Se establece un icono donde está la posición del agente y puntos por donde ya ha pasado.
     public void actualizarAgente( SimpleEntry<Integer,Integer> pos ) {
         etiquetasMapa.get(posAg).setIcon(new ImageIcon("src/Img/punto.png"));
         posAg = pos;

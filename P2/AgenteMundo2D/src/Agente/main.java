@@ -37,6 +37,7 @@ public class main {
         mapaGUI.setVisible(true);
         
         // -------------------------------------------------------------------------
+        // Hacemos una llamada a la interfaz MainListener. 
         mapaGUI.setMainListener(() -> {
             // ------------------------------------------------------
             // Un vez incializado el mapa, iniciamos plataforma JADE.

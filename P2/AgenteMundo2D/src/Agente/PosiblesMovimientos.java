@@ -8,10 +8,14 @@ import java.util.AbstractMap.SimpleEntry;
  * @author Diego Velázquez Ortuño.
  */
 public enum PosiblesMovimientos {
+    // ----------------------------
+    // MOVIMIENTOS BÁSICOS:
     ARRIBA(-1, 0),
     ABAJO(1, 0),
     IZQUIERDA(0, -1),
     DERECHA(0, 1),
+    
+    // DIAGONALES:
     ARRIBA_DERECHA(-1, 1),
     ARRIBA_IZQUIERDA(-1, -1),
     ABAJO_DERECHA(1, 1),
