@@ -43,9 +43,9 @@ public class MapaGUI extends javax.swing.JFrame {
         // Creamos un listener para el entorno.
         this.entorno.setEntornoListener(new EntornoListener(){
             @Override
-            public void onPosicionAgenteActualizada(SimpleEntry<Integer, Integer> posAgente, PosiblesMovimientos movimiento){
+            public void onPosicionAgenteActualizada(PosiblesMovimientos movimiento){
                 SwingUtilities.invokeLater(() -> {
-                    actualizarAgente(posAgente);
+                    actualizarAgente(movimiento);
                     visualizarAccion(movimiento);
                 });
             }
@@ -385,9 +385,9 @@ public class MapaGUI extends javax.swing.JFrame {
     
     // ------------------------------------------------------------------------------------
     // Se establece un icono donde está la posición del agente y puntos por donde ya ha pasado.
-    public void actualizarAgente(SimpleEntry<Integer, Integer> posAgente) {
+    public void actualizarAgente(PosiblesMovimientos movimiento) {
         etiquetasMapa.get(posAg).setIcon(new ImageIcon("src/Img/punto.png"));
-        this.posAg = posAgente;
+        this.posAg = movimiento.sumar(posAg);
         etiquetasMapa.get(posAg).setIcon(new ImageIcon("src/Img/agente.png"));
         
     }

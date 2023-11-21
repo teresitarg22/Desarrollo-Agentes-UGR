@@ -50,10 +50,11 @@ public class Entorno {
         if (this.entornoListener != null) {
             getPesos().put(this.posicionAgente, this.segundoMejor+1);
             this.posicionAgente = coordenadas;
-            this.siguienteMovimiento = null;
-            
+           
             // Llamamos al listener del entorno.
-            this.entornoListener.onPosicionAgenteActualizada(this.posicionAgente, this.siguienteMovimiento);
+            this.entornoListener.onPosicionAgenteActualizada(this.siguienteMovimiento);
+            
+            this.siguienteMovimiento = null;
         }
     }  
        
