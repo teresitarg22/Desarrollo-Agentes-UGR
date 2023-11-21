@@ -37,22 +37,35 @@ public class TomaDecision extends SimpleBehaviour{
     }
 
     // ----------------------------------------------------------------------------------
-    // Calcula la próxima acción basada en el entorno.
-    private PosiblesMovimientos calcularSiguienteMovimiento() {     
+    // Calcula la próxima acción basada en el entorno usando LRTA*.
+    private PosiblesMovimientos calcularSiguienteMovimiento() {    
         SimpleEntry<Integer,Integer> pos = this.entorno.getPosicionAgente();
+        // Inicializamos el siguiente movimiento que devolveremos a nulo
         PosiblesMovimientos siguienteMovimiento = null;
+        // Usaremos una distancia mínima para comprara cuál es el mejor povimiento posible
+        // Inicializado al máximo valor para que en la primera comprobación nos dvuelva una distancia real,
+        // que será mínima en comparación al máximo valor
         int distMin = Integer.MAX_VALUE;
+        // Inicilizamos el peso del segundo mejor al máximo valor
         int segundoMejor = Integer.MAX_VALUE;
         
+        // Recorre todos los movimientos posibles
         for (PosiblesMovimientos movimiento : PosiblesMovimientos.values()) {
+            // Comprueba si ese siguiente movimiento posible es un muro o es accesible (0)
             if (this.entorno.getSensores()[movimiento.ordinal()] == 0) {
+                // Comprueba si la posición delk movimiento dentro de la lista es mayor o igual que 4, lo que indica que es una esquina
+                // Si se cambia el orden de inicialización dentro del enumerado esto debe cambiar
                 if (movimiento.ordinal()>=4 &&
+                    // Para esa esquina comprueba si sus casillas adyacnte son mueros, por lo que tenemos un muro diagonal tapándola
+                    // y no es accesible, por lo que se salta la iteración actual y no hace estudio de ese posible movimiento
                     this.entorno.getSensores()[PosiblesMovimientos.getMovimiento(0, movimiento.y()).ordinal()] !=0 &&
                     this.entorno.getSensores()[PosiblesMovimientos.getMovimiento(movimiento.x(), 0).ordinal()] !=0 ) {
                     
                     continue;
                 }
                 
+                // Si el peso en esa siguiente posición ya estaba almacenado en la tabla de pesos no hace nada, de lo contrario calcula su peso como
+                // la distancia Manhattan entre esa nueva posición y el objetivo
                 this.entorno.getPesos().putIfAbsent(movimiento.sumar(pos), distanciaManhattan(movimiento.sumar(pos),this.entorno.getPosicionObjetivo()));
                 int dist = this.entorno.getPesos().get(movimiento.sumar(pos));
                 
@@ -60,7 +73,9 @@ public class TomaDecision extends SimpleBehaviour{
                 if (dist < distMin) {
                     siguienteMovimiento = movimiento;
                     
-                    // Comprobamos valores para la segunda mejor distancia mínima.
+                    // Para poder guardar el segundo peso para posteriormente asignarlo al nodo que se abandona, necesitamos comprobar primero si el anterior tiene valor
+                    // máximo, por lo que estamos en la primera iteración en la que se encuntra un mínimo y el segundo tendrá que ser también el primero (si no se encuentra un
+                    // siguiente mínimo)
                     if (distMin != Integer.MAX_VALUE)
                         segundoMejor = distMin;
                     else segundoMejor = dist;
