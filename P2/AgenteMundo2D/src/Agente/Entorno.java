@@ -3,7 +3,10 @@ package Agente;
 
 import java.util.Map;
 import java.util.HashMap;
+import java.util.ArrayList; 
 import java.util.AbstractMap.SimpleEntry;
+
+
 
 /**
  * @ author Julia Cano Flores
@@ -11,6 +14,8 @@ import java.util.AbstractMap.SimpleEntry;
 public class Entorno {
     private Mapa mapa;
     private EntornoListener entornoListener;
+    private DecisionListener decisionListener;
+    private ArrayList<PosiblesMovimientos> decisionesTomadas;
     private int[] sensores;
     
     private SimpleEntry<Integer, Integer> posicionObjetivo = new SimpleEntry<>(1, 1); // Por defecto el objetivo está en la 0,0
@@ -26,6 +31,7 @@ public class Entorno {
         this.segundoMejor = Integer.MAX_VALUE;
         this.siguienteMovimiento = null;
         this.sensores = new int[PosiblesMovimientos.values().length];
+        this.decisionesTomadas = new ArrayList<PosiblesMovimientos>();
 
         this.actualizarSensores();
     }
@@ -53,6 +59,14 @@ public class Entorno {
             this.entornoListener.onPosicionAgenteActualizada(this.posicionAgente);
         }
     }  
+    
+    // ---------------------------------------------
+    // Actualiza la posición del agente.
+    public void listarDecisiones(){
+        if(this.decisionListener != null){
+            this.decisionListener.onDecisionTomada(this.decisionesTomadas);
+        }
+    }
     
     // --------------------------------- GETTERS ---------------------------------
     
@@ -104,11 +118,18 @@ public class Entorno {
     // Establecer la siguiente posición.
     public void setSiguienteMovimiento(PosiblesMovimientos siguienteMovimiento) {
         this.siguienteMovimiento = siguienteMovimiento;
+        this.decisionesTomadas.add(siguienteMovimiento);
     }
     
     // ---------------------------------------------
     // Establecer el Listener del entorno.
     public void setEntornoListener(EntornoListener listener){
         this.entornoListener = listener;
+    }
+    
+    // ---------------------------------------------
+    // Establecer el Listener de las decisiones tomadas.
+    public void setDecisionListener(DecisionListener listener){
+        this.decisionListener = listener;
     }
 }

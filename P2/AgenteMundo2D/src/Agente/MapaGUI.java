@@ -1,12 +1,12 @@
 
 package Agente;
 
-import jade.core.behaviours.Behaviour;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Rectangle;
 import java.util.AbstractMap.SimpleEntry;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.HashMap;
 import javax.swing.BorderFactory;
@@ -41,11 +41,21 @@ public class MapaGUI extends javax.swing.JFrame {
         etiquetasMapa = new HashMap<>();
         
         // Creamos un listener para el entorno.
-        this.entorno.setEntornoListener(new EntornoListener() {
+        this.entorno.setEntornoListener(new EntornoListener(){
             @Override
             public void onPosicionAgenteActualizada(SimpleEntry<Integer,Integer> pos){
                 SwingUtilities.invokeLater(() -> {
                     actualizarAgente(pos);
+                });
+            }
+        });
+        
+        // Creamos un listener para la siguiente decisión tomada.
+        this.entorno.setDecisionListener(new DecisionListener(){
+            @Override
+            public void onDecisionTomada(ArrayList<PosiblesMovimientos> decisionesTomadas){
+                SwingUtilities.invokeLater(() -> {
+                    visualizarAccion(decisionesTomadas);
                 });
             }
         });
@@ -269,24 +279,23 @@ public class MapaGUI extends javax.swing.JFrame {
     }
   
     // ------------------------------------------------------------------------------------
-    private void visualizarAccion(Behaviour behaviour) {
-        // Crear una nueva etiqueta con el texto proporcionado
-        JLabel nuevaEtiqueta = new JLabel(behaviour.getBehaviourName());
-
-        // Agregar la nueva etiqueta al panel
-        panelEtiquetas.add(nuevaEtiqueta);
-
-        // Agregar el panel al JScrollPane
-        jScrollPanelDecision.setViewportView(panelEtiquetas);
+    private void visualizarAccion(ArrayList<PosiblesMovimientos> decisionesTomadas) {
+            
+        for(int i = 0; i < decisionesTomadas.size(); i++){
+            // Agregar la nueva etiqueta al panel.
+            panelEtiquetas.add(new JLabel(decisionesTomadas.get(i).name()));
+            
+            // Agregar el panel al JScrollPane.
+            jScrollPanelDecision.setViewportView(panelEtiquetas);
+            jScrollPanelDecision.revalidate();
+            jScrollPanelDecision.repaint();
+        }
         
-        // Desplazar automáticamente hacia abajo el JScrollPane
-        SwingUtilities.invokeLater(() -> {
+        // Desplazar automáticamente hacia abajo el JScrollPane.
+        /*SwingUtilities.invokeLater(() -> {
             Rectangle bounds = nuevaEtiqueta.getBounds();
             jScrollPanelDecision.getViewport().scrollRectToVisible(bounds);
-        });
-
-        jScrollPanelDecision.revalidate();
-        jScrollPanelDecision.repaint();
+        });*/
     }
     
     // ------------------------------------------------------------------------------------
