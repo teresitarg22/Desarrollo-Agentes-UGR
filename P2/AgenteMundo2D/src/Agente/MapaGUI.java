@@ -43,19 +43,10 @@ public class MapaGUI extends javax.swing.JFrame {
         // Creamos un listener para el entorno.
         this.entorno.setEntornoListener(new EntornoListener(){
             @Override
-            public void onPosicionAgenteActualizada(SimpleEntry<Integer,Integer> pos){
+            public void onPosicionAgenteActualizada(SimpleEntry<Integer, Integer> posAgente, PosiblesMovimientos movimiento){
                 SwingUtilities.invokeLater(() -> {
-                    actualizarAgente(pos);
-                });
-            }
-        });
-        
-        // Creamos un listener para la siguiente decisión tomada.
-        this.entorno.setDecisionListener(new DecisionListener(){
-            @Override
-            public void onDecisionTomada(ArrayList<PosiblesMovimientos> decisionesTomadas){
-                SwingUtilities.invokeLater(() -> {
-                    visualizarAccion(decisionesTomadas);
+                    actualizarAgente(posAgente);
+                    visualizarAccion(movimiento);
                 });
             }
         });
@@ -279,23 +270,21 @@ public class MapaGUI extends javax.swing.JFrame {
     }
   
     // ------------------------------------------------------------------------------------
-    private void visualizarAccion(ArrayList<PosiblesMovimientos> decisionesTomadas) {
+    private void visualizarAccion(PosiblesMovimientos movimiento) {
             
-        for(int i = 0; i < decisionesTomadas.size(); i++){
-            // Agregar la nueva etiqueta al panel.
-            panelEtiquetas.add(new JLabel(decisionesTomadas.get(i).name()));
-            
-            // Agregar el panel al JScrollPane.
-            jScrollPanelDecision.setViewportView(panelEtiquetas);
-            jScrollPanelDecision.revalidate();
-            jScrollPanelDecision.repaint();
-        }
-        
+        JLabel nuevaEtiqueta = new JLabel(movimiento.name());
+        panelEtiquetas.add(nuevaEtiqueta); // Agregar la nueva etiqueta al panel.
+
+        jScrollPanelDecision.setViewportView(panelEtiquetas); // Agregar el panel al JScrollPane.
+
         // Desplazar automáticamente hacia abajo el JScrollPane.
-        /*SwingUtilities.invokeLater(() -> {
+        SwingUtilities.invokeLater(() -> {
             Rectangle bounds = nuevaEtiqueta.getBounds();
             jScrollPanelDecision.getViewport().scrollRectToVisible(bounds);
-        });*/
+        });
+        
+        jScrollPanelDecision.revalidate();
+        jScrollPanelDecision.repaint();
     }
     
     // ------------------------------------------------------------------------------------
@@ -396,10 +385,11 @@ public class MapaGUI extends javax.swing.JFrame {
     
     // ------------------------------------------------------------------------------------
     // Se establece un icono donde está la posición del agente y puntos por donde ya ha pasado.
-    public void actualizarAgente( SimpleEntry<Integer,Integer> pos ) {
+    public void actualizarAgente(SimpleEntry<Integer, Integer> posAgente) {
         etiquetasMapa.get(posAg).setIcon(new ImageIcon("src/Img/punto.png"));
-        posAg = pos;
+        this.posAg = posAgente;
         etiquetasMapa.get(posAg).setIcon(new ImageIcon("src/Img/agente.png"));
+        
     }
     
     // ------------------------------------------------------------------------------------
