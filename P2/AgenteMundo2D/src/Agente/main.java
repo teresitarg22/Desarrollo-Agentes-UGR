@@ -13,10 +13,6 @@ import jade.core.ProfileImpl;
 import jade.wrapper.AgentContainer;
 import jade.wrapper.AgentController;
 
-import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
 /**
  * @author Marta Rincón Otero
  */
@@ -31,7 +27,8 @@ public class main {
             return;
         }
         
-       // Si no ha habido errores creo el mapa.
+        // ---------------------------------------
+        // Si no ha habido errores creamos el mapa.
         String archivo = args[0];
         Mapa mapa = new Mapa(archivo);
         Entorno entorno = new Entorno(mapa);
@@ -39,8 +36,9 @@ public class main {
         MapaGUI mapaGUI = new MapaGUI(mapa,entorno);
         mapaGUI.setVisible(true);
         
+        // -------------------------------------------------------------------------
         mapaGUI.setMainListener(() -> {
-            // ------------------------------------------------------------------
+            // ------------------------------------------------------
             // Un vez incializado el mapa, iniciamos plataforma JADE.
             // Creamos contenedor.
             Runtime rt = Runtime.instance();
@@ -52,7 +50,8 @@ public class main {
             try {
                AgentController ac = container.createNewAgent("agentemundo2d","Agente.AgenteMundo2D", new Object[]{entorno} );
                 ac.start();
-            } catch (Exception e) {
+            } 
+            catch (Exception e){
                 e.printStackTrace();
             }
         });

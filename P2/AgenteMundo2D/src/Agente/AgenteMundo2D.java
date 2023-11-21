@@ -6,16 +6,12 @@ import jade.core.Agent;
 import Comportamientos.Vision;
 import Comportamientos.Mover;
 import Comportamientos.TomaDecision;
-import Comportamientos.IniciarEstado;
-import java.util.AbstractMap.SimpleEntry;
 
 
 /**
  * @author Diego Velazquez Ortuño
  */
 public class AgenteMundo2D extends Agent {
-    /*SimpleEntry<Integer,Integer> siguienteMovimiento = null;
-    Integer heuristica = null;*/
         
     // -------------------------------------------------
     // Inicialización del agente.
@@ -23,24 +19,16 @@ public class AgenteMundo2D extends Agent {
     public void setup(){
         Entorno entorno = (Entorno) getArguments()[0];
         
-        //addBehaviour( new IniciarEstado() );
         addBehaviour( new Vision(entorno) );
         addBehaviour( new TomaDecision(entorno) );
         addBehaviour( new Mover(entorno) );
     } 
     
-    // -----------------------------------------------------------
-    /*public SimpleEntry<Integer,Integer>getSiguienteMovimiento(){
-        return this.siguienteMovimiento;
+    // ----------------------------------------------------------------------------------------------------------
+    // Sobreescribimos el método takeDown() que es llamado por doDelete() para mostrar un mensaje de despedida.
+    @Override
+    public void takeDown(){
+        System.out.println("\nTerminando el agente...");
     }
-    
-    public Integer getHeuristica(){
-        return this.heuristica;
-    }
-    
-    public void setSiguienteMovimiento(SimpleEntry<Integer,Integer> movimiento, Integer heuristica){
-        this.siguienteMovimiento = movimiento;
-        this.heuristica = heuristica;
-    }*/
 }
 

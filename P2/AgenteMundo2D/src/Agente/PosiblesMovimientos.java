@@ -5,8 +5,7 @@ import java.util.HashMap;
 import java.util.AbstractMap.SimpleEntry;
 
 /**
- *
- * @author diego
+ * @author Diego Velázquez Ortuño.
  */
 public enum PosiblesMovimientos {
     ARRIBA(-1, 0),
@@ -18,38 +17,49 @@ public enum PosiblesMovimientos {
     ABAJO_DERECHA(1, 1),
     ABAJO_IZQUIERDA(1, -1);
     
-
     private final int x;
     private final int y;
 
-    // Mapa para mapear coordenadas a movimientos
+    // Mapa para mapear coordenadas a movimientos:
     private static final Map<SimpleEntry<Integer, Integer>, PosiblesMovimientos> coordenadasAMovimiento = new HashMap<>();
 
+    // --------------------------------------------------------------------
     static {
         for (PosiblesMovimientos movimiento : values()) {
             coordenadasAMovimiento.put(new SimpleEntry<>(movimiento.x, movimiento.y), movimiento);
         }
     }
 
+    // --------------------------------------------------------------------
+    // Constructor.
     PosiblesMovimientos(int x, int y) {
         this.x = x;
         this.y = y;
     }
 
-    public int x() {
-        return x;
-    }
-
-    public int y() {
-        return y;
-    }
-
+    // --------------------------------------------------------------------
+    // Sumar la posición pasada por parámetro.
     public SimpleEntry<Integer, Integer> sumar(SimpleEntry<Integer, Integer> pos) {
         return new SimpleEntry<>(this.x + pos.getKey(), this.y + pos.getValue());
     }
 
-    // Método para buscar la posición de un enumerado dado en el formato (x, y)
+    // --------------------------------------------------------------------
+    // Buscar la posición de un enumerado dado en el formato (x, y).
     public static PosiblesMovimientos getMovimiento(int x, int y) {
         return coordenadasAMovimiento.get(new SimpleEntry<>(x, y));
+    }
+    
+    // --------------------------------- GETTERS ---------------------------------
+    
+    // --------------------------------------------------------------------
+    // Obtener el valor de X
+    public int x() {
+        return x;
+    }
+    
+    // --------------------------------------------------------------------
+    // Obtener el valor de Y.
+    public int y() {
+        return y;
     }
 }

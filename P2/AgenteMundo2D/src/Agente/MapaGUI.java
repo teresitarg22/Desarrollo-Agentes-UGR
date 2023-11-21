@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package Agente;
 
 import jade.core.behaviours.Behaviour;
@@ -9,8 +6,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Rectangle;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.util.AbstractMap.SimpleEntry;
 import java.util.Map;
 import java.util.HashMap;
@@ -24,8 +19,7 @@ import javax.swing.SwingUtilities;
 
 
 /**
- *
- * @author marta
+ * @author Marta Rincón Otero
  */
 public class MapaGUI extends javax.swing.JFrame {
     private Mapa mapa;
@@ -36,11 +30,8 @@ public class MapaGUI extends javax.swing.JFrame {
     
     JPanel panelEtiquetas = new JPanel();
     
-    /**
-     * Creates new form MapaGUI
-     * @param mapa
-     * @param entorno
-     */
+    // ------------------------------------------------------------------------------------
+    // Constructor.
     public MapaGUI(Mapa mapa, Entorno entorno) {
         this.mapa = mapa;
         this.entorno = entorno;
@@ -59,9 +50,9 @@ public class MapaGUI extends javax.swing.JFrame {
         });
         
         visualizarMapa();
-        
     }
 
+    // ------------------------------------------------------------------------------------
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -276,6 +267,7 @@ public class MapaGUI extends javax.swing.JFrame {
          
     }
   
+    // ------------------------------------------------------------------------------------
     private void visualizarAccion(Behaviour behaviour) {
         // Crear una nueva etiqueta con el texto proporcionado
         JLabel nuevaEtiqueta = new JLabel(behaviour.getBehaviourName());
@@ -294,54 +286,56 @@ public class MapaGUI extends javax.swing.JFrame {
 
         jScrollPanelDecision.revalidate();
         jScrollPanelDecision.repaint();
-        
     }
     
+    // ------------------------------------------------------------------------------------
     private void jTextFieldCoordXAgentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldCoordXAgentActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldCoordXAgentActionPerformed
 
+    // ------------------------------------------------------------------------------------
     private void jTextFieldCoordXObjActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldCoordXObjActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldCoordXObjActionPerformed
 
+    // ------------------------------------------------------------------------------------
     private void jButtonSetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSetActionPerformed
-       // jButtonSelecMapAg.setEnabled(false);
-        //jButtonSelecMapObj.setEnabled(false);
-        
         String coordXStr = jTextFieldCoordXAgent.getText();
         String coordYStr = jTextFieldCoordYAgent.getText();
         
         String coordXObjStr = jTextFieldCoordXObj.getText();
         String coordYObjStr = jTextFieldCoordYObj.getText();
         
-        if ( (!coordXStr.isEmpty() && !coordYStr.isEmpty() ) && (!coordXObjStr.isEmpty() && !coordYObjStr.isEmpty() )) {
+        if ((!coordXStr.isEmpty() && !coordYStr.isEmpty()) && (!coordXObjStr.isEmpty() && !coordYObjStr.isEmpty())) {
             try {
-                // Convertir los valores de texto a enteros y convertirlos a SimpleEntry
-                int coordX = Integer.parseInt(coordXStr); // Agente
+                // Convertir los valores de texto a enteros y convertirlos a SimpleEntry.
+                // ----------- Agente -----------
+                int coordX = Integer.parseInt(coordXStr);
                 int coordY = Integer.parseInt(coordYStr);
                 posAg = new SimpleEntry<>(coordX, coordY);
 
-                int coordXObj = Integer.parseInt(coordXObjStr); // Objetivo
+                // ----------- Objetivo -----------
+                int coordXObj = Integer.parseInt(coordXObjStr);
                 int coordYObj = Integer.parseInt(coordYObjStr);
                 SimpleEntry<Integer, Integer> coordenadasObj = new SimpleEntry<>(coordXObj, coordYObj);
 
                 boolean esAccesibleAg = mapa.esAccesible(posAg);
                 boolean esAccesibleObj = mapa.esAccesible(posAg);
-                //Comprobar si es muro o no
-                if ( esAccesibleAg && esAccesibleObj) {
-                    // Llamar al método del agente con los valores
-                    entorno.setPosicionAgente(posAg);
+                
+                // -------------------
+                // Comprobamos si la celda es accesible o no (si hay un obstáculo o no).
+                if (esAccesibleAg && esAccesibleObj){
+                    entorno.setPosicionAgente(posAg); // Llamar al método del agente para establecer la posición.
                     
-                     //Establecer la imagen del agente en la casilla
+                    // Establecer la imagen del agente en la casilla
                     ImageIcon imagenAg = new ImageIcon("src/Img/agente.png");
                     JLabel labelAg = etiquetasMapa.get(posAg);
                     labelAg.setIcon(imagenAg);
                     
-                     //Llamo al método para establecer los valores del objetivo
+                    // Llamar al método del entorno para establecer la posición del objetivo.
                     entorno.setPosicionObjetivo(coordenadasObj);
 
-                    //Establecer la imagen del objetivo en la casilla
+                    // Establecer la imagen del objetivo en la casilla.
                     ImageIcon imagenObj = new ImageIcon("src/Img/objetivo.png");
                     JLabel labelObj = etiquetasMapa.get(coordenadasObj);
                     labelObj.setIcon(imagenObj);
@@ -351,7 +345,9 @@ public class MapaGUI extends javax.swing.JFrame {
                     jTextFieldCoordYAgent.setEnabled(false);
                     jTextFieldCoordXObj.setEnabled(false);
                     jTextFieldCoordYObj.setEnabled(false);
-                } else {
+                } 
+                // -------------------------------------
+                else{
                     String message = "Por favor, indique una casilla accesible para: ";
                     if (!esAccesibleAg)
                         message+= " *agente ";
@@ -361,36 +357,40 @@ public class MapaGUI extends javax.swing.JFrame {
                     
                     JOptionPane.showMessageDialog(this, message, "Error", JOptionPane.ERROR_MESSAGE);
                 }
-
-            } catch (NumberFormatException e) {
-                // Manejar error si los valores no son enteros
+            } 
+            // -------------------------------------
+            catch (NumberFormatException e){
+                // Manejar error si los valores no son enteros.
                 JOptionPane.showMessageDialog(this, "Por favor, ingrese valores enteros para X e Y.", "Error", JOptionPane.ERROR_MESSAGE);
             }
-        } else {
-            // Manejar error si algún campo está vacío
+        } 
+        // -------------------------------------
+        else{
+            // Manejar error si algún campo está vacío.
             JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos.", "Error", JOptionPane.ERROR_MESSAGE);
         }
-
     }//GEN-LAST:event_jButtonSetActionPerformed
     
+    // ------------------------------------------------------------------------------------
     private void jButtonIniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonIniciarActionPerformed
         if (mainListener != null) {
             mainListener.onIniciarButtonPreseed();
         }
     }//GEN-LAST:event_jButtonIniciarActionPerformed
 
-    
+    // ------------------------------------------------------------------------------------
     public void setMainListener(MainListener listener){
         this.mainListener = listener;
     }
     
+    // ------------------------------------------------------------------------------------
     public void actualizarAgente( SimpleEntry<Integer,Integer> pos ) {
         etiquetasMapa.get(posAg).setIcon(new ImageIcon("src/Img/punto.png"));
         posAg = pos;
         etiquetasMapa.get(posAg).setIcon(new ImageIcon("src/Img/agente.png"));
     }
     
-
+    // ------------------------------------------------------------------------------------
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonIniciar;
     private javax.swing.JButton jButtonSet;

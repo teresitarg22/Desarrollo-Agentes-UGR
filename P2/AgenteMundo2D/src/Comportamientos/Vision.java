@@ -2,7 +2,6 @@
 package Comportamientos;
 
 import jade.core.behaviours.SimpleBehaviour;
-
 import Agente.Entorno;
 
 /**
@@ -11,23 +10,26 @@ import Agente.Entorno;
 public class Vision extends SimpleBehaviour {
     private Entorno entorno;
     
+    // -------------------------------------------------------
+    // Constructor.
     public Vision(Entorno entorno){
         this.entorno = entorno;
     }
     
+    // -------------------------------------------------------
     @Override
     public void action(){
+        // Comprobamos si se ha alcanzado el objetivo.
         if (this.entorno.getPosicionAgente().equals(this.entorno.getPosicionObjetivo())) {
             System.out.println("¡Se ha alcanzado el objetivo!");
-            myAgent.doDelete();
-            //System.exit(0);
+            myAgent.doDelete(); // Eliminamos el agente una vez finalizado.
         }
-        else this.entorno.actualizarSensores();
+        else this.entorno.actualizarSensores(); // Actualizamos los sensores.
     }
     
+    // -------------------------------------------------------
     @Override
     public boolean done(){
-        //System.out.println("Visión");
         return false;
     }
 }

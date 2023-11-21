@@ -1,41 +1,34 @@
 package Comportamientos;
 
-// Realizamos los imports que necesitamos.
 import jade.core.behaviours.SimpleBehaviour;
 import java.util.AbstractMap.SimpleEntry;
 import Agente.AgenteMundo2D;
 import Agente.Entorno;
 
 /**
- * @author Sergio Muñoz Gómez y Teresa Fernanda Reyes García
+ * @author Sergio Muñoz Gómez 
+ * @author Teresa Fernanda Reyes García
  */
 public class Mover extends SimpleBehaviour{
     private Entorno entorno;
-    /*SimpleEntry<Integer,Integer> siguienteMovimiento = null;
-    Integer heuristica = null;*/
     
+    // ----------------------------------------------------------------------------------
+    // Constructor
     public Mover(Entorno entorno){
         this.entorno = entorno;
-        /*this.heuristica = ((AgenteMundo2D) myAgent).getHeuristica();
-        this.siguienteMovimiento = ((AgenteMundo2D) myAgent).getSiguienteMovimiento();*/
     }
     
     // ----------------------------------------------------------------------------------
-    // Se realiza el movimiento del agente según el siguienteMovimiento.
+    // Se realiza el movimiento del agente según el siguiente movimiento calculado.
     @Override
     public void action(){
-        // Actualizamos la posición del agente con las coordenadas dadas y actualizamos en nuestro mapa de pesos la heurística.
-        /*this.entorno.actualizarPosicionAgente(this.siguienteMovimiento.getKey(), this.siguienteMovimiento.getValue());
-        this.entorno.actualizarPesos(this.siguienteMovimiento, this.heuristica);*/
-        block(250); // - SÓLO USAR EN PRUBAS, tira muchisimo de cpu
-        this.entorno.actualizarPosicionAgente();
+        block(250); // Hacemos esto para poder mostrar en la GUI los pasos del agente lentamente.
+        this.entorno.actualizarPosicionAgente(); // Actualizamos la posición del agente.
     }
     
     // ----------------------------------------------------------------------------------
-    // 
     @Override
     public boolean done(){
-        //System.out.println("Mover");
         return false;
     }
 }
