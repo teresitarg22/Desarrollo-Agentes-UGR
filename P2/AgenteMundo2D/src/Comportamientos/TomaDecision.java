@@ -75,7 +75,7 @@ public class TomaDecision extends SimpleBehaviour{
                 
                 if (dist < distMin)
                     asignarMovimiento = true;
-                else if ( dist==distMin && ( distanciaManhattan(movimiento.sumar(pos),posObj) <= distanciaManhattan(siguienteMovimiento.sumar(pos),posObj) ) )
+                else if ( dist == distMin && (distanciaManhattan(movimiento.sumar(pos),posObj) <= distanciaManhattan(siguienteMovimiento.sumar(pos),posObj)))
                     asignarMovimiento = true;
                 
                 if (asignarMovimiento) {
@@ -106,10 +106,8 @@ public class TomaDecision extends SimpleBehaviour{
     // ----------------------------------------------------------------------------------
     // Calculamos la distancia Manhattan entre dos puntos teniendo en cuenta las diagonales.
     private int distanciaManhattanDiagonal(SimpleEntry<Integer,Integer> puntoA, SimpleEntry<Integer,Integer> puntoB){
-        
-        //return Math.abs(puntoB.getKey()-puntoA.getKey()) + Math.abs(puntoB.getValue()-puntoA.getValue());
-        
-        if(Math.abs(puntoB.getKey() - puntoA.getKey()) > Math.abs(puntoB.getValue() - puntoA.getValue()))
+                
+        if (Math.abs(puntoB.getKey() - puntoA.getKey()) > Math.abs(puntoB.getValue() - puntoA.getValue()))
             return Math.abs(puntoB.getKey() - puntoA.getKey());
         else
             return Math.abs(puntoB.getValue() - puntoA.getValue());
