@@ -64,15 +64,22 @@ public class TomaDecision extends SimpleBehaviour{
                     continue;
                 }
                 
+                SimpleEntry<Integer,Integer> posObj = this.entorno.getPosicionObjetivo();
+                
                 // Si el peso en esa siguiente posición ya estaba almacenado en la tabla de pesos no hace nada, de lo contrario calcula su peso como
                 // la distancia Manhattan entre esa nueva posición y el objetivo.
-                this.entorno.getPesos().putIfAbsent(movimiento.sumar(pos), distanciaManhattan(movimiento.sumar(pos),this.entorno.getPosicionObjetivo()));
+                this.entorno.getPesos().putIfAbsent(movimiento.sumar(pos), distanciaManhattanDiagonal(movimiento.sumar(pos),posObj));
                 int dist = this.entorno.getPesos().get(movimiento.sumar(pos));
                 
-                // Comprobamos si la distancia es menor que la distancia mínima.
-                if (dist < distMin) {
+                boolean asignarMovimiento = false;
+                
+                if (dist < distMin)
+                    asignarMovimiento = true;
+                else if ( dist==distMin && ( distanciaManhattan(movimiento.sumar(pos),posObj) <= distanciaManhattan(siguienteMovimiento.sumar(pos),posObj) ) )
+                    asignarMovimiento = true;
+                
+                if (asignarMovimiento) {
                     siguienteMovimiento = movimiento;
-                    
                     // Para poder guardar el segundo peso para posteriormente asignarlo al nodo que se abandona, necesitamos comprobar primero si el anterior tiene valor
                     // máximo, por lo que estamos en la primera iteración en la que se encuntra un mínimo y el segundo tendrá que ser también el primero (si no se encuentra un
                     // siguiente mínimo).
@@ -93,16 +100,19 @@ public class TomaDecision extends SimpleBehaviour{
     // ----------------------------------------------------------------------------------
     // Calculamos la distancia Manhattan entre dos puntos.
     private int distanciaManhattan(SimpleEntry<Integer,Integer> puntoA, SimpleEntry<Integer,Integer> puntoB){
-        int distancia = 0;
+        return Math.abs(puntoB.getKey()-puntoA.getKey()) + Math.abs(puntoB.getValue()-puntoA.getValue());
+    }
+    
+    // ----------------------------------------------------------------------------------
+    // Calculamos la distancia Manhattan entre dos puntos teniendo en cuenta las diagonales.
+    private int distanciaManhattanDiagonal(SimpleEntry<Integer,Integer> puntoA, SimpleEntry<Integer,Integer> puntoB){
         
-        if(Math.abs(puntoB.getKey() - puntoA.getKey()) < Math.abs(puntoB.getValue() - puntoA.getValue())){
-            distancia = Math.abs(puntoB.getKey() - puntoA.getKey()) + 1;
-        }
-        else{
-            distancia = Math.abs(puntoB.getValue() - puntoA.getValue()) + 1;
-        }
+        //return Math.abs(puntoB.getKey()-puntoA.getKey()) + Math.abs(puntoB.getValue()-puntoA.getValue());
         
-        return distancia;
+        if(Math.abs(puntoB.getKey() - puntoA.getKey()) > Math.abs(puntoB.getValue() - puntoA.getValue()))
+            return Math.abs(puntoB.getKey() - puntoA.getKey());
+        else
+            return Math.abs(puntoB.getValue() - puntoA.getValue());
     }
     
     // ----------------------------------------------------------------------------------
