@@ -8,7 +8,7 @@ import Agente.Entorno;
  * @author Diego Velázquez Ortuño
  */
 public class Vision extends SimpleBehaviour {
-    private Entorno entorno;
+    private final Entorno entorno;
     
     // -------------------------------------------------------
     // Constructor.

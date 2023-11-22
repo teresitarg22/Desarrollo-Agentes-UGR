@@ -2,22 +2,18 @@
 package Agente;
 
 import java.util.Map;
-import java.util.HashMap;
-import java.util.ArrayList; 
 import java.util.AbstractMap.SimpleEntry;
-
-
 
 /**
  * @ author Julia Cano Flores
  */
-public class Entorno {
-    private Mapa mapa;
+public final class Entorno {
+    private final Mapa mapa;
     private EntornoListener entornoListener;
-    private int[] sensores;
+    private final int[] sensores;
     
-    private SimpleEntry<Integer, Integer> posicionObjetivo = new SimpleEntry<>(1, 1); // Por defecto el objetivo está en la 0,0
-    private SimpleEntry<Integer, Integer> posicionAgente = new SimpleEntry<>(0, 0); // Por defecto el agente está en la 0,0
+    private SimpleEntry<Integer, Integer> posicionObjetivo; 
+    private SimpleEntry<Integer, Integer> posicionAgente; 
     
     private PosiblesMovimientos siguienteMovimiento; // Cuál va a ser el próximo movimiento.
     private int segundoMejor;
@@ -25,6 +21,9 @@ public class Entorno {
     // ---------------------------------------------
     // Constructor.
     public Entorno(Mapa mapa) {
+        this.posicionObjetivo = new SimpleEntry<>(1, 1); // Por defecto el objetivo está en la celda 1,1
+        this.posicionAgente = new SimpleEntry<>(0, 0); // Por defecto el agente está en la celda 0,0
+        
         this.mapa = mapa;
         this.segundoMejor = Integer.MAX_VALUE;
         this.siguienteMovimiento = null;
