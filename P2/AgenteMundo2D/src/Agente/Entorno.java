@@ -15,6 +15,7 @@ public class Entorno {
     private Mapa mapa;
     private EntornoListener entornoListener;
     private int[] sensores;
+    private int pasos;
     
     private SimpleEntry<Integer, Integer> posicionObjetivo = new SimpleEntry<>(1, 1); // Por defecto el objetivo está en la 0,0
     private SimpleEntry<Integer, Integer> posicionAgente = new SimpleEntry<>(0, 0); // Por defecto el agente está en la 0,0
@@ -29,6 +30,7 @@ public class Entorno {
         this.segundoMejor = Integer.MAX_VALUE;
         this.siguienteMovimiento = null;
         this.sensores = new int[PosiblesMovimientos.values().length];
+        this.pasos = 0;
 
         this.actualizarSensores();
     }
@@ -48,15 +50,27 @@ public class Entorno {
         SimpleEntry<Integer,Integer> coordenadas = this.siguienteMovimiento.sumar(this.posicionAgente);
 
         if (this.entornoListener != null) {
-            getPesos().put(this.posicionAgente, this.segundoMejor+1);
+            //this.mapa.getVecesPisada().put(this.posicionAgente, this.mapa.getVecesPisada().get(this.posicionAgente)+1);
+            
+            /*if (this.mapa.getVecesPisada().get(this.posicionAgente) > 3)
+                getPesos().put(this.posicionAgente, Integer.MAX_VALUE);
+            else*/
+                getPesos().put(this.posicionAgente, this.segundoMejor+1);
+            
             this.posicionAgente = coordenadas;
            
             // Llamamos al listener del entorno.
             this.entornoListener.onPosicionAgenteActualizada(this.siguienteMovimiento);
             
             this.siguienteMovimiento = null;
+            
+            this.pasos++;
         }
     }  
+    
+    public int getPasos() {
+        return this.pasos;
+    }
        
     // --------------------------------- GETTERS ---------------------------------
     

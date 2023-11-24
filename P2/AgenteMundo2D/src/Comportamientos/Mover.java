@@ -20,7 +20,7 @@ public class Mover extends SimpleBehaviour{
     // Se realiza el movimiento del agente según el siguiente movimiento calculado.
     @Override
     public void action(){
-        block(250); // Hacemos esto para poder mostrar en la GUI los pasos del agente lentamente.
+        //block(200); // Hacemos esto para poder mostrar en la GUI los pasos del agente lentamente.
         this.entorno.actualizarPosicionAgente(); // Actualizamos la posición del agente.
     }
     

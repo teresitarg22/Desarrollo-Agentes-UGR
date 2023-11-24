@@ -107,8 +107,6 @@ public class TomaDecision extends SimpleBehaviour{
     // Calculamos la distancia Manhattan entre dos puntos teniendo en cuenta las diagonales.
     private int distanciaManhattanDiagonal(SimpleEntry<Integer,Integer> puntoA, SimpleEntry<Integer,Integer> puntoB){
         
-        //return Math.abs(puntoB.getKey()-puntoA.getKey()) + Math.abs(puntoB.getValue()-puntoA.getValue());
-        
         if(Math.abs(puntoB.getKey() - puntoA.getKey()) > Math.abs(puntoB.getValue() - puntoA.getValue()))
             return Math.abs(puntoB.getKey() - puntoA.getKey());
         else

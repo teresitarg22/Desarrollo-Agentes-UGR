@@ -21,7 +21,7 @@ public class Vision extends SimpleBehaviour {
     public void action(){
         // Comprobamos si se ha alcanzado el objetivo.
         if (this.entorno.getPosicionAgente().equals(this.entorno.getPosicionObjetivo())) {
-            System.out.println("¡Se ha alcanzado el objetivo!");
+            System.out.println("¡Se ha alcanzado el objetivo! Nº pasos: " + this.entorno.getPasos());
             
             myAgent.doDelete(); // Eliminamos el agente una vez finalizado.
         }
