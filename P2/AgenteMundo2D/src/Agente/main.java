@@ -1,8 +1,9 @@
 /** 
- * ejecución EN MI CASO dentro de ~/.../JADE-all-4.6.0/jade/proyectos/Desarrollo-Agentes/P2/AgenteMundo2D$
+ * EJECUCIÓN DEL PROGRAMA:
+ * 
  * comando: java -cp dist/AgenteMundo2D.jar:dist/lib/jade.jar Agente.main mapWithVerticalWall.txt
  * formato: java -cp (ruta del jar del proyecto: ruta de jade) (paquete donde se encuentra el archivo main).main (nombre del mapa a usar)
- * Para indicar el mapa poner directamente el nombre del txt a probar
+ * Para indicar el mapa poner directamente el nombre del txt a probar.
  */
 
 package Agente;

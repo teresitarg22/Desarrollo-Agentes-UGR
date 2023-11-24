@@ -8,7 +8,7 @@ import Agente.Entorno;
  * @author Teresa Fernanda Reyes García
  */
 public class Mover extends SimpleBehaviour{
-    private Entorno entorno;
+    private final Entorno entorno;
     
     // ----------------------------------------------------------------------------------
     // Constructor

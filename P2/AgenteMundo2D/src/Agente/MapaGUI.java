@@ -22,11 +22,11 @@ import javax.swing.SwingUtilities;
  * @author Marta Rincón Otero
  */
 public class MapaGUI extends javax.swing.JFrame {
-    private Mapa mapa;
-    private Entorno entorno;
+    private final Mapa mapa;
+    private final Entorno entorno;
     private MainListener mainListener;
     private SimpleEntry<Integer,Integer> posAg;
-    private Map < SimpleEntry <Integer, Integer >, JLabel> etiquetasMapa;
+    private final Map < SimpleEntry <Integer, Integer >, JLabel> etiquetasMapa;
     
     JPanel panelEtiquetas = new JPanel();
     
@@ -35,6 +35,7 @@ public class MapaGUI extends javax.swing.JFrame {
     public MapaGUI(Mapa mapa, Entorno entorno) {
         this.mapa = mapa;
         this.entorno = entorno;
+        this.posAg = new SimpleEntry<>(0, 0); // Por defecto el agente está en la celda 0,0
         initComponents();
                
         panelEtiquetas.setLayout(new BoxLayout(panelEtiquetas, BoxLayout.Y_AXIS));

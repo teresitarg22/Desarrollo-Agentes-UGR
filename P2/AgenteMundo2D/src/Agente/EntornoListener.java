@@ -1,7 +1,5 @@
 package Agente;
 
-import java.util.AbstractMap.SimpleEntry;
-
 /**
  * @author Diego Velázquez Ortuño
  */

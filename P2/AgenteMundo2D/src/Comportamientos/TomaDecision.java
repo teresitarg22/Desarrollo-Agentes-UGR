@@ -75,7 +75,7 @@ public class TomaDecision extends SimpleBehaviour{
                 
                 if (dist < distMin)
                     asignarMovimiento = true;
-                else if ( dist==distMin && ( distanciaManhattan(movimiento.sumar(pos),posObj) <= distanciaManhattan(siguienteMovimiento.sumar(pos),posObj) ) )
+                else if ( dist == distMin && (distanciaManhattan(movimiento.sumar(pos),posObj) <= distanciaManhattan(siguienteMovimiento.sumar(pos),posObj)))
                     asignarMovimiento = true;
                 
                 if (asignarMovimiento) {
