@@ -1,1 +1,1 @@
-http://teresa-OMEN:7778/acc
+http://sergio:7778/acc
