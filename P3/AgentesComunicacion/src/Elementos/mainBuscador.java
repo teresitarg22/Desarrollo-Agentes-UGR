@@ -1,6 +1,8 @@
+package Elementos;
 
-// Añadimos al agente : RUDOLPH
-import Rudolph.AgenteRudolph;
+
+// Añadimos al agente: BUSCADOR
+import Buscador.AgenteBuscador;
 
 import jade.core.Runtime;
 import jade.core.Profile;
@@ -11,7 +13,7 @@ import jade.wrapper.AgentController;
 /**
  * @author Teresa Reyes García.
  */
-public class mainRudolph {
+public class mainBuscador {
     
     public static void main(String[] args) {
        // Creamos el contenedor de los agentes.
@@ -22,7 +24,7 @@ public class mainRudolph {
         
         // Crear y lanzar el agente. Uso de try catch para mostrar errores en caso de fallo.
         try {
-           AgentController ac = container.createNewAgent("AgenteRudolph","Rudolph.AgenteRudolph", null);
+           AgentController ac = container.createNewAgent("AgenteBuscador","Buscador.AgenteBuscador", null);
             ac.start();
         } 
         catch (Exception e){
