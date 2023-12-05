@@ -2,6 +2,7 @@
 package SantaClaus;
 
 import jade.core.Agent;
+import java.util.Random;
 
 /**
  *
@@ -20,5 +21,13 @@ public class AgenteSantaClaus extends Agent {
     @Override
     public void takeDown(){
         System.out.println("\nTerminando el agente Santa Claus...");
+    }
+    
+    // ----------------------------------------------------------------------------------------------------------
+    // Función que calcula si el Buscador es apto o no para recibir la misión.
+    private boolean somosAptos() {
+        // Queremos simular que el 80% son confiables (buenos) y el 20% no son confiables (malos).
+        Random random = new Random();
+        return random.nextDouble() <= 0.8;
     }
 }
