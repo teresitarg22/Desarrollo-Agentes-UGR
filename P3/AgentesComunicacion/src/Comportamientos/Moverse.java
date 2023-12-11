@@ -11,12 +11,12 @@ import Elementos.PosiblesMovimientos;
  * @author Teresa Fernanda Reyes García
  * @author Diego Velázquez Ortuño
  */
-public class TomaDecision extends SimpleBehaviour{
+public class Moverse extends SimpleBehaviour{
     private final Entorno entorno;
     
     // ----------------------------------------------------------------------------------
     // Constructor.
-    public TomaDecision(Entorno entorno){
+    public Moverse(Entorno entorno){
         this.entorno = entorno;
     }
     
@@ -29,6 +29,9 @@ public class TomaDecision extends SimpleBehaviour{
         if (siguienteMovimiento != null){
             // Establecemos el siguiente movimiento calculado.
             this.entorno.setSiguienteMovimiento(siguienteMovimiento);
+            
+            block(200); // Hacemos esto para poder mostrar en la GUI los pasos del agente lentamente.
+            this.entorno.actualizarPosicionAgente(); // Actualizamos la posición del agente.
         } 
         else{
             // ¿Es posible que no se encuentre siguiente movimiento?

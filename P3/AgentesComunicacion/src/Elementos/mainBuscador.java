@@ -14,9 +14,15 @@ import jade.wrapper.AgentController;
  * @author Teresa Reyes García.
  */
 public class mainBuscador {
+    private Entorno entorno;
+    
+    public mainBuscador(Entorno entorno){
+        this.entorno = entorno;
+    }
     
     public static void main(String[] args) {
-       // Creamos el contenedor de los agentes.
+        
+        // Creamos el contenedor de los agentes.
         Runtime rt = Runtime.instance();
 
         Profile p = new ProfileImpl();
