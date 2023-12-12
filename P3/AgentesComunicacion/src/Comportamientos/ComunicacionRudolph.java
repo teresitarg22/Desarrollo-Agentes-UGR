@@ -87,6 +87,11 @@ public class ComunicacionRudolph extends Behaviour{
                    ACLMessage respuestaInforme = informeBuscador.createReply();
                    respuestaInforme.setContent("¡Buen trabajo!");
                 } 
+                
+                // Si no quedan más renos, se borra el agente.
+                if(this.contadorRenos == 0){
+                    myAgent.doDelete();
+                }
                
                this.step = 1;
             break;

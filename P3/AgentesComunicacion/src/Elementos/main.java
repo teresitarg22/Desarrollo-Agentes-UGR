@@ -24,7 +24,10 @@ public class main {
         // -------------------------------------------------------------------------
         // Hacemos una llamada a la interfaz MainListener. 
         mapaGUI.setMainListener(() -> {
-            // Aquí tendríamos que iniciar los 3 agentes (?)
+                        
+            mainBuscador.main(entorno);
+            mainSantaClaus.main(entorno);
+            mainRudolph.main(entorno);
         });
     }
 }

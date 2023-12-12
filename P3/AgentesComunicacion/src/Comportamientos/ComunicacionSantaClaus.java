@@ -30,10 +30,10 @@ public class ComunicacionSantaClaus extends Behaviour{
                ACLMessage propuesta = myAgent.blockingReceive();
                
                if (somosAptos()) {
-                    // Si no hay misión por completar, avisamos a Rudolph para que termine.
-                    ACLMessage misionTerminada = new ACLMessage(ACLMessage.INFORM);
-                    misionTerminada.addReceiver(new AID("AgenteRudolph", AID.ISLOCALNAME));
-                    misionTerminada.setContent("Todo correcto.");
+                    ACLMessage mision = new ACLMessage(ACLMessage.INFORM);
+                    mision.addReceiver(new AID("AgenteRudolph", AID.ISLOCALNAME));
+                    mision.setContent("Todo correcto.");
+                    myAgent.send(mision);
                    
                     // --------------------------------------------
                     // Aceptar la propuesta y enviar un código
@@ -41,22 +41,26 @@ public class ComunicacionSantaClaus extends Behaviour{
                     aceptacion.setPerformative(ACLMessage.ACCEPT_PROPOSAL);
                     aceptacion.setContent(this.codigoSecreto);
                     myAgent.send(aceptacion);
+                    
+                    this.step = 1;
                 } 
                 else {
                     // Si no hay misión por completar, avisamos a Rudolph para que termine.
                     ACLMessage misionTerminada = new ACLMessage(ACLMessage.INFORM);
                     misionTerminada.addReceiver(new AID("AgenteRudolph", AID.ISLOCALNAME));
                     misionTerminada.setContent("Nos vamos.");
+                    myAgent.send(misionTerminada);
                    
                     // --------------------------------------------
                     // Rechazar la propuesta
                     ACLMessage rechazo = propuesta.createReply();
                     rechazo.setPerformative(ACLMessage.REJECT_PROPOSAL);
                     rechazo.setContent("Has sido malo.");
-                    myAgent.send(rechazo);  
+                    myAgent.send(rechazo);
+                    
+                    myAgent.doDelete();
                 }
-
-               this.step = 1;
+               
             break;
             
             // -------------------------------------------------------

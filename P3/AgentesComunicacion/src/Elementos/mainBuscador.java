@@ -1,9 +1,5 @@
 package Elementos;
 
-
-// Añadimos al agente: BUSCADOR
-import Buscador.AgenteBuscador;
-
 import jade.core.Runtime;
 import jade.core.Profile;
 import jade.core.ProfileImpl;
@@ -14,13 +10,8 @@ import jade.wrapper.AgentController;
  * @author Teresa Reyes García.
  */
 public class mainBuscador {
-    private Entorno entorno;
     
-    public mainBuscador(Entorno entorno){
-        this.entorno = entorno;
-    }
-    
-    public static void main(String[] args) {
+    public static void main(Entorno entorno) {
         
         // Creamos el contenedor de los agentes.
         Runtime rt = Runtime.instance();
@@ -30,7 +21,7 @@ public class mainBuscador {
         
         // Crear y lanzar el agente. Uso de try catch para mostrar errores en caso de fallo.
         try {
-           AgentController ac = container.createNewAgent("AgenteBuscador","Buscador.AgenteBuscador", null);
+           AgentController ac = container.createNewAgent("AgenteBuscador","Buscador.AgenteBuscador", new Object[]{entorno});
             ac.start();
         } 
         catch (Exception e){

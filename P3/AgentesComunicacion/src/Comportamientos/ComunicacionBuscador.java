@@ -44,13 +44,13 @@ public class ComunicacionBuscador extends Behaviour{
                 if (respuesta.getPerformative() == ACLMessage.ACCEPT_PROPOSAL) {
                     // Santa acepta la misión, recibimos un código:
                     this.codigo = respuesta.getContent();
+                    this.step = 2;
 
                 } else {
                     // Santa rechaza la misión.
                     myAgent.doDelete();
                 }
                 
-                this.step = 2;
             break;
             
             // -------------------------------------------------------
@@ -83,7 +83,7 @@ public class ComunicacionBuscador extends Behaviour{
                     if(motivo.equals("No hay más renos"))
                         this.step = 5;
                     else
-                        myAgent.doDelete();  // REVISARLO ¿cómo saben los demás agentes que hemos terminado?
+                        myAgent.doDelete(); // Q
                 }
             break; 
             
