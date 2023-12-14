@@ -12,18 +12,12 @@ import Elementos.Entorno;
 public class AgenteRudolph extends Agent {
     
     // -------------------------------------------------
-    // Constructor
-    public AgenteRudolph(){
-        Entorno entorno = (Entorno) getArguments()[0];
-        
-        addBehaviour(new ComunicacionRudolph());
-    }
-    
-    // -------------------------------------------------
     // Inicialización del agente Rudolph.
     @Override
     public void setup(){
+        Entorno entorno = (Entorno) getArguments()[0];
         
+        addBehaviour(new ComunicacionRudolph(entorno));
     } 
     
     // ----------------------------------------------------------------------------------------------------------

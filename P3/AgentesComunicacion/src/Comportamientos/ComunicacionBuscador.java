@@ -7,7 +7,7 @@ import jade.lang.acl.ACLMessage;
 import java.util.AbstractMap.SimpleEntry;
 
 /**
- * @author teresa
+ * @author Teresa Reyes García
  */
 public class ComunicacionBuscador extends Behaviour{
     private int step;
@@ -49,6 +49,7 @@ public class ComunicacionBuscador extends Behaviour{
                 } else {
                     // Santa rechaza la misión.
                     myAgent.doDelete();
+                    this.finish = true;
                 }
                 
             break;
@@ -58,6 +59,7 @@ public class ComunicacionBuscador extends Behaviour{
             case 2:
                 ACLMessage codigoRudolph = new ACLMessage(ACLMessage.REQUEST);
                 codigoRudolph.addReceiver(new AID("AgenteRudolph", AID.ISLOCALNAME));
+                codigoRudolph.setContent("¿Cuáles son las coordenadas del reno que tengo que buscar?");
                 codigoRudolph.setConversationId(this.codigo);
                 myAgent.send(codigoRudolph);
                 
@@ -74,7 +76,7 @@ public class ComunicacionBuscador extends Behaviour{
                     String coord = respuestaCodigo.getContent();
                     SimpleEntry<Integer, Integer> coordenadas = convertirCoordenadas(coord);
                     
-                    // HAY QUE LLAMAR AL COMPORTAMIENTO MOVERSE ETC
+                    // HAY QUE LLAMAR AL COMPORTAMIENTO MOVERSE !!!!
                     
                     this.step = 4;
                 } else {
@@ -82,34 +84,71 @@ public class ComunicacionBuscador extends Behaviour{
                     
                     if(motivo.equals("No hay más renos"))
                         this.step = 5;
-                    else
-                        myAgent.doDelete(); // Q
+                    else{
+                        myAgent.doDelete();
+                        this.finish = true;
+                    }
                 }
             break; 
             
             // -------------------------------------------------------
             // Informamos a Rudolph que hemos terminado con ese reno.
             case 4:
-                // MOVERÁ HASTA RUDOLPH 
+                // EL BUSCADOR SE MOVERÁ HASTA RUDOLPH 
                 
                 ACLMessage terminado = new ACLMessage(ACLMessage.INFORM);
                 terminado.addReceiver(new AID("AgenteRudolph", AID.ISLOCALNAME));
                 terminado.setContent("He terminado, ¿dónde está el siguiente reno?");
                 myAgent.send(terminado);
                 
-                this.step = 2;
+                ACLMessage informe = myAgent.blockingReceive();
+                
+                // Recibimos la respuesta informativa de Rudolph de buen trabajo.
+                if (informe.getPerformative() == ACLMessage.INFORM){
+                    this.step = 2;
+                }
             break;
             
             // -------------------------------------------------------
-            // No hay más renos, se mueve a Santa
+            // No hay más renos, le pedimos a Santa sus coordenadas
             case 5:
-                
-                // SE MUEVE HACIA SANTA E INFORMA.
-                
-                ACLMessage misionTerminada = new ACLMessage(ACLMessage.INFORM);
+                ACLMessage misionTerminada = new ACLMessage(ACLMessage.REQUEST);
                 misionTerminada.addReceiver(new AID("AgenteSantaClaus", AID.ISLOCALNAME));
-                misionTerminada.setContent("¡He terminado la misión!");
-                myAgent.doDelete();
+                misionTerminada.setContent("¡He terminado la misión! ¿Dónde estás?");
+                
+                this.step = 6;
+            break;
+            
+            // -------------------------------------------------------
+            // Recibimos las coordenadas de Santa y vamos hasta él.
+            case 6:
+                ACLMessage posSanta = myAgent.blockingReceive();
+                
+                if (posSanta.getPerformative() == ACLMessage.AGREE) {
+                    // Obtenemos las coordenadas de Santa para ir hasta él.
+                    String coord = posSanta.getContent();
+                    SimpleEntry<Integer, Integer> coordenadas = convertirCoordenadas(coord);
+                    
+                    // HAY QUE LLAMAR AL COMPORTAMIENTO MOVERSE PARA IR HASTA SANTA
+                    
+                    ACLMessage posSantaCompleta = new ACLMessage(ACLMessage.INFORM);
+                    posSantaCompleta.addReceiver(new AID("AgenteSantaClaus", AID.ISLOCALNAME));
+                    posSantaCompleta.setContent("¡Ya estoy aquí!");
+                    myAgent.send(posSantaCompleta);
+                    
+                    this.step = 7;
+                }  
+            break;
+            
+            // -------------------------------------------------------
+            // Recibimos el Hohoho de Santa y termina la misión.
+            case 7:
+                ACLMessage misionCompleta = myAgent.blockingReceive();
+                
+                if (misionCompleta.getPerformative() == ACLMessage.INFORM) {
+                    myAgent.doDelete();
+                    this.finish = true;
+                }
             break;
         }
     }
@@ -119,7 +158,7 @@ public class ComunicacionBuscador extends Behaviour{
         String[] separacion = coord.split(",");
         
         if(separacion.length == 2)
-            return new SimpleEntry<Integer, Integer>(Integer.parseInt(separacion[0]), Integer.parseInt(separacion[1]));
+            return new SimpleEntry<>(Integer.parseInt(separacion[0]), Integer.parseInt(separacion[1]));
         else
             return null;
     }

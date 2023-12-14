@@ -1,6 +1,7 @@
 
 package Comportamientos;
 
+import Elementos.Entorno;
 import jade.core.behaviours.Behaviour;
 import jade.lang.acl.ACLMessage;
 import java.util.AbstractMap;
@@ -8,24 +9,27 @@ import java.util.AbstractMap.SimpleEntry;
 import java.util.Random;
 
 /**
- *
- * @author teresa
+ * @author Teresa Reyes García
  */
 public class ComunicacionRudolph extends Behaviour{
     private int step;
     private boolean finish;
     private final String codigoSecreto;
     private int contadorRenos;
+    private final Entorno entorno;
     
-    public ComunicacionRudolph(){
+    // -----------------------------------------------------------------------------------
+    public ComunicacionRudolph(Entorno entorno){
         this.step = 0;
         this.finish = false;
         this.codigoSecreto = "NAVIDAD";
+        this.entorno = entorno;
         
         Random random = new Random();
         this.contadorRenos = random.nextInt(7) + 4; // Número random de renos entre 4 y 10.
     }
     
+    // -----------------------------------------------------------------------------------
     @Override
     public void action(){
         
@@ -34,8 +38,10 @@ public class ComunicacionRudolph extends Behaviour{
                 ACLMessage informeSanta = myAgent.blockingReceive();
                 
                 if(informeSanta.getPerformative() == ACLMessage.INFORM){
-                    if(informeSanta.getContent().equals("Nos vamos."))
+                    if(informeSanta.getContent().equals("Nos vamos.")){
                         myAgent.doDelete();
+                        this.finish = true;
+                    }
                     else
                         this.step = 1; // Todo correcto, comienza la misión.
                 }
@@ -51,7 +57,7 @@ public class ComunicacionRudolph extends Behaviour{
                     if(this.contadorRenos > 0){
                         ACLMessage respuesta = codigoBuscador.createReply();
                         respuesta.setPerformative(ACLMessage.AGREE);
-                        SimpleEntry<Integer, Integer> coordenadasReno = obtenerCoordenadasReno();
+                        SimpleEntry<Integer, Integer> coordenadasReno = this.entorno.generarCoordenadas();
                     
                         // Convierte las coordenadas a una cadena para enviarlas.
                         String coord = coordenadasReno.getKey() + "," + coordenadasReno.getValue();
@@ -59,23 +65,29 @@ public class ComunicacionRudolph extends Behaviour{
 
                         myAgent.send(respuesta);
                         this.contadorRenos--;
-                    }
-                }
-               else{
-                    ACLMessage respuesta = codigoBuscador.createReply();
-                    respuesta.setPerformative(ACLMessage.CANCEL);
-                    
-                    if(this.contadorRenos == 0){
-                        respuesta.setContent("No hay más renos.");
+                        
+                        this.step = 2;
                     }
                     else{
-                        respuesta.setContent("Código incorrecto.");
+                        // No hay más renos, informamos al buscador.
+                        ACLMessage respuesta = codigoBuscador.createReply();
+                        respuesta.setPerformative(ACLMessage.INFORM);
+                        respuesta.setContent("No hay más renos.");
+                        myAgent.send(respuesta);
+                        
+                        myAgent.doDelete();
+                        this.finish = true;
                     }
+                }
+               else {
+                    ACLMessage respuesta = codigoBuscador.createReply();
+                    respuesta.setPerformative(ACLMessage.INFORM);
+                    respuesta.setContent("Código incorrecto.");
                     
+
                     myAgent.send(respuesta);
                }
 
-                this.step = 2;
             break;
             
             // -------------------------------------------------------
@@ -86,31 +98,15 @@ public class ComunicacionRudolph extends Behaviour{
                 if (informeBuscador.getPerformative() == ACLMessage.INFORM){
                    ACLMessage respuestaInforme = informeBuscador.createReply();
                    respuestaInforme.setContent("¡Buen trabajo!");
-                } 
-                
-                // Si no quedan más renos, se borra el agente.
-                if(this.contadorRenos == 0){
-                    myAgent.doDelete();
+                   
+                   this.step = 1;
                 }
-               
-               this.step = 1;
+                              
             break;
         }
     }
     
-    // ----------------------------------------------------------------------------------------------------------
-    // Generamos de manera aleatoria las coordenadas de los renos que tiene que buscar el Agente Buscador.
-    private AbstractMap.SimpleEntry<Integer, Integer> obtenerCoordenadasReno() {
-        Random random = new Random();
-        
-        // AÑADIR QUE NO ESTÉN EN LA POSICIÓN DE SANTA O DE RUDOLPH
-        // CAMBIAR ESTO PARA QUE EL NÚMERO DE CELDAS SE OBTENGA DEL MAPA (NUM DE FILAS, NUM COLUMNAS)
-        
-        int x = random.nextInt(40);  // Coordenada x entre 0 y 39
-        int y = random.nextInt(40);  // Coordenada y entre 0 y 39
-        return new AbstractMap.SimpleEntry<>(x, y);
-    }
-    
+    // -----------------------------------------------------------------------------------
     @Override
     public boolean done(){
         return this.finish;

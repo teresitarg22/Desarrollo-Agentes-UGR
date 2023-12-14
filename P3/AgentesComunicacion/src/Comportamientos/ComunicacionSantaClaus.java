@@ -1,25 +1,31 @@
 
 package Comportamientos;
 
+import Elementos.Entorno;
 import jade.core.AID;
 import jade.core.behaviours.Behaviour;
 import jade.lang.acl.ACLMessage;
+import java.util.AbstractMap;
 import java.util.Random;
 
 /**
- * @author teresa
+ * @author Teresa Reyes García
  */
 public class ComunicacionSantaClaus extends Behaviour{
     private int step;
     private boolean finish;
     private final String codigoSecreto;
+    private final Entorno entorno;
     
-    public ComunicacionSantaClaus(){
+    // -----------------------------------------------------------------------------------
+    public ComunicacionSantaClaus(Entorno entorno){
         this.step = 0;
         this.finish = false;
         this.codigoSecreto = "NAVIDAD";
+        this.entorno = entorno;
     }
     
+    // -----------------------------------------------------------------------------------
     @Override
     public void action(){
         
@@ -59,6 +65,7 @@ public class ComunicacionSantaClaus extends Behaviour{
                     myAgent.send(rechazo);
                     
                     myAgent.doDelete();
+                    this.finish = true;
                 }
                
             break;
@@ -66,11 +73,35 @@ public class ComunicacionSantaClaus extends Behaviour{
             // -------------------------------------------------------
             // Santa recibe el informe del buscador de que ha terminado.
             case 1:
-               ACLMessage informeFinal = myAgent.blockingReceive();
+               ACLMessage misionTerminada = myAgent.blockingReceive();
                
-               if (informeFinal.getPerformative() == ACLMessage.INFORM){
-                   myAgent.doDelete();
+               if (misionTerminada.getPerformative() == ACLMessage.REQUEST){
+                    ACLMessage pos = misionTerminada.createReply();
+                    pos.setPerformative(ACLMessage.AGREE);
+
+                    AbstractMap.SimpleEntry<Integer, Integer> coordenadasSanta = this.entorno.generarCoordenadas();
+                    
+                    // Convierte las coordenadas a una cadena para enviarlas.
+                    String coord = coordenadasSanta.getKey() + "," + coordenadasSanta.getValue();
+                    pos.setContent(coord);
+                    myAgent.send(pos);
+                    
+                    this.step = 2;
                }
+            break;
+            
+            case 2:
+                ACLMessage fin = myAgent.blockingReceive();
+                
+                if (fin.getPerformative() == ACLMessage.INFORM) {
+                    ACLMessage despedida = new ACLMessage(ACLMessage.INFORM);
+                    despedida.addReceiver(new AID("AgenteBuscador", AID.ISLOCALNAME));
+                    despedida.setContent("HoHoHo!");
+                    myAgent.send(despedida);
+                    
+                    myAgent.doDelete();
+                    this.finish = true;
+                }
             break;
         }
     }
@@ -83,6 +114,7 @@ public class ComunicacionSantaClaus extends Behaviour{
         return random.nextDouble() <= 0.8;
     }
     
+    // -----------------------------------------------------------------------------------
     @Override
     public boolean done(){
         return this.finish;

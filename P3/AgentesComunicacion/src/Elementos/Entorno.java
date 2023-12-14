@@ -1,8 +1,10 @@
 
 package Elementos;
 
+import java.util.AbstractMap;
 import java.util.Map;
 import java.util.AbstractMap.SimpleEntry;
+import java.util.Random;
 
 /**
  * @ author Julia Cano Flores
@@ -10,7 +12,7 @@ import java.util.AbstractMap.SimpleEntry;
 public final class Entorno {
     private final Mapa mapa;
     private EntornoListener entornoListener;
-    private int[] sensores;
+    private final int[] sensores;
     private int pasos;
     
     private SimpleEntry<Integer, Integer> posicionObjetivo; 
@@ -65,11 +67,20 @@ public final class Entorno {
             
             this.pasos++;
         }
-    }  
-    
-    public int getPasos() {
-        return this.pasos;
     }
+    
+    // ----------------------------------------------------------------------------------------------------------
+    // Generamos de manera aleatoria las coordenadas de los renos que tiene que buscar el Agente Buscador.
+
+    public AbstractMap.SimpleEntry<Integer, Integer> generarCoordenadas() {
+        Random random = new Random();
+        
+        int x = random.nextInt(this.mapa.getFilas());  // Coordenada x : Número de filas del mapa.
+        int y = random.nextInt(this.mapa.getColumnas());  // Coordenada y : Número de columnas del mapa.
+        
+        return new AbstractMap.SimpleEntry<>(x, y);
+    }
+ 
        
     // --------------------------------- GETTERS ---------------------------------
     
@@ -77,6 +88,12 @@ public final class Entorno {
     // Obtener los sensores.
     public int[] getSensores(){
         return sensores; 
+    }
+    
+    // ---------------------------------------------
+    // Obtener los pasos realizados.
+    public int getPasos() {
+        return this.pasos;
     }
     
     // ---------------------------------------------

@@ -7,7 +7,6 @@ import Elementos.Entorno;
 import jade.core.Agent;
 
 /**
- *
  * @author Teresa Reyes García.
  */
 public class AgenteSantaClaus extends Agent {
@@ -17,7 +16,7 @@ public class AgenteSantaClaus extends Agent {
     public void setup(){
         Entorno entorno = (Entorno) getArguments()[0];
         
-        addBehaviour(new ComunicacionSantaClaus());
+        addBehaviour(new ComunicacionSantaClaus(entorno));
     } 
     
     // ----------------------------------------------------------------------------------------------------------
