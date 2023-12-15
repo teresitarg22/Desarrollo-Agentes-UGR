@@ -52,12 +52,8 @@ public final class Entorno {
 
         if (this.entornoListener != null) {
             //this.mapa.getVecesPisada().put(this.posicionAgente, this.mapa.getVecesPisada().get(this.posicionAgente)+1);
-            
-            /*if (this.mapa.getVecesPisada().get(this.posicionAgente) > 3)
-                getPesos().put(this.posicionAgente, Integer.MAX_VALUE);
-            else*/
-                getPesos().put(this.posicionAgente, this.segundoMejor+1);
-            
+          
+            getPesos().put(this.posicionAgente, this.segundoMejor+1);
             this.posicionAgente = coordenadas;
            
             // Llamamos al listener del entorno.
