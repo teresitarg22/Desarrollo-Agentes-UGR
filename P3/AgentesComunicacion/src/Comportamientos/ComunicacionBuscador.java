@@ -1,6 +1,7 @@
 
 package Comportamientos;
 
+import Elementos.Entorno;
 import jade.core.AID;
 import jade.core.behaviours.Behaviour;
 import jade.lang.acl.ACLMessage;
@@ -13,12 +14,15 @@ public class ComunicacionBuscador extends Behaviour{
     private int step;
     private boolean finish;
     private String codigo;
+    private final Entorno entorno;
     
     // -----------------------------------------------------------------------------------
-    public ComunicacionBuscador(){
+    public ComunicacionBuscador(Entorno entorno){
         this.step = 0;
         this.finish = false;
         this.codigo = null; 
+        
+        this.entorno = entorno;
     }
     
     // -----------------------------------------------------------------------------------

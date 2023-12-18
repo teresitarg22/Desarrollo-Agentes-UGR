@@ -4,7 +4,6 @@ package Comportamientos;
 import Elementos.Entorno;
 import jade.core.behaviours.Behaviour;
 import jade.lang.acl.ACLMessage;
-import java.util.AbstractMap;
 import java.util.AbstractMap.SimpleEntry;
 import java.util.Random;
 

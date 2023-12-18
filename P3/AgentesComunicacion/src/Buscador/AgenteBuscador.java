@@ -16,7 +16,7 @@ public class AgenteBuscador extends Agent {
     public void setup(){
         Entorno entorno = (Entorno) getArguments()[0];
         
-        addBehaviour(new ComunicacionBuscador());
+        addBehaviour(new ComunicacionBuscador(entorno));
     } 
     
     // ----------------------------------------------------------------------------------------------------------
