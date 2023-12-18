@@ -21,6 +21,6 @@ Contamos con tres elementos principales en nuestro proyecto: el agente, el entor
 
 Hemos hecho uso de interfaces para escuchar eventos relacionados con la interfaz gráfica. Contamos con un listener para el entorno y otro para el main. Por otro lado, para la gestión de los posibles movimientos disponibles para el agente (contando con diagonales), en un entorno bidimensional, hemos hecho uso de un enumerado. El directorio de mapas contiene archivos de texto que representan diferentes configuraciones de mapas, desde entornos sin obstáculos hasta entornos con obstáculos complejos.
 
-Dejamos la documentación de la primera iteración en :scroll: [Práctica 2](P2/Documentación/Mmeoria_P2.pdf)
+Dejamos la documentación de la segunda práctica en :scroll: [Práctica 2](P2/Documentación/Memoria_P2.pdf)
 
 ### :envelope: **P3** -- Comunicación entre agentes.
