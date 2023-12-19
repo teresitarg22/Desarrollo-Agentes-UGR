@@ -53,6 +53,7 @@ public class MapaGUI extends javax.swing.JFrame {
                 });
             }
         });
+        this.
         
         visualizarMapa();
     }
