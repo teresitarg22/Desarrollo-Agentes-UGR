@@ -50,7 +50,7 @@ public final class Entorno {
     
     // ---------------------------------------------
     // Actualiza la posición del agente.
-    public void actualizarPosicionAgente(){     
+    public void actualizarPosicionAgente(){
         // Permite mover arriba, abajo, derecha, izquierda y diagonales.
         //SimpleEntry<Integer,Integer> coordenadas = this.siguienteMovimiento.sumar(this.posicionBuscador);
 
@@ -67,6 +67,14 @@ public final class Entorno {
             
             //this.pasos++;
         }
+    }
+    
+    // ---------------------------------------------
+    // Añade la acción tomada en el protocolo.
+    public void setAccion(String accion) {
+        System.out.print("ugu");
+        this.entornoListener.onVisualizarAccion(accion);
+        System.out.print("NO");
     }
     
     // ----------------------------------------------------------------------------------------------------------

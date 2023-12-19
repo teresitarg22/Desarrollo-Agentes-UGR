@@ -49,7 +49,12 @@ public class MapaGUI extends javax.swing.JFrame {
             public void onPosicionAgenteActualizada(PosiblesMovimientos movimiento){
                 SwingUtilities.invokeLater(() -> {
                     actualizarAgente(movimiento);
-                    //visualizarAccion(movimiento);
+                });
+            }
+            @Override
+            public void onVisualizarAccion(String accion){
+                SwingUtilities.invokeLater(() -> {
+                    visualizarAccion(accion);
                 });
             }
         });
@@ -280,9 +285,8 @@ public class MapaGUI extends javax.swing.JFrame {
     }
   
     // ------------------------------------------------------------------------------------
-    private void visualizarAccion(PosiblesMovimientos movimiento) {
-            
-        JLabel nuevaEtiqueta = new JLabel(movimiento.name());
+    private void visualizarAccion(String accion) {
+        JLabel nuevaEtiqueta = new JLabel(accion);
         panelEtiquetas.add(nuevaEtiqueta); // Agregar la nueva etiqueta al panel.
 
         jScrollPanelDecision.setViewportView(panelEtiquetas); // Agregar el panel al JScrollPane.
@@ -315,7 +319,7 @@ public class MapaGUI extends javax.swing.JFrame {
         String coordXObjStr = jTextFieldCoordXObj.getText();
         String coordYObjStr = jTextFieldCoordYObj.getText();
         
-        SimpleEntry<Integer, Integer> posObjetivo;
+        SimpleEntry<Integer, Integer> posRudolph;
         
         if ((!coordXStr.isEmpty() && !coordYStr.isEmpty()) && (!coordXObjStr.isEmpty() && !coordYObjStr.isEmpty())) {
             // Convertir los valores de texto a enteros y convertirlos a SimpleEntry.
@@ -327,16 +331,16 @@ public class MapaGUI extends javax.swing.JFrame {
             // ----------- Objetivo -----------
             int coordXObj = Integer.parseInt(coordXObjStr);
             int coordYObj = Integer.parseInt(coordYObjStr);
-            posObjetivo = new SimpleEntry<>(coordXObj, coordYObj);
+            posRudolph = new SimpleEntry<>(coordXObj, coordYObj);
         }
         else {
             posBuscador = this.entorno.getPosicionBuscador();
-            posObjetivo = this.entorno.getPosicionRudolph();
+            posRudolph = this.entorno.getPosicionRudolph();
         }
         
         try {
             boolean esAccesibleAg = mapa.esAccesible(posBuscador);
-            boolean esAccesibleObj = mapa.esAccesible(posObjetivo);
+            boolean esAccesibleObj = mapa.esAccesible(posRudolph);
 
             // -------------------
             // Comprobamos si la celda es accesible o no (si hay un obstáculo o no).
@@ -349,11 +353,12 @@ public class MapaGUI extends javax.swing.JFrame {
                 labelBuscador.setIcon(scale("img/Buscador.png"));
                 
                 // Llamar al método del entorno para establecer la posición del objetivo.
-                entorno.setPosicionObjetivo(posObjetivo);
+                entorno.setPosicionRudolph(posRudolph);
+                entorno.setPosicionObjetivo(posRudolph);
 
                 // Establecer la imagen del objetivo en la casilla.
                 //ImageIcon imagenRudolph = new ImageIcon("img/Rudolph.png");
-                JLabel labelRudolph = etiquetasMapa.get(posObjetivo);
+                JLabel labelRudolph = etiquetasMapa.get(posRudolph);
                 labelRudolph.setIcon(scale("img/Rudolph.png"));
 
                 jButtonSet.setEnabled(false);
