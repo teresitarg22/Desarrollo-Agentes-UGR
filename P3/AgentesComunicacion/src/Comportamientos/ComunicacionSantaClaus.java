@@ -2,6 +2,7 @@
 package Comportamientos;
 
 import Elementos.Entorno;
+import SantaClaus.AgenteSantaClaus;
 import jade.core.AID;
 import jade.core.behaviours.Behaviour;
 import jade.lang.acl.ACLMessage;
@@ -79,11 +80,12 @@ public class ComunicacionSantaClaus extends Behaviour{
                     ACLMessage pos = misionTerminada.createReply();
                     pos.setPerformative(ACLMessage.AGREE);
 
-                    AbstractMap.SimpleEntry<Integer, Integer> coordenadasSanta = this.entorno.generarCoordenadas();
+                    //AbstractMap.SimpleEntry<Integer, Integer> coordenadasSanta = this.entorno.generarCoordenadas();
                     
                     // Convierte las coordenadas a una cadena para enviarlas.
-                    String coord = coordenadasSanta.getKey() + "," + coordenadasSanta.getValue();
-                    pos.setContent(coord);
+                    //String coord = coordenadasSanta.getKey() + "," + coordenadasSanta.getValue();
+                    //pos.setContent(coord);
+                    pos.setContent(((AgenteSantaClaus)myAgent).getPosicion());
                     myAgent.send(pos);
                     
                     this.step = 2;

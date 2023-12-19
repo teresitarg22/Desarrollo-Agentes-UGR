@@ -2,6 +2,7 @@
 package Buscador;
 
 import Comportamientos.ComunicacionBuscador;
+import Comportamientos.Moverse;
 import jade.core.Agent;
 import Elementos.Entorno;
 
@@ -17,6 +18,7 @@ public class AgenteBuscador extends Agent {
         Entorno entorno = (Entorno) getArguments()[0];
         
         addBehaviour(new ComunicacionBuscador(entorno));
+        addBehaviour(new Moverse(entorno));
     } 
     
     // ----------------------------------------------------------------------------------------------------------

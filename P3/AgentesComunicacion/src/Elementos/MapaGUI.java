@@ -24,8 +24,9 @@ import javax.swing.SwingUtilities;
 public class MapaGUI extends javax.swing.JFrame {
     private final Mapa mapa;
     private final Entorno entorno;
+    private final int TamCelda; // Tamaño del largo de la celda cuadrada
     private MainListener mainListener;
-    private SimpleEntry<Integer,Integer> posAg;
+    private SimpleEntry<Integer,Integer> posBuscador;
     private final Map < SimpleEntry <Integer, Integer >, JLabel> etiquetasMapa;
     
     JPanel panelEtiquetas = new JPanel();
@@ -35,7 +36,8 @@ public class MapaGUI extends javax.swing.JFrame {
     public MapaGUI(Mapa mapa, Entorno entorno) {
         this.mapa = mapa;
         this.entorno = entorno;
-        this.posAg = new SimpleEntry<>(0, 0); // Por defecto el agente está en la celda 0,0
+        this.TamCelda = (int)((30*30)/this.mapa.getFilas());
+        this.posBuscador = new SimpleEntry<>(0, 0); // Por defecto el agente está en la celda 0,0
         initComponents();
                
         panelEtiquetas.setLayout(new BoxLayout(panelEtiquetas, BoxLayout.Y_AXIS));
@@ -47,7 +49,7 @@ public class MapaGUI extends javax.swing.JFrame {
             public void onPosicionAgenteActualizada(PosiblesMovimientos movimiento){
                 SwingUtilities.invokeLater(() -> {
                     actualizarAgente(movimiento);
-                    visualizarAccion(movimiento);
+                    //visualizarAccion(movimiento);
                 });
             }
         });
@@ -87,6 +89,7 @@ public class MapaGUI extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(0, 0, 0));
+        setResizable(false);
 
         jLabelCoordInicAgent.setFont(new java.awt.Font("sansserif", 1, 16)); // NOI18N
         jLabelCoordInicAgent.setText("Coordenadas inicio agente:");
@@ -124,6 +127,9 @@ public class MapaGUI extends javax.swing.JFrame {
 
         jSeparator1.setForeground(new java.awt.Color(0, 0, 0));
 
+        jPanelMapa.setName(""); // NOI18N
+        jPanelMapa.setPreferredSize(new java.awt.Dimension(504, 504));
+
         javax.swing.GroupLayout jPanelMapaLayout = new javax.swing.GroupLayout(jPanelMapa);
         jPanelMapa.setLayout(jPanelMapaLayout);
         jPanelMapaLayout.setHorizontalGroup(
@@ -132,7 +138,7 @@ public class MapaGUI extends javax.swing.JFrame {
         );
         jPanelMapaLayout.setVerticalGroup(
             jPanelMapaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 504, Short.MAX_VALUE)
         );
 
         jLabelDecision.setFont(new java.awt.Font("sansserif", 0, 15)); // NOI18N
@@ -193,46 +199,47 @@ public class MapaGUI extends javax.swing.JFrame {
                                     .addComponent(jLabelDecision))
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(85, 85, 85)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jButtonSet, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButtonIniciar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jButtonIniciar, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addComponent(jLabelCoordInicAgent)
-                .addGap(19, 19, 19)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabelCoordXAgent)
-                    .addComponent(jTextFieldCoordXAgent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabelCoordYAgent)
-                    .addComponent(jTextFieldCoordYAgent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(24, 24, 24)
-                .addComponent(jLabelCoordInicObj)
-                .addGap(17, 17, 17)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabelCoordXObj)
-                    .addComponent(jTextFieldCoordXObj, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabelCoordYObj)
-                    .addComponent(jTextFieldCoordYObj, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButtonSet)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButtonIniciar)
-                .addGap(13, 13, 13)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabelDecision)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPanelDecision, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(25, 25, 25)
+                        .addComponent(jLabelCoordInicAgent)
+                        .addGap(19, 19, 19)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabelCoordXAgent)
+                            .addComponent(jTextFieldCoordXAgent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabelCoordYAgent)
+                            .addComponent(jTextFieldCoordYAgent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(24, 24, 24)
+                        .addComponent(jLabelCoordInicObj)
+                        .addGap(17, 17, 17)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabelCoordXObj)
+                            .addComponent(jTextFieldCoordXObj, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabelCoordYObj)
+                            .addComponent(jTextFieldCoordYObj, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(13, 13, 13)
+                        .addComponent(jButtonSet)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButtonIniciar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabelDecision)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPanelDecision, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jPanelMapa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanelMapa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
         );
 
         pack();
@@ -245,9 +252,9 @@ public class MapaGUI extends javax.swing.JFrame {
         jPanelMapa.setLayout(new GridLayout(filas, columnas));
          
         // Establezco que el tamaño del jPanel para que el Gridlayout se extienda entero 
-        jPanelMapa.setPreferredSize(new Dimension(jPanelMapa.getWidth(), jPanelMapa.getHeight()));
+        jPanelMapa.setPreferredSize(new Dimension(filas*this.TamCelda,columnas*this.TamCelda/*jPanelMapa.getWidth(), jPanelMapa.getHeight()*/));
     
-         for (int i = 0; i < filas; i++) {
+        for (int i = 0; i < filas; i++) {
             for (int j = 0; j < columnas; j++) {
                 JLabel label = new JLabel();
                 
@@ -267,7 +274,8 @@ public class MapaGUI extends javax.swing.JFrame {
                 etiquetasMapa.put(new SimpleEntry<>(i, j), label);
             }
         }
-         
+        
+        this.setSize(new Dimension(columnas*this.TamCelda+350/*columnas*(int)(this.TamCelda*0.47)*/,filas*this.TamCelda+50/*filas*(int)(this.TamCelda*0.07)*/));
     }
   
     // ------------------------------------------------------------------------------------
@@ -306,69 +314,76 @@ public class MapaGUI extends javax.swing.JFrame {
         String coordXObjStr = jTextFieldCoordXObj.getText();
         String coordYObjStr = jTextFieldCoordYObj.getText();
         
+        SimpleEntry<Integer, Integer> posObjetivo;
+        
         if ((!coordXStr.isEmpty() && !coordYStr.isEmpty()) && (!coordXObjStr.isEmpty() && !coordYObjStr.isEmpty())) {
-            try {
-                // Convertir los valores de texto a enteros y convertirlos a SimpleEntry.
-                // ----------- Agente -----------
-                int coordX = Integer.parseInt(coordXStr);
-                int coordY = Integer.parseInt(coordYStr);
-                posAg = new SimpleEntry<>(coordX, coordY);
+            // Convertir los valores de texto a enteros y convertirlos a SimpleEntry.
+            // ----------- Agente -----------
+            int coordX = Integer.parseInt(coordXStr);
+            int coordY = Integer.parseInt(coordYStr);
+            posBuscador = new SimpleEntry<>(coordX, coordY);
 
-                // ----------- Objetivo -----------
-                int coordXObj = Integer.parseInt(coordXObjStr);
-                int coordYObj = Integer.parseInt(coordYObjStr);
-                SimpleEntry<Integer, Integer> coordenadasObj = new SimpleEntry<>(coordXObj, coordYObj);
+            // ----------- Objetivo -----------
+            int coordXObj = Integer.parseInt(coordXObjStr);
+            int coordYObj = Integer.parseInt(coordYObjStr);
+            posObjetivo = new SimpleEntry<>(coordXObj, coordYObj);
+        }
+        else {
+            posBuscador = this.entorno.getPosicionBuscador();
+            posObjetivo = this.entorno.getPosicionRudolph();
+        }
+        
+        try {
+            boolean esAccesibleAg = mapa.esAccesible(posBuscador);
+            boolean esAccesibleObj = mapa.esAccesible(posObjetivo);
 
-                boolean esAccesibleAg = mapa.esAccesible(posAg);
-                boolean esAccesibleObj = mapa.esAccesible(posAg);
+            // -------------------
+            // Comprobamos si la celda es accesible o no (si hay un obstáculo o no).
+            if (esAccesibleAg && esAccesibleObj){
+                entorno.setPosicionBuscador(posBuscador); // Llamar al método del agente para establecer la posición.
+
+                // Establecer la imagen del agente en la casilla
+                //ImageIcon imagenBuscador = new ImageIcon("img/Buscador.png");
+                JLabel labelBuscador = etiquetasMapa.get(posBuscador);
+                labelBuscador.setIcon(scale("img/Buscador.png"));
                 
-                // -------------------
-                // Comprobamos si la celda es accesible o no (si hay un obstáculo o no).
-                if (esAccesibleAg && esAccesibleObj){
-                    entorno.setPosicionAgente(posAg); // Llamar al método del agente para establecer la posición.
-                    
-                    // Establecer la imagen del agente en la casilla
-                    ImageIcon imagenAg = new ImageIcon("src/Img/agente.png");
-                    JLabel labelAg = etiquetasMapa.get(posAg);
-                    labelAg.setIcon(imagenAg);
-                    
-                    // Llamar al método del entorno para establecer la posición del objetivo.
-                    entorno.setPosicionObjetivo(coordenadasObj);
+                // Llamar al método del entorno para establecer la posición del objetivo.
+                entorno.setPosicionObjetivo(posObjetivo);
 
-                    // Establecer la imagen del objetivo en la casilla.
-                    ImageIcon imagenObj = new ImageIcon("src/Img/objetivo.png");
-                    JLabel labelObj = etiquetasMapa.get(coordenadasObj);
-                    labelObj.setIcon(imagenObj);
-                    
-                    jButtonSet.setEnabled(false);
-                    jTextFieldCoordXAgent.setEnabled(false);
-                    jTextFieldCoordYAgent.setEnabled(false);
-                    jTextFieldCoordXObj.setEnabled(false);
-                    jTextFieldCoordYObj.setEnabled(false);
-                } 
-                // -------------------------------------
-                else{
-                    String message = "Por favor, indique una casilla accesible para: ";
-                    if (!esAccesibleAg)
-                        message+= " *agente ";
-                    
-                    if (!esAccesibleObj)
-                        message+= "*objetivo";
-                    
-                    JOptionPane.showMessageDialog(this, message, "Error", JOptionPane.ERROR_MESSAGE);
-                }
+                // Establecer la imagen del objetivo en la casilla.
+                //ImageIcon imagenRudolph = new ImageIcon("img/Rudolph.png");
+                JLabel labelRudolph = etiquetasMapa.get(posObjetivo);
+                labelRudolph.setIcon(scale("img/Rudolph.png"));
+
+                jButtonSet.setEnabled(false);
+                jTextFieldCoordXAgent.setEnabled(false);
+                jTextFieldCoordYAgent.setEnabled(false);
+                jTextFieldCoordXObj.setEnabled(false);
+                jTextFieldCoordYObj.setEnabled(false);
             } 
             // -------------------------------------
-            catch (NumberFormatException e){
-                // Manejar error si los valores no son enteros.
-                JOptionPane.showMessageDialog(this, "Por favor, ingrese valores enteros para X e Y.", "Error", JOptionPane.ERROR_MESSAGE);
+            else{
+                String message = "Por favor, indique una casilla accesible para: ";
+                if (!esAccesibleAg)
+                    message+= " *agente ";
+
+                if (!esAccesibleObj)
+                    message+= "*objetivo";
+
+                JOptionPane.showMessageDialog(this, message, "Error", JOptionPane.ERROR_MESSAGE);
             }
         } 
         // -------------------------------------
-        else{
+        catch (NumberFormatException e){
+            // Manejar error si los valores no son enteros.
+            JOptionPane.showMessageDialog(this, "Por favor, ingrese valores enteros para X e Y.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+            
+        // -------------------------------------
+        /*else{
             // Manejar error si algún campo está vacío.
             JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos.", "Error", JOptionPane.ERROR_MESSAGE);
-        }
+        }*/
     }//GEN-LAST:event_jButtonSetActionPerformed
     
     // ------------------------------------------------------------------------------------
@@ -387,10 +402,16 @@ public class MapaGUI extends javax.swing.JFrame {
     // ------------------------------------------------------------------------------------
     // Se establece un icono donde está la posición del agente y puntos por donde ya ha pasado.
     public void actualizarAgente(PosiblesMovimientos movimiento) {
-        etiquetasMapa.get(posAg).setIcon(new ImageIcon("src/Img/punto.png"));
-        this.posAg = movimiento.sumar(posAg);
-        etiquetasMapa.get(posAg).setIcon(new ImageIcon("src/Img/agente.png"));
+        etiquetasMapa.get(posBuscador).setIcon(scale("img/Camino.png"));
+        this.posBuscador = movimiento.sumar(posBuscador);
+        etiquetasMapa.get(posBuscador).setIcon(scale("img/Buscador.png"));
         
+    }
+    
+    // ------------------------------------------------------------------------------------
+    // S. 
+    public ImageIcon scale(String path) {
+        return new ImageIcon((new ImageIcon(path)).getImage().getScaledInstance(this.TamCelda-(int)(this.TamCelda*0.2), this.TamCelda-(int)(this.TamCelda*0.2), java.awt.Image.SCALE_SMOOTH) );
     }
     
     // ------------------------------------------------------------------------------------

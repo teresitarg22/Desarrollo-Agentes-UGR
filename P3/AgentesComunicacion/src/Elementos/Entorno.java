@@ -13,25 +13,29 @@ public final class Entorno {
     private final Mapa mapa;
     private EntornoListener entornoListener;
     private final int[] sensores;
-    private int pasos;
+    //private int pasos;
     
     private SimpleEntry<Integer, Integer> posicionObjetivo; 
-    private SimpleEntry<Integer, Integer> posicionAgente; 
+    private SimpleEntry<Integer, Integer> posicionBuscador; 
+    private SimpleEntry<Integer, Integer> posicionRudolph;
+    //private SimpleEntry<Integer, Integer> posicionSanta; 
     
     private PosiblesMovimientos siguienteMovimiento; // Cuál va a ser el próximo movimiento.
-    private int segundoMejor;
+    //private int segundoMejor;
 
     // ---------------------------------------------
     // Constructor.
     public Entorno(Mapa mapa) {
-        this.posicionObjetivo = new SimpleEntry<>(1, 1); // Por defecto el objetivo está en la celda 1,1
-        this.posicionAgente = new SimpleEntry<>(0, 0); // Por defecto el agente está en la celda 0,0
+        this.posicionBuscador = new SimpleEntry<>(0, 0); // Por defecto el agente está en la celda 0,0
+        //this.posicionSanta = new SimpleEntry<>(1, 1); // Por defecto el objetivo está en la celda 1,1
+        this.posicionRudolph = new SimpleEntry<>(10,10);
+        this.posicionObjetivo = this.posicionBuscador;
         
         this.mapa = mapa;
-        this.segundoMejor = Integer.MAX_VALUE;
+        //this.segundoMejor = Integer.MAX_VALUE;
         this.siguienteMovimiento = null;
         this.sensores = new int[PosiblesMovimientos.values().length];
-        this.pasos = 0;
+        //this.pasos = 0;
 
         this.actualizarSensores();
     }
@@ -40,7 +44,7 @@ public final class Entorno {
     // Actualiza los sensores.
     public void actualizarSensores() {
         for (PosiblesMovimientos movimiento : PosiblesMovimientos.values()) {
-            sensores[movimiento.ordinal()] = mapa.obtenerCelda(movimiento.sumar(this.posicionAgente));
+            sensores[movimiento.ordinal()] = mapa.obtenerCelda(movimiento.sumar(this.posicionBuscador));
         }
     }
     
@@ -48,20 +52,20 @@ public final class Entorno {
     // Actualiza la posición del agente.
     public void actualizarPosicionAgente(){     
         // Permite mover arriba, abajo, derecha, izquierda y diagonales.
-        SimpleEntry<Integer,Integer> coordenadas = this.siguienteMovimiento.sumar(this.posicionAgente);
+        //SimpleEntry<Integer,Integer> coordenadas = this.siguienteMovimiento.sumar(this.posicionBuscador);
 
         if (this.entornoListener != null) {
-            //this.mapa.getVecesPisada().put(this.posicionAgente, this.mapa.getVecesPisada().get(this.posicionAgente)+1);
+            //this.mapa.getVecesPisada().put(this.posicionBuscador, this.mapa.getVecesPisada().get(this.posicionBuscador)+1);
           
-            getPesos().put(this.posicionAgente, this.segundoMejor+1);
-            this.posicionAgente = coordenadas;
+            //getPesos().put(this.posicionBuscador, this.segundoMejor+1);
+            this.posicionBuscador = this.siguienteMovimiento.sumar(this.posicionBuscador);
            
             // Llamamos al listener del entorno.
             this.entornoListener.onPosicionAgenteActualizada(this.siguienteMovimiento);
             
             this.siguienteMovimiento = null;
             
-            this.pasos++;
+            //this.pasos++;
         }
     }
     
@@ -88,40 +92,62 @@ public final class Entorno {
     
     // ---------------------------------------------
     // Obtener los pasos realizados.
-    public int getPasos() {
-        return this.pasos;
-    }
+    //public int getPasos() {
+    //    return this.pasos;
+    //}
     
     // ---------------------------------------------
     // Obtener el mapa de pesos.
-    public Map<SimpleEntry<Integer,Integer>,Integer> getPesos() {
+    /*public Map<SimpleEntry<Integer,Integer>,Integer> getPesos() {
         return this.mapa.getPesos();
-    }
+    }*/
     
     // ---------------------------------------------
     // Obtener la posición actual del agente.
-    public SimpleEntry<Integer, Integer> getPosicionAgente() {
-        return posicionAgente;
+    public SimpleEntry<Integer, Integer> getPosicionBuscador() {
+        return this.posicionBuscador;
     }
     
     // ---------------------------------------------
     // Obtener la posición del objetivo.
     public SimpleEntry<Integer, Integer> getPosicionObjetivo() {
-        return posicionObjetivo;
+        return this.posicionObjetivo;
     }
+    
+    // ---------------------------------------------
+    // Obtener la posición de Rudolph.
+    public SimpleEntry<Integer, Integer> getPosicionRudolph() {
+        return this.posicionRudolph;
+    }
+    
+    // ---------------------------------------------
+    // Obtener la posición de Santa.
+    //public SimpleEntry<Integer, Integer> getPosicionSanta() {
+    //    return this.posicionSanta;
+    //}
+    
+    
+    // --------------------------------- COMPROBADORES -----------------------------
+    
+    // ---------------------------------------------
+    // Comprobamos si el agente se encuentra en el objetivo.
+    public boolean enObjetivo() {
+        return this.posicionBuscador == this.posicionObjetivo;
+    }
+    
     
     // --------------------------------- SETTERS ---------------------------------
     
     // ---------------------------------------------
     // Establecemos el segundo mejor peso.
-    public void setSegundoMejor(int valor) {
-        this.segundoMejor = valor;
-    }
+    //public void setSegundoMejor(int valor) {
+    //    this.segundoMejor = valor;
+    //}
     
     // ---------------------------------------------
     // Establecer la posición actual del agente.
-    public void setPosicionAgente(SimpleEntry<Integer,Integer> pos) {
-        this.posicionAgente = pos;
+    public void setPosicionBuscador(SimpleEntry<Integer,Integer> pos) {
+        this.posicionBuscador = pos;
     }
     
     // ---------------------------------------------
@@ -129,6 +155,18 @@ public final class Entorno {
     public void setPosicionObjetivo(SimpleEntry<Integer,Integer> pos) {
         this.posicionObjetivo = pos;
     }
+    
+    // ---------------------------------------------
+    // Establecer la posición de Rudolph.
+    public void setPosicionRudolph(SimpleEntry<Integer,Integer> pos) {
+        this.posicionRudolph = pos;
+    }
+    
+    // ---------------------------------------------
+    // Establecer la posición de Santa.
+    //public void setPosicionSanta(SimpleEntry<Integer,Integer> pos) {
+    //    this.posicionSanta = pos;
+    //}
     
     // ---------------------------------------------
     // Establecer la siguiente posición.

@@ -24,6 +24,8 @@ public class Moverse extends SimpleBehaviour{
     // Calcula la próxima acción y le pasa las coordenadas al siguiente comportamiento.
     @Override
     public void action() {
+        this.entorno.actualizarSensores();
+        
         PosiblesMovimientos siguienteMovimiento = calcularSiguienteMovimiento();
         
         if (siguienteMovimiento != null){
@@ -42,7 +44,7 @@ public class Moverse extends SimpleBehaviour{
     // ----------------------------------------------------------------------------------
     // Calcula la próxima acción basada en el entorno usando LRTA*.
     private PosiblesMovimientos calcularSiguienteMovimiento() {    
-        SimpleEntry<Integer,Integer> pos = this.entorno.getPosicionAgente();
+        SimpleEntry<Integer,Integer> pos = this.entorno.getPosicionBuscador();
         // Inicializamos el siguiente movimiento que devolveremos a nulo
         PosiblesMovimientos siguienteMovimiento = null;
         // Usaremos una distancia mínima para comprara cuál es el mejor povimiento posible.
@@ -50,7 +52,7 @@ public class Moverse extends SimpleBehaviour{
         // que será mínima en comparación al máximo valor.
         int distMin = Integer.MAX_VALUE;
         // Inicilizamos el peso del segundo mejor al máximo valor.
-        int segundoMejor = Integer.MAX_VALUE;
+        //int segundoMejor = Integer.MAX_VALUE;
         
         // Recorre todos los movimientos posibles
         for (PosiblesMovimientos movimiento : PosiblesMovimientos.values()) {
@@ -71,8 +73,10 @@ public class Moverse extends SimpleBehaviour{
                 
                 // Si el peso en esa siguiente posición ya estaba almacenado en la tabla de pesos no hace nada, de lo contrario calcula su peso como
                 // la distancia Manhattan entre esa nueva posición y el objetivo.
-                this.entorno.getPesos().putIfAbsent(movimiento.sumar(pos), distanciaManhattanDiagonal(movimiento.sumar(pos),posObj));
-                int dist = this.entorno.getPesos().get(movimiento.sumar(pos));
+                /*this.entorno.getPesos().putIfAbsent(movimiento.sumar(pos), distanciaManhattanDiagonal(movimiento.sumar(pos),posObj));
+                int dist = this.entorno.getPesos().get(movimiento.sumar(pos));*/
+                
+                int dist = distanciaManhattanDiagonal(movimiento.sumar(pos),posObj);
                 
                 boolean asignarMovimiento = false;
                 
@@ -86,9 +90,9 @@ public class Moverse extends SimpleBehaviour{
                     // Para poder guardar el segundo peso para posteriormente asignarlo al nodo que se abandona, necesitamos comprobar primero si el anterior tiene valor
                     // máximo, por lo que estamos en la primera iteración en la que se encuntra un mínimo y el segundo tendrá que ser también el primero (si no se encuentra un
                     // siguiente mínimo).
-                    if (distMin != Integer.MAX_VALUE)
-                        segundoMejor = distMin;
-                    else segundoMejor = dist;
+                    //if (distMin != Integer.MAX_VALUE)
+                    //    segundoMejor = distMin;
+                    //else segundoMejor = dist;
 
                     distMin = dist; // Actualizamos la distancia mínima.
                 }
@@ -96,7 +100,7 @@ public class Moverse extends SimpleBehaviour{
         }
         
         // Establecemos el segundo mejor y devolvemos el siguiente movimiento calculado.
-        this.entorno.setSegundoMejor(segundoMejor);
+        //this.entorno.setSegundoMejor(segundoMejor);
         return siguienteMovimiento;
     }
     
