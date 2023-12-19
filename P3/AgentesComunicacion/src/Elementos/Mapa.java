@@ -14,15 +14,15 @@ public class Mapa {
     private int filas;
     private int columnas;
     private Map < SimpleEntry <Integer, Integer >, Integer> mapa;
-    private Map < SimpleEntry <Integer, Integer >, Integer> pesos;
-    private Map < SimpleEntry <Integer, Integer >, Integer> vecesPisada;
+    //private Map < SimpleEntry <Integer, Integer >, Integer> pesos;
+    //private Map < SimpleEntry <Integer, Integer >, Integer> vecesPisada;
 
     // ---------------------------------------------
     // Constructor.
     public Mapa(String archivo){
         // Combinamos la ruta con el nombre del archivo pasado como argumento.
         // Partimos del .jar (AgenteMundo2D.jar) y con /Mapas/ entro en el paquete de mapas.
-        String rutaCompleta = "/Mapas/" + archivo; 
+        String rutaCompleta = "/Mapa/" + archivo; 
         
         try {
             // Abre el archivo con la ruta completa.
@@ -33,7 +33,7 @@ public class Mapa {
                 filas = scanner.nextInt();
                 columnas = scanner.nextInt();
                 mapa = new HashMap<>();
-                pesos = new HashMap<>();
+                //pesos = new HashMap<>();
                 //vecesPisada = new HashMap<>();
 
                 for (int i = 0; i < filas; i++){
@@ -108,11 +108,11 @@ public class Mapa {
 
     // ---------------------------------------------
     // Obtenemos el mapa de pesos.
-    public Map<SimpleEntry<Integer,Integer>,Integer> getPesos() {
+    /*public Map<SimpleEntry<Integer,Integer>,Integer> getPesos() {
         return this.pesos;
     }
     
     public Map<SimpleEntry<Integer,Integer>,Integer> getVecesPisada() {
         return this.vecesPisada;
-    }
+    }*/
 }

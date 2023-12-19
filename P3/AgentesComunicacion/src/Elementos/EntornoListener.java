@@ -5,4 +5,5 @@ package Elementos;
  */
 public interface EntornoListener {
     void onPosicionAgenteActualizada(PosiblesMovimientos movimiento);
+    void onVisualizarAccion(String accion);
 }
