@@ -1,6 +1,11 @@
 
 package Elementos;
 
+import jade.core.AID;
+import jade.core.Profile;
+import jade.core.ProfileImpl;
+import jade.wrapper.AgentContainer;
+
 /** 
  * EJECUCIÓN DEL PROGRAMA:
  * 
@@ -29,12 +34,20 @@ public class main {
         MapaGUI mapaGUI = new MapaGUI(mapa,entorno);
         mapaGUI.setVisible(true);
         
+        // Creamos el contenedor de los agentes.
+        jade.core.Runtime rt = jade.core.Runtime.instance();
+
+        Profile p = new ProfileImpl();
+        AgentContainer container = rt.createMainContainer(p);
+        
         // -------------------------------------------------------------------------
         // Hacemos una llamada a la interfaz MainListener. 
-        mapaGUI.setMainListener(() -> {              
-            mainBuscador.main(entorno);
-            mainSantaClaus.main(entorno);
-            mainRudolph.main(entorno);
+        mapaGUI.setMainListener(() -> {
+            mainRudolph.main(entorno,container);
+            mainSantaClaus.main(entorno,container);
+            mainBuscador.main(entorno,container);
         });
     }
 }
+
+

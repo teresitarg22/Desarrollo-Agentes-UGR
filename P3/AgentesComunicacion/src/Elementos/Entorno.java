@@ -72,9 +72,7 @@ public final class Entorno {
     // ---------------------------------------------
     // Añade la acción tomada en el protocolo.
     public void setAccion(String accion) {
-        System.out.print("ugu");
         this.entornoListener.onVisualizarAccion(accion);
-        System.out.print("NO");
     }
     
     // ----------------------------------------------------------------------------------------------------------
@@ -140,7 +138,7 @@ public final class Entorno {
     // ---------------------------------------------
     // Comprobamos si el agente se encuentra en el objetivo.
     public boolean enObjetivo() {
-        return this.posicionBuscador == this.posicionObjetivo;
+        return this.posicionBuscador.equals(this.posicionObjetivo);
     }
     
     

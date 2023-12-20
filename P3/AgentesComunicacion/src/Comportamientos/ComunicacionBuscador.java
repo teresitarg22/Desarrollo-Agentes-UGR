@@ -28,8 +28,8 @@ public class ComunicacionBuscador extends Behaviour{
     // -----------------------------------------------------------------------------------
     @Override
     public void action(){
+        //System.out.print("\n\n\n\n"+myAgent.getContainerController().getAgent()+"\n\n\n\n");
         if (this.entorno.enObjetivo()) {
-            System.out.print("ugu");
             switch(this.step){
                 // -------------------------------------------------------
                 // Propuesta a Santa sobre si somos aptos para la misión.
@@ -38,7 +38,7 @@ public class ComunicacionBuscador extends Behaviour{
                     propuesta.addReceiver(new AID("AgenteSantaClaus", AID.ISLOCALNAME));
                     propuesta.setContent("¿Somos aptos?");
                     myAgent.send(propuesta);
-                    this.entorno.setAccion("Elfo -> Santa\t¿Somos aptos?");
+                    this.entorno.setAccion("Elfo -> Santa   ¿Somos aptos?");
                     this.step = 1;
                 break;
 
@@ -53,12 +53,12 @@ public class ComunicacionBuscador extends Behaviour{
                         
                         this.entorno.setPosicionObjetivo(this.entorno.getPosicionRudolph());
                         
-                        this.entorno.setAccion("Elfo <- Santa\tCódigo recibido ("+this.codigo+").");
+                        this.entorno.setAccion("Elfo <- Santa   Código recibido ("+this.codigo+").");
                         this.step = 2;
 
                     } else {
                         // Santa rechaza la misión.
-                        this.entorno.setAccion("Elfo <- Santa\tSanta ha rechazado la misión.");
+                        this.entorno.setAccion("Elfo <- Santa   Santa ha rechazado la misión.");
                         this.finish = true;
                         myAgent.doDelete();
                     }
@@ -74,7 +74,7 @@ public class ComunicacionBuscador extends Behaviour{
                     codigoRudolph.setConversationId(this.codigo);
                     myAgent.send(codigoRudolph);
                     
-                    this.entorno.setAccion("Elfo -> Rudolph\tEste es el código: "+this.codigo+".");
+                    this.entorno.setAccion("Elfo -> Rudolph   Este es el código: "+this.codigo+".");
                     this.step = 3;
                 break;
 
@@ -90,16 +90,16 @@ public class ComunicacionBuscador extends Behaviour{
 
                         this.entorno.setPosicionObjetivo(convertirCoordenadas(respuestaCodigo.getContent()));
 
-                        this.entorno.setAccion("Elfo <- Rudolph\tCoordenadas recibidas ("+convertirCoordenadas(respuestaCodigo.getContent())+").");
+                        this.entorno.setAccion("Elfo <- Rudolph   Coordenadas recibidas ("+convertirCoordenadas(respuestaCodigo.getContent())+").");
                         this.step = 4;
                     } else {
                         String motivo = respuestaCodigo.getContent();
 
                         if(motivo.equals("No hay más renos")) {
-                            this.entorno.setAccion("Elfo <- Rudolph\tNo hay más renos.");
+                            this.entorno.setAccion("Elfo <- Rudolph   No hay más renos.");
                             this.step = 5;
                         } else {
-                            this.entorno.setAccion("Elfo <- Rudolph\tEl código no es correcto.");
+                            this.entorno.setAccion("Elfo <- Rudolph   El código no es correcto.");
                             this.finish = true;
                             myAgent.doDelete();                            
                         }
@@ -121,7 +121,7 @@ public class ComunicacionBuscador extends Behaviour{
 
                         // Recibimos la respuesta informativa de Rudolph de buen trabajo.convertirCoordenadas
                         if (informe.getPerformative() == ACLMessage.INFORM){
-                            this.entorno.setAccion("Elfo -> Rudolph\tReno encontrado. ¿Cuál es el siguiente reno?");
+                            this.entorno.setAccion("Elfo -> Rudolph   Reno encontrado. ¿Cuál es el siguiente reno?");
                             this.step = 2;
                         }
                     } 
@@ -134,7 +134,7 @@ public class ComunicacionBuscador extends Behaviour{
                     misionTerminada.addReceiver(new AID("AgenteSantaClaus", AID.ISLOCALNAME));
                     misionTerminada.setContent("¡He terminado la misión! ¿Dónde estás?");
 
-                    this.entorno.setAccion("Elfo -> Santa\tMisión terminada, ¿cuáles son tus coordenadas?");
+                    this.entorno.setAccion("Elfo -> Santa   Misión terminada, ¿cuáles son tus coordenadas?");
                     this.step = 6;
                 break;
 
@@ -155,7 +155,7 @@ public class ComunicacionBuscador extends Behaviour{
                         posSantaCompleta.setContent("¡Ya estoy aquí!");
                         myAgent.send(posSantaCompleta);
 
-                        this.entorno.setAccion("Elfo <- Santa\tCoordenadas de Santa recibidas ("+convertirCoordenadas(posSanta.getContent())+").");
+                        this.entorno.setAccion("Elfo <- Santa   Coordenadas de Santa recibidas ("+convertirCoordenadas(posSanta.getContent())+").");
                         this.step = 7;
                     }  
                 break;
@@ -166,7 +166,7 @@ public class ComunicacionBuscador extends Behaviour{
                     ACLMessage misionCompleta = myAgent.blockingReceive();
 
                     if (misionCompleta.getPerformative() == ACLMessage.INFORM) {
-                        this.entorno.setAccion("Elfo <- Santa\tSanta nos dice HO HO HO.");
+                        this.entorno.setAccion("Elfo <- Santa   Santa nos dice HO HO HO.");
                         this.finish = true;
                         myAgent.doDelete();
                     }

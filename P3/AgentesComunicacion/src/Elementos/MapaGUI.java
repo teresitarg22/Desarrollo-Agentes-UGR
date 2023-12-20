@@ -354,7 +354,9 @@ public class MapaGUI extends javax.swing.JFrame {
                 
                 // Llamar al método del entorno para establecer la posición del objetivo.
                 entorno.setPosicionRudolph(posRudolph);
-                entorno.setPosicionObjetivo(posRudolph);
+                
+                // Hacemos que el primero objetivo sea su posicion inicial para que entre en el primer paso
+                entorno.setPosicionObjetivo(posBuscador);
 
                 // Establecer la imagen del objetivo en la casilla.
                 //ImageIcon imagenRudolph = new ImageIcon("img/Rudolph.png");

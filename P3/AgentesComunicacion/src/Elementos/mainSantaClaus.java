@@ -11,12 +11,7 @@ import jade.wrapper.AgentController;
  */
 public class mainSantaClaus {
     
-    public static void main(Entorno entorno) {
-       // Creamos el contenedor de los agentes.
-        Runtime rt = Runtime.instance();
-
-        Profile p = new ProfileImpl();
-        AgentContainer container = rt.createMainContainer(p);
+    public static void main(Entorno entorno, AgentContainer container) {
         
         // Crear y lanzar el agente. Uso de try catch para mostrar errores en caso de fallo.
         try {
