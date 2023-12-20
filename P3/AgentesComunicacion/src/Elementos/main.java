@@ -1,6 +1,8 @@
 
 package Elementos;
 
+import java.util.AbstractMap.SimpleEntry;
+
 /** 
  * EJECUCIÓN DEL PROGRAMA:
  * 
@@ -35,6 +37,8 @@ public class main {
             mainBuscador.main(entorno);
             mainSantaClaus.main(entorno);
             mainRudolph.main(entorno);
+           
+           //entorno.actualizarReno(new SimpleEntry<>(15,15));
         });
     }
 }
