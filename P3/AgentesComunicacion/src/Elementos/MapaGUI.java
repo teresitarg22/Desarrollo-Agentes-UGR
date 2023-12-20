@@ -6,11 +6,8 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Rectangle;
 import java.util.AbstractMap.SimpleEntry;
-import java.util.ArrayList;
 import java.util.Map;
 import java.util.HashMap;
-import java.util.List;
-import java.util.stream.Collectors;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -31,6 +28,8 @@ public class MapaGUI extends javax.swing.JFrame {
     private SimpleEntry<Integer,Integer> posBuscador;
     private SimpleEntry<Integer,Integer> posReno;
     private final Map < SimpleEntry <Integer, Integer >, JLabel> etiquetasMapa;
+    
+    private ImageIcon santaI, rudolphI, renoI, caminoI, elfoI;
    
     
     JPanel panelEtiquetas = new JPanel();
@@ -45,9 +44,17 @@ public class MapaGUI extends javax.swing.JFrame {
         this.posBuscador = entorno.getPosicionBuscador();
         this.posReno = new SimpleEntry<>(-1, -1); // Por defecto el reno está en la celda -1,-1
         initComponents();
+        
+        this.santaI = scale("img/SantaClaus.png");
+        this.rudolphI = scale("img/Rudolph.png");
+        this.renoI = scale("img/Reno.png");
+        this.caminoI = scale("img/Camino.png");
+        this.elfoI = scale("img/Buscador.png");
                
         panelEtiquetas.setLayout(new BoxLayout(panelEtiquetas, BoxLayout.Y_AXIS));
         etiquetasMapa = new HashMap<>();
+        
+        visualizarMapa();
         
         // Creamos un listener para el entorno.
         this.entorno.setEntornoListener(new EntornoListener(){
@@ -84,10 +91,14 @@ public class MapaGUI extends javax.swing.JFrame {
                     renoEncontrado();
                 });
             }
+            
+            @Override
+            public void onSantaEncontrado(SimpleEntry<Integer,Integer> coord){
+                SwingUtilities.invokeLater(() -> {
+                    santa(coord);
+                });
+            }
         });
-        
-        
-        visualizarMapa();
     }
 
     // ------------------------------------------------------------------------------------
@@ -126,7 +137,7 @@ public class MapaGUI extends javax.swing.JFrame {
         setResizable(false);
 
         jLabelCoordInicAgent.setFont(new java.awt.Font("sansserif", 1, 16)); // NOI18N
-        jLabelCoordInicAgent.setText("Coordenadas inicio buscador:");
+        jLabelCoordInicAgent.setText("Coordenadas del elfo buscador:");
 
         jLabelCoordXAgent.setText("x:");
 
@@ -139,7 +150,7 @@ public class MapaGUI extends javax.swing.JFrame {
         });
 
         jLabelCoordInicObj.setFont(new java.awt.Font("sansserif", 1, 16)); // NOI18N
-        jLabelCoordInicObj.setText("Coordenadas del Rudolph:");
+        jLabelCoordInicObj.setText("Coordenadas de Rudolph:");
 
         jLabelCoordXObj.setText("x:");
 
@@ -194,82 +205,78 @@ public class MapaGUI extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jPanelMapa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jScrollPanelDecision, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(15, 15, 15))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(135, 135, 135)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jButtonSet, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButtonIniciar, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap())
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
+                        .addGap(64, 64, 64)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabelDecision)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jLabelSC, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(41, 41, 41)))
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(jLabelCoordXObj)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jTextFieldCoordXObj, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabelCoordYObj)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jTextFieldCoordYObj, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabelCoordInicObj)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addGap(14, 14, 14)
-                                                .addComponent(jLabelCoordXAgent)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                .addComponent(jTextFieldCoordXAgent, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(18, 18, 18)
-                                                .addComponent(jLabelCoordYAgent)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(jTextFieldCoordYAgent, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                        .addGap(55, 55, 55))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addComponent(jLabelCoordXObj)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jTextFieldCoordXObj, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jLabelCoordYObj)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jTextFieldCoordYObj, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(76, 76, 76))))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jScrollPanelDecision, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabelCoordInicAgent))
-                                .addGap(15, 15, 15))))))
+                                .addComponent(jLabelCoordXAgent)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jTextFieldCoordXAgent, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabelCoordYAgent)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jTextFieldCoordYAgent, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(jLabelDecision)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(jLabelSC, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(41, 41, 41)))
+                            .addComponent(jLabelCoordInicAgent)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(79, 79, 79)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jButtonSet, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jButtonIniciar, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(47, 47, 47)
+                        .addComponent(jLabelCoordInicObj)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(25, 25, 25)
+                        .addGap(26, 26, 26)
                         .addComponent(jLabelCoordInicAgent)
-                        .addGap(19, 19, 19)
+                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabelCoordXAgent)
                             .addComponent(jTextFieldCoordXAgent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabelCoordYAgent)
                             .addComponent(jTextFieldCoordYAgent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(24, 24, 24)
+                        .addGap(29, 29, 29)
                         .addComponent(jLabelCoordInicObj)
-                        .addGap(17, 17, 17)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabelCoordXObj)
                             .addComponent(jTextFieldCoordXObj, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabelCoordYObj)
                             .addComponent(jTextFieldCoordYObj, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
+                        .addGap(13, 13, 13)
                         .addComponent(jButtonSet)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButtonIniciar)
-                        .addGap(7, 7, 7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -360,7 +367,7 @@ public class MapaGUI extends javax.swing.JFrame {
         
       
         
-        jLabelSC.setIcon(scale("img/SantaClaus.png"));
+        //jLabelSC.setIcon(this.santaI);
         
         if ((!coordXStr.isEmpty() && !coordYStr.isEmpty()) && (!coordXObjStr.isEmpty() && !coordYObjStr.isEmpty())) {
             // Convertir los valores de texto a enteros y convertirlos a SimpleEntry.
@@ -391,7 +398,7 @@ public class MapaGUI extends javax.swing.JFrame {
                 // Establecer la imagen del agente en la casilla
                 //ImageIcon imagenBuscador = new ImageIcon("img/Buscador.png");
                 JLabel labelBuscador = etiquetasMapa.get(posBuscador);
-                labelBuscador.setIcon(scale("img/Buscador.png"));
+                labelBuscador.setIcon(this.elfoI);
                 
                 // Llamar al método del entorno para establecer la posición del objetivo.
                 entorno.setPosicionRudolph(posRudolph);
@@ -402,7 +409,7 @@ public class MapaGUI extends javax.swing.JFrame {
                 // Establecer la imagen del objetivo en la casilla.
                 //ImageIcon imagenRudolph = new ImageIcon("img/Rudolph.png");
                 JLabel labelRudolph = etiquetasMapa.get(posRudolph);
-                labelRudolph.setIcon(scale("img/Rudolph.png"));
+                labelRudolph.setIcon(this.rudolphI);
 
                 jButtonSet.setEnabled(false);
                 jTextFieldCoordXAgent.setEnabled(false);
@@ -427,12 +434,6 @@ public class MapaGUI extends javax.swing.JFrame {
             // Manejar error si los valores no son enteros.
             JOptionPane.showMessageDialog(this, "Por favor, ingrese valores enteros para X e Y.", "Error", JOptionPane.ERROR_MESSAGE);
         }
-            
-        // -------------------------------------
-        /*else{
-            // Manejar error si algún campo está vacío.
-            JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos.", "Error", JOptionPane.ERROR_MESSAGE);
-        }*/
     }//GEN-LAST:event_jButtonSetActionPerformed
     
     // ------------------------------------------------------------------------------------
@@ -451,15 +452,14 @@ public class MapaGUI extends javax.swing.JFrame {
     // ------------------------------------------------------------------------------------
     // Se establece un icono donde está la posición del agente y puntos por donde ya ha pasado.
     public void actualizarAgente(PosiblesMovimientos movimiento) {
-        if (!posBuscador.equals(entorno.getPosicionRudolph())) {
-            etiquetasMapa.get(posBuscador).setIcon(scale("img/Camino.png"));
-        }
+        if (posBuscador.equals(entorno.getPosicionRudolph()))
+            etiquetasMapa.get(posBuscador).setIcon(this.rudolphI);
         else
-            etiquetasMapa.get(posBuscador).setIcon(scale("img/Rudolph.png"));
+            etiquetasMapa.get(posBuscador).setIcon(this.caminoI);
+            
         this.posBuscador = movimiento.sumar(posBuscador);
         
-        etiquetasMapa.get(posBuscador).setIcon(scale("img/Buscador.png"));
-        
+        etiquetasMapa.get(posBuscador).setIcon(this.elfoI);
     }
     
     public void actualizarReno(SimpleEntry<Integer, Integer> coord){
@@ -469,24 +469,23 @@ public class MapaGUI extends javax.swing.JFrame {
         }
        
         posReno = coord;
-        etiquetasMapa.get(posReno).setIcon(scale("img/Reno.png"));
-        
-      
+        etiquetasMapa.get(posReno).setIcon(this.renoI);
+    }
+    
+    public void santa(SimpleEntry<Integer,Integer> coord) {
+        if (this.etiquetasMapa.containsKey(coord))
+            this.etiquetasMapa.get(coord).setIcon(santaI);
     }
     
     public void renoEncontrado(){
-            // Obtiene las claves cuyos valores tienen el ícono "img/Camino.png" y las guarda en una lista
-        List<SimpleEntry<Integer, Integer>> indicesCamino = etiquetasMapa.entrySet().stream()
-            .filter(entry -> entry.getValue() != null && "img/Camino.png".equals(entry.getValue().getIcon().toString()))
-            .map(Map.Entry::getKey)
-            .collect(Collectors.toList());
-
-        // Luego, se establece el ícono como null en esas posiciones del mapa. Al encontrar el reno se borra el rastro /camino seguido hasta llegar a él
-        indicesCamino.forEach(clave -> etiquetasMapa.get(clave).setIcon(null));
+        this.etiquetasMapa.replaceAll((key, value) -> {
+            value.setIcon(null);
+            return value;
+        });
     }
     
     // ------------------------------------------------------------------------------------
-    // S. 
+    // Escalar el icono en funcion del tamaño de la celda. 
     public ImageIcon scale(String path) {
         return new ImageIcon((new ImageIcon(path)).getImage().getScaledInstance(this.TamCelda-(int)(this.TamCelda*0.2), this.TamCelda-(int)(this.TamCelda*0.2), java.awt.Image.SCALE_SMOOTH) );
     }

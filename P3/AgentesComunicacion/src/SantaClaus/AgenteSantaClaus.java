@@ -5,13 +5,14 @@ import Comportamientos.ComunicacionSantaClaus;
 import Elementos.Entorno;
 
 import jade.core.Agent;
+import java.util.AbstractMap.SimpleEntry;
 
 /**
  * @author Teresa Reyes García.
  */
 public class AgenteSantaClaus extends Agent {
     
-    private String posicion;
+    private SimpleEntry<Integer,Integer> posicion;
     
     // -------------------------------------------------
     // Inicialización del agente Santa Claus.
@@ -19,10 +20,12 @@ public class AgenteSantaClaus extends Agent {
     public void setup(){
         Entorno entorno = (Entorno) getArguments()[0];
         
+        this.posicion = entorno.generarCoordenadas();
+        
         addBehaviour(new ComunicacionSantaClaus(entorno));
     } 
     
-    public String getPosicion() {
+    public SimpleEntry<Integer,Integer> getPosicion() {
         return this.posicion;
     }
     

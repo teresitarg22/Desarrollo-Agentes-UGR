@@ -5,7 +5,6 @@ import Elementos.Entorno;
 import jade.core.behaviours.Behaviour;
 import jade.lang.acl.ACLMessage;
 import java.util.AbstractMap.SimpleEntry;
-import java.util.Random;
 
 /**
  * @author Teresa Reyes García
@@ -23,9 +22,7 @@ public class ComunicacionRudolph extends Behaviour{
         this.finish = false;
         this.codigoSecreto = "NAVIDAD";
         this.entorno = entorno;
-        
-        Random random = new Random();
-        this.contadorRenos = random.nextInt(7) + 4; // Número random de renos entre 4 y 10.
+        this.contadorRenos =  8;
     }
     
     // -----------------------------------------------------------------------------------
@@ -52,11 +49,11 @@ public class ComunicacionRudolph extends Behaviour{
                ACLMessage codigoBuscador = myAgent.blockingReceive();
                
                if (codigoBuscador.getConversationId() != null && codigoBuscador.getConversationId().equals(this.codigoSecreto)){
-                    
                     if(this.contadorRenos > 0){
                         ACLMessage respuesta = codigoBuscador.createReply();
                         respuesta.setPerformative(ACLMessage.AGREE);
                         SimpleEntry<Integer, Integer> coordenadasReno = this.entorno.generarCoordenadas();
+                        this.entorno.actualizarReno(coordenadasReno);
                     
                         // Convierte las coordenadas a una cadena para enviarlas.
                         String coord = coordenadasReno.getKey() + "," + coordenadasReno.getValue();
@@ -92,13 +89,17 @@ public class ComunicacionRudolph extends Behaviour{
             // -------------------------------------------------------
             // Recibe el informe del Buscador.
             case 2:
-               ACLMessage informeBuscador = myAgent.blockingReceive();
+                ACLMessage informeBuscador = myAgent.blockingReceive();
                
-                if (informeBuscador.getPerformative() == ACLMessage.INFORM){
-                   ACLMessage respuestaInforme = informeBuscador.createReply();
-                   respuestaInforme.setContent("¡Buen trabajo!");
-                   
-                   this.step = 1;
+                if (informeBuscador.getPerformative() == ACLMessage.INFORM) {
+                    ACLMessage respuestaInforme = informeBuscador.createReply();
+                    respuestaInforme.setContent("¡Buen trabajo!");
+                    
+                    this.entorno.limpiarCamino();
+
+                    myAgent.send(respuestaInforme);
+                    
+                    this.step = 1;
                 }
                               
             break;

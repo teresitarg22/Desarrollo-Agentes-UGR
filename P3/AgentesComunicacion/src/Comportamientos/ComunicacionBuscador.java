@@ -28,7 +28,6 @@ public class ComunicacionBuscador extends Behaviour{
     // -----------------------------------------------------------------------------------
     @Override
     public void action(){
-        //System.out.print("\n\n\n\n"+myAgent.getContainerController().getAgent()+"\n\n\n\n");
         if (this.entorno.enObjetivo()) {
             switch(this.step){
                 // -------------------------------------------------------
@@ -85,8 +84,6 @@ public class ComunicacionBuscador extends Behaviour{
 
                     if (respuestaCodigo.getPerformative() == ACLMessage.AGREE) {
                         // Santa acepta la misión, recibimos un código:
-                        //String coord = respuestaCodigo.getContent();
-                        //SimpleEntry<Integer, Integer> coordenadas = convertirCoordenadas(coord);
 
                         this.entorno.setPosicionObjetivo(convertirCoordenadas(respuestaCodigo.getContent()));
 
@@ -94,8 +91,8 @@ public class ComunicacionBuscador extends Behaviour{
                         this.step = 4;
                     } else {
                         String motivo = respuestaCodigo.getContent();
-
-                        if(motivo.equals("No hay más renos")) {
+                        
+                        if(motivo.equals("No hay más renos.")) {
                             this.entorno.setAccion("Elfo <- Rudolph   No hay más renos.");
                             this.step = 5;
                         } else {
@@ -115,13 +112,14 @@ public class ComunicacionBuscador extends Behaviour{
                         ACLMessage terminado = new ACLMessage(ACLMessage.INFORM);
                         terminado.addReceiver(new AID("AgenteRudolph", AID.ISLOCALNAME));
                         terminado.setContent("He terminado, ¿dónde está el siguiente reno?");
+                        this.entorno.setAccion("Elfo -> Rudolph   Reno encontrado.");
                         myAgent.send(terminado);
 
                         ACLMessage informe = myAgent.blockingReceive();
 
                         // Recibimos la respuesta informativa de Rudolph de buen trabajo.convertirCoordenadas
                         if (informe.getPerformative() == ACLMessage.INFORM){
-                            this.entorno.setAccion("Elfo -> Rudolph   Reno encontrado. ¿Cuál es el siguiente reno?");
+                            this.entorno.setAccion("Elfo -> Rudolph   ¿Cuál es el siguiente reno?");
                             this.step = 2;
                         }
                     } 
@@ -133,6 +131,7 @@ public class ComunicacionBuscador extends Behaviour{
                     ACLMessage misionTerminada = new ACLMessage(ACLMessage.REQUEST);
                     misionTerminada.addReceiver(new AID("AgenteSantaClaus", AID.ISLOCALNAME));
                     misionTerminada.setContent("¡He terminado la misión! ¿Dónde estás?");
+                    myAgent.send(misionTerminada);
 
                     this.entorno.setAccion("Elfo -> Santa   Misión terminada, ¿cuáles son tus coordenadas?");
                     this.step = 6;
@@ -145,10 +144,8 @@ public class ComunicacionBuscador extends Behaviour{
 
                     if (posSanta.getPerformative() == ACLMessage.AGREE) {
                         // Obtenemos las coordenadas de Santa para ir hasta él.
-                        //String coord = posSanta.getContent();
-                        //SimpleEntry<Integer, Integer> coordenadas = convertirCoordenadas(coord);
 
-                        this.entorno.setPosicionObjetivo(convertirCoordenadas(posSanta.getContent()));
+                        this.entorno.setSanta(convertirCoordenadas(posSanta.getContent()));
 
                         ACLMessage posSantaCompleta = new ACLMessage(ACLMessage.INFORM);
                         posSantaCompleta.addReceiver(new AID("AgenteSantaClaus", AID.ISLOCALNAME));
@@ -166,7 +163,7 @@ public class ComunicacionBuscador extends Behaviour{
                     ACLMessage misionCompleta = myAgent.blockingReceive();
 
                     if (misionCompleta.getPerformative() == ACLMessage.INFORM) {
-                        this.entorno.setAccion("Elfo <- Santa   Santa nos dice HO HO HO.");
+                        this.entorno.setAccion("Elfo <- Santa   Santa nos dice HOHOHO.");
                         this.finish = true;
                         myAgent.doDelete();
                     }

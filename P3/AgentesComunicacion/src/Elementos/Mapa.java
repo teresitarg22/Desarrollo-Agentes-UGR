@@ -14,8 +14,6 @@ public class Mapa {
     private int filas;
     private int columnas;
     private Map < SimpleEntry <Integer, Integer >, Integer> mapa;
-    //private Map < SimpleEntry <Integer, Integer >, Integer> pesos;
-    //private Map < SimpleEntry <Integer, Integer >, Integer> vecesPisada;
 
     // ---------------------------------------------
     // Constructor.
@@ -33,13 +31,10 @@ public class Mapa {
                 filas = scanner.nextInt();
                 columnas = scanner.nextInt();
                 mapa = new HashMap<>();
-                //pesos = new HashMap<>();
-                //vecesPisada = new HashMap<>();
 
                 for (int i = 0; i < filas; i++){
                     for (int j = 0; j < columnas; j++){
                         mapa.put(new SimpleEntry<>(i, j), scanner.nextInt());
-                        //vecesPisada.put(new SimpleEntry<>(i, j), 0);
                     }
                 }
 
@@ -105,14 +100,4 @@ public class Mapa {
     public int getColumnas() {
         return columnas;
     }
-
-    // ---------------------------------------------
-    // Obtenemos el mapa de pesos.
-    /*public Map<SimpleEntry<Integer,Integer>,Integer> getPesos() {
-        return this.pesos;
-    }
-    
-    public Map<SimpleEntry<Integer,Integer>,Integer> getVecesPisada() {
-        return this.vecesPisada;
-    }*/
 }

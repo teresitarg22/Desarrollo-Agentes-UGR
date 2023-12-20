@@ -2,7 +2,6 @@
 package Elementos;
 
 import java.util.AbstractMap;
-import java.util.Map;
 import java.util.AbstractMap.SimpleEntry;
 import java.util.Random;
 
@@ -71,16 +70,26 @@ public final class Entorno {
     
     //Actualiza la posición del reno
     public void actualizarReno(SimpleEntry<Integer, Integer> coord){
-          if (this.entornoListener != null) {
-                this.entornoListener.onPosicionRenoActualizada(coord);
-          }
-          
+        if (this.entornoListener != null) {
+            this.entornoListener.onPosicionRenoActualizada(coord);
+        } 
     }
     
-      public void onUltimoReno(){
-          if (this.entornoListener != null) {
-                this.entornoListener.onUltimoReno();
-          }
+    public void limpiarCamino() {
+        if (this.entornoListener != null) {
+            this.entornoListener.onRenoEncontrado();
+        } 
+    }
+    
+    public void setSanta(SimpleEntry<Integer,Integer> coord) {
+        this.entornoListener.onSantaEncontrado(coord);
+        this.setPosicionObjetivo(coord);
+    }
+    
+    public void ultimoReno(){
+        if (this.entornoListener != null) {
+            this.entornoListener.onUltimoReno();
+        }
           
     }
     
@@ -112,18 +121,6 @@ public final class Entorno {
     }
     
     // ---------------------------------------------
-    // Obtener los pasos realizados.
-    //public int getPasos() {
-    //    return this.pasos;
-    //}
-    
-    // ---------------------------------------------
-    // Obtener el mapa de pesos.
-    /*public Map<SimpleEntry<Integer,Integer>,Integer> getPesos() {
-        return this.mapa.getPesos();
-    }*/
-    
-    // ---------------------------------------------
     // Obtener la posición actual del agente.
     public SimpleEntry<Integer, Integer> getPosicionBuscador() {
         return this.posicionBuscador;
@@ -141,12 +138,6 @@ public final class Entorno {
         return this.posicionRudolph;
     }
     
-    // ---------------------------------------------
-    // Obtener la posición de Santa.
-    //public SimpleEntry<Integer, Integer> getPosicionSanta() {
-    //    return this.posicionSanta;
-    //}
-    
     
     // --------------------------------- COMPROBADORES -----------------------------
     
@@ -158,12 +149,6 @@ public final class Entorno {
     
     
     // --------------------------------- SETTERS ---------------------------------
-    
-    // ---------------------------------------------
-    // Establecemos el segundo mejor peso.
-    //public void setSegundoMejor(int valor) {
-    //    this.segundoMejor = valor;
-    //}
     
     // ---------------------------------------------
     // Establecer la posición actual del agente.
@@ -182,12 +167,6 @@ public final class Entorno {
     public void setPosicionRudolph(SimpleEntry<Integer,Integer> pos) {
         this.posicionRudolph = pos;
     }
-    
-    // ---------------------------------------------
-    // Establecer la posición de Santa.
-    //public void setPosicionSanta(SimpleEntry<Integer,Integer> pos) {
-    //    this.posicionSanta = pos;
-    //}
     
     // ---------------------------------------------
     // Establecer la siguiente posición.

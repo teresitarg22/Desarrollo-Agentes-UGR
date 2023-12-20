@@ -32,7 +32,7 @@ public class Moverse extends SimpleBehaviour{
             // Establecemos el siguiente movimiento calculado.
             this.entorno.setSiguienteMovimiento(siguienteMovimiento);
             
-            block(200); // Hacemos esto para poder mostrar en la GUI los pasos del agente lentamente.
+            block(100); // Hacemos esto para poder mostrar en la GUI los pasos del agente lentamente.
             this.entorno.actualizarPosicionAgente(); // Actualizamos la posición del agente.
         } 
         else{
@@ -71,11 +71,6 @@ public class Moverse extends SimpleBehaviour{
                 
                 SimpleEntry<Integer,Integer> posObj = this.entorno.getPosicionObjetivo();
                 
-                // Si el peso en esa siguiente posición ya estaba almacenado en la tabla de pesos no hace nada, de lo contrario calcula su peso como
-                // la distancia Manhattan entre esa nueva posición y el objetivo.
-                /*this.entorno.getPesos().putIfAbsent(movimiento.sumar(pos), distanciaManhattanDiagonal(movimiento.sumar(pos),posObj));
-                int dist = this.entorno.getPesos().get(movimiento.sumar(pos));*/
-                
                 int dist = distanciaManhattanDiagonal(movimiento.sumar(pos),posObj);
                 
                 boolean asignarMovimiento = false;
@@ -87,12 +82,6 @@ public class Moverse extends SimpleBehaviour{
                 
                 if (asignarMovimiento) {
                     siguienteMovimiento = movimiento;
-                    // Para poder guardar el segundo peso para posteriormente asignarlo al nodo que se abandona, necesitamos comprobar primero si el anterior tiene valor
-                    // máximo, por lo que estamos en la primera iteración en la que se encuntra un mínimo y el segundo tendrá que ser también el primero (si no se encuentra un
-                    // siguiente mínimo).
-                    //if (distMin != Integer.MAX_VALUE)
-                    //    segundoMejor = distMin;
-                    //else segundoMejor = dist;
 
                     distMin = dist; // Actualizamos la distancia mínima.
                 }

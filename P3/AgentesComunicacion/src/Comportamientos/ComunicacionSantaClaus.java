@@ -6,7 +6,6 @@ import SantaClaus.AgenteSantaClaus;
 import jade.core.AID;
 import jade.core.behaviours.Behaviour;
 import jade.lang.acl.ACLMessage;
-import java.util.AbstractMap;
 import java.util.Random;
 
 /**
@@ -34,17 +33,7 @@ public class ComunicacionSantaClaus extends Behaviour{
             // -------------------------------------------------------
             // Recibe la propuesta del buscador
             case 0:
-                System.out.print("\n\n\n\nNOSE\n");
-                try {
-                    System.out.println(myAgent.getContainerController().getAgent("AgenteSantaClaus",AID.ISLOCALNAME));
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                System.out.print("\n\n\n\n");
-                
                 ACLMessage propuesta = myAgent.blockingReceive();
-
-                System.out.print("\n\n\n\nESPERA\n\n\n\n");
 
                 if (somosAptos()) {
                      ACLMessage mision = new ACLMessage(ACLMessage.INFORM);
@@ -85,17 +74,11 @@ public class ComunicacionSantaClaus extends Behaviour{
             // Santa recibe el informe del buscador de que ha terminado.
             case 1:
                ACLMessage misionTerminada = myAgent.blockingReceive();
-               
                if (misionTerminada.getPerformative() == ACLMessage.REQUEST){
                     ACLMessage pos = misionTerminada.createReply();
                     pos.setPerformative(ACLMessage.AGREE);
-
-                    //AbstractMap.SimpleEntry<Integer, Integer> coordenadasSanta = this.entorno.generarCoordenadas();
                     
-                    // Convierte las coordenadas a una cadena para enviarlas.
-                    //String coord = coordenadasSanta.getKey() + "," + coordenadasSanta.getValue();
-                    //pos.setContent(coord);
-                    pos.setContent(((AgenteSantaClaus)myAgent).getPosicion());
+                    pos.setContent(((AgenteSantaClaus)myAgent).getPosicion().getKey()+","+((AgenteSantaClaus)myAgent).getPosicion().getValue());
                     myAgent.send(pos);
                     
                     this.step = 2;
@@ -109,6 +92,9 @@ public class ComunicacionSantaClaus extends Behaviour{
                     ACLMessage despedida = new ACLMessage(ACLMessage.INFORM);
                     despedida.addReceiver(new AID("AgenteBuscador", AID.ISLOCALNAME));
                     despedida.setContent("HoHoHo!");
+                    
+                    this.entorno.limpiarCamino();
+                    
                     myAgent.send(despedida);
                     
                     myAgent.doDelete();
@@ -122,9 +108,8 @@ public class ComunicacionSantaClaus extends Behaviour{
     // Función que calcula si el Buscador es apto o no para recibir la misión.
     private boolean somosAptos() {
         // Queremos simular que el 80% son confiables (buenos) y el 20% no son confiables (malos).
-        //Random random = new Random();
-        //return random.nextDouble() <= 0.8;
-        return true;
+        Random random = new Random();
+        return random.nextDouble() <= 0.8;
     }
     
     // -----------------------------------------------------------------------------------

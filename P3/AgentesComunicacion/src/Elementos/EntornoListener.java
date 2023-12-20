@@ -11,4 +11,5 @@ public interface EntornoListener {
     void onPosicionRenoActualizada(SimpleEntry<Integer, Integer> coord);
     void onUltimoReno();
     void onRenoEncontrado();
+    void onSantaEncontrado(SimpleEntry<Integer,Integer> coord);
 }
