@@ -69,6 +69,21 @@ public final class Entorno {
         }
     }
     
+    //Actualiza la posición del reno
+    public void actualizarReno(SimpleEntry<Integer, Integer> coord){
+          if (this.entornoListener != null) {
+                this.entornoListener.onPosicionRenoActualizada(coord);
+          }
+          
+    }
+    
+      public void onUltimoReno(){
+          if (this.entornoListener != null) {
+                this.entornoListener.onUltimoReno();
+          }
+          
+    }
+    
     // ---------------------------------------------
     // Añade la acción tomada en el protocolo.
     public void setAccion(String accion) {
